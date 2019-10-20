@@ -82,10 +82,11 @@ Snow algae grow in the liquid water surrounding rounded snow granules [@Leya2013
 
 <!-- Liquid water availability and nutrient limitation likely play a role in determining where snow algae blooms, as both water and NPK fertilizer increased cell counts of *Chlamydomonas cf. nivalis* in one study in Alaska . -->
 
-<!-- im not doing network analysis, this is community structure -->
+<!-- im not doing community structure / network analysis (yet) -->
+<!-- what is the point of this para? rbcL, our hot new method, is the shit -->
 Microscopic observation shows that snow algae blooms can contain a diversity of cell morphologies in the same sample [@Lutz2018], but the genetic community structure of snow algae may not correlate with what is seen under the microscope. 18S amplicon high-throughput sequencing (HTS) shows that snow algae may contain more diversity than meets the eye: although red snow from sites across the Arctic were dominated by uncultured Chlamydomonadaceae, they also contained lower abundance of reads assigned to *Chloromonas* and *Raphidonema* [@Lutz2016a]. 18S is highly conserved and therefore suited to survey broadly across a variety of taxa; however, due to its high similarity between closely related species short segments of thie gene are poorly-differentiated among closely related taxa (ref). The *rbc*L plastid gene coding for the large subunit of RuBisCO is highly differentiated among photosynthetic organisms, and contains reference sequences for snow algae, making it an ideal complement to survey snow algae communities. 
 
-In this study, we surveyed snow algae communities from the mountains surrounding Vancouver, BC, Canada using light microscopy, 18S and *rbc*L amplicon HTS. Our aims were to: 1) see what species were present, 2) compare community composition between samples, 3) and see how they are distributed across the landscape. We found ...
+In this study, we surveyed snow algae communities from the mountains surrounding Vancouver, BC, Canada using light microscopy, 18S and *rbc*L amplicon HTS. Our aims were to: 1) see what species were present, 2) compare community composition between samples. We found ...
 
 
 <!-- These blooms are often dominated by red spherical cells, which until recently were referred to in the literature as *Chlamydomonas cf. nivalis*, but recent taxonomy classifies as *Sanguina nivaloides*, although synonymy was not established [@Prochazkova2019].  -->
