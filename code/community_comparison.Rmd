@@ -1,0 +1,101 @@
+---
+title: "Community comparison"
+output: html_notebook
+---
+
+```{r libs, echo=F}
+library(tidyverse)
+library(GUniFrac)
+library(vegan)
+library(ggthemes)
+```
+
+```{r set}
+theme_set(theme_few())
+set.seed(123)
+```
+
+
+```{r input, echo=F}
+rbcl_rel_abund <- read_csv(here("data","clean","rbcl_rel_abund_clean.csv"))
+idtax <- read_csv(here("data","clean","rbcl_taxonomy_clean.csv"))
+field <- read_csv(here("data","clean","field_clean.csv"))
+
+rbcl_asv_id_key <- read_csv(here("output","keys","rbcl_asv_key.csv"))
+rbcl_asv_otu_key <- read_csv(here("output","keys","asv_otu_key.csv"))
+sample_aliases <- read_csv(here("data","sample_aliases.csv"))
+rbcl.tree <- read.tree(here("output","tree","rbcl","asv613.fasta.treefile"))
+```
+
+Unifrac rbcL
+```{r unifrac}
+rbcl.asv.rel.abund.wide <- rbcl_rel_abund %>% 
+  select(asv_id, sample_id, rel_abund) %>% 
+  pivot_wider(names_from = asv_id, values_from = rel_abund, values_fill = list(rel_abund = 0)) %>% 
+  column_to_rownames("sample_id")
+
+# rooted tree required, root by one of my Raphidonema asvs
+rbcl.tree <- rbcl.tree %>% root(outgroup = "559", resolve.root=T)
+
+unifracs <- rbcl.asv.rel.abund.wide %>% 
+  GUniFrac::GUniFrac(rbcl.tree, alpha=c(0, 0.5, 1))
+unifrac <- unifracs$unifracs[, , "d_1"]
+
+
+# plot results as NMDS
+nmds <- metaMDS(unifrac, autotransform = F)
+nmds # stress
+unifrac_plot_data <- nmds %>% 
+  scores() %>% 
+  as_tibble(rownames = "sample_id") %>% 
+  left_join(field, by="sample_id")
+
+# plot unifrac, colored by elevation
+uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
+  geom_point(aes(color=elev_m), size=4) +
+  scale_color_gradientn(colours = terrain.colors(8)[1:7]) +
+  labs(color="Elevation (m)") +
+  geom_text(data = unifrac_plot_data %>%   # add sample ID labels
+              left_join(sample_aliases, by="sample_id"),
+            aes(label = alias), size=3)  ######### change to alias for final version. edit overlap txt in svg
+uf_plot
+```
+
+# rbcL relative abundance plot
+```{r barplot}
+rbcl_stack_barplot_tbl <- rbcl_rel_abund %>% 
+  left_join(rbcl_asv_otu_key, by="asv_id") %>% 
+  left_join(field, by="sample_id") %>% 
+  left_join(sample_aliases, by="sample_id") %>% 
+  select(alias, rel_abund, otu_name, elev_m) %>% 
+  group_by(alias, otu_name, elev_m) %>% 
+  summarise(rel_abund = sum(rel_abund)) %>% 
+  ungroup()
+
+rbcl_stack_barplot_tbl %>% distinct(otu_name)
+
+# sanity check samples rel abund sum to 1
+rbcl_stack_barplot_tbl %>%
+  group_by(alias) %>% 
+  summarise(sum(rel_abund))
+                                                                                 
+# order OTUs
+# otu.order <- c("Chloromonas", "Sanguina A","Trebouxiophyceae J")
+
+stacked_barplot <- ggplot(rbcl_stack_barplot_tbl, aes(x = alias %>% fct_reorder(elev_m), y = rel_abund, fill=otu_name)) +
+  geom_bar(position="stack",stat="identity") +
+  coord_flip() +
+  ylab("Sample ID") +
+  xlab("Relative abundance") +
+  labs(fill = "OTU")
+stacked_barplot
+
+```
+
+
+
+```{r output}
+ggsave(plot = uf_plot, filename = here("figs","rbcl_unifrac_nmds.pdf"), height = 6, width = 8)
+ggsave(plot = stacked_barplot, filename = here("figs","rbcl_otu_rel_abund.pdf"), height = 6, width = 8)
+```
+
