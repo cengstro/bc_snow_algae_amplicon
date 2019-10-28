@@ -1,5 +1,5 @@
 ---
-title: "Distinct communities of snow algae bloom at different elevations"
+title: "Distinct snow algae communities along an elevational gradient"
 author:
   - name: Casey B. Engstrom
     institute: SFU
@@ -27,7 +27,9 @@ output:
       - '--lua-filter=lua-filters-master/author-info-blocks.lua'
 bibliography: /home/cengstro/ownCloud/mendeley_library/bibtex_by_grp/casey1.bib
 abstract: |
-  *Abstract*: Snow algae grow in melting summer snow across polar and alpine regions, forming green or red colored blooms on the snow surface which can reduce snow surface albedo and increases snow melt rate. Despite over a century of study, the we know little of the diversity of algae species that cause snow algae blooms. We used light microscopy and high-throughput amplicon sequencing of the plastid *rbc*L gene and 18S rDNA to survey snow algae blooms in the Coast Range of British Columbia, Canada. We found distinct communities at different elevations. Our findings suggest that some species of snow algae are widely dispersed, but environmental conditions likely select which snow algae species will proliferate.
+  *Abstract*: Snow algae grow in melting summer snowfields throughout polar and alpine regions, forming extensive blooms that can alter snow surface albedo and increase melt rate. Snow algae community composition is reported to be similar between snow algae blooms in different continents; here, we report community composition can vary widely from patch to patch within the same mountain, and varies with elevation and date. We used dual-marker *rbc*L and 18S amplicon high-throughput sequencing (HTS) and light microscopy to assess community composition in 33 snow algae samples from the Coast Range of British Columbia, Canada. We found lower elevation snow algae blooms (800 - 1400 m) were dominated by *Chloromonas*, while *Sanguina* was restricted to higher elevations (1400 - 2200 m), with a distinct clades of *Chlainomonas* found only in our high elevation sites. High elevation samples, which were collected later in the season, countained higher phylogenetic diversity---including several potentially novel clades of algae. Low elevation sites dominated by *Chloromonas krienitzii* remained green throughout the season in subsurface samples, but developed orange pigment at the surface. Taken together, our results suggest that microscopy and 18S amplicon HTS alone may not be sufficient to resolve differences between snow algae communities, and that snow algae may be specially adapted to distinct micro-habitats within the melting snow microbiome. 
+
+  
 
 ---
 ```{r setup, include=FALSE}
@@ -41,9 +43,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### *Keywords*: snow algae rbcL 18S amplicon microbiome alpine community
 
-### *Run title*: Elevation patterns in snow algae communities
+### *Run title*: Elevational patterns in snow algae communities
 
-### *To be submitted to*: 1) Frontiers in Micb 2) Env Micb 3) Microbial Ecology
+### *To be submitted to*: 1) Nat Comm, 2) Frontiers in Micb 3) Env Micb 4) Microbial Ecology
    
 
 <!-- what we now know: (Old studies suggested... here we are blowing open the door. ) -->
@@ -147,7 +149,7 @@ Although *Chlainomonas* is reported to only grow in slushy snow above alpine tar
 
 # 
 
-**Different alpine and subalpine snow algae communities**. *Sanguina* was more abundant in alpine sites, as well as one OTU of *Chlainomonas* and two OTUs of *Chloromonas*, while *Chloromonas krienitzii* and Chlainomonas OTU6 were found in high relative abundance below treeline (Fig. 2, 3). This consistent with the microscopy observations of @Hoham1979a and @Nedbalova2008a, who found primarily *Chlamydomonas cf. nivalis* above treeline and *Chloromonas* below treeline. However, in microscopy surveys we infrequently observed *Sanguina* below treeline, and *Chloromonas krienitzii* above treeline. We found higher diversity in samples from higher elevation, both at the ASV level and OTU level<!--Chao1 w fossil.-->, with several OTUs that were not found at lower elevations. *Raphidonema* and related ASVs were restricted to high alpine sites, with the highest relative abundance occurring in samples from August and September. This fits with the interpretation of @Stibal2005, who suggest that *Raphidonema* is an opportunistic soil algae that blows into snow fields from surrounding dirt to colonize the snow. However, rare taxa should not be discounted as playing an important role in ecosystem functioning [@Jousset2017].
+**Snow algae community composition co-varies with date and elevation**. *Sanguina* was more abundant in alpine sites, as well as one OTU of *Chlainomonas* and two OTUs of *Chloromonas*, while *Chloromonas krienitzii* and Chlainomonas OTU6 were found in high relative abundance below treeline (Fig. 2, 3). This consistent with the microscopy observations of @Hoham1979a and @Nedbalova2008a, who found primarily *Chlamydomonas cf. nivalis* above treeline and *Chloromonas* below treeline. However, in microscopy surveys we infrequently observed *Sanguina* below treeline, and *Chloromonas krienitzii* above treeline. We found higher diversity in samples from higher elevation, both at the ASV level and OTU level<!--Chao1 w fossil.-->, with several OTUs that were not found at lower elevations. *Raphidonema* and related ASVs were restricted to high alpine sites, with the highest relative abundance occurring in samples from August and September. This fits with the interpretation of @Stibal2005, who suggest that *Raphidonema* is an opportunistic soil algae that blows into snow fields from surrounding dirt to colonize the snow. However, rare taxa should not be discounted as playing an important role in ecosystem functioning [@Jousset2017].
 
 Snowpack above and below treeline are very different habitats, with forest providing shade (and therefore less evaporation). The red pigment of *Sanguina* and *Chlainomonas* (astaxanthin) is likely an adaptation to high light [@Gorton2003;@Holzinger2006], and it has been suggested that *Sanguina* is adapted to the drier snowpacks that form at higher elevations [@Dial2018c].
 
