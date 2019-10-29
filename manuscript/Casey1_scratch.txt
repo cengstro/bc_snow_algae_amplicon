@@ -1,0 +1,179 @@
+CAsey1 scratch
+
+
+Our findings highlight the need to consider the species composition of snow algae blooms in future research of this poorly understood microbiome.
+
+
+what we now know: (Old studies suggested... here we are blowing open the door. )
+- there are different microbiomes
+- alpine vs subalpine
+- communities are not distinct, but a gradient!!
+
+completely novel
+- chloromonas krienitzii blooms in snow runnels (more seen below treeline), green below, orange above
+- chlainomonas is widespread in all blooms
+- muramotoi in North America? (if this is a reliable genetic marker)
+- Some unknown Chloromonas OTUs with no match in ref databases
+- distinct clade Chlainomonas above treeline
+- sphere krienitzii, oval, same? or closely related...
+- Chlainomonas more at surface than depth
+
+18S data
+write discussion
+
+
+based on this paragraph, I would not trust the morphology categories in my thing. Ill take em out anyway, but... chlainomonas is distinct, chloro distinct
+
+get reader up to date on snow algae taxonomy... two out of three are poorly explored
+
+
+how communities vary from patch to patch.
+
+Much of the recent snow algae literature has focused on the eye-catching red snow prevalent throughout polar and alpine regions [@Segawa2018;@Leya2013].
+
+Liquid water availability and nutrient limitation likely play a role in determining where snow algae blooms, as both water and NPK fertilizer increased cell counts of *Chlamydomonas cf. nivalis* in one study in Alaska .
+
+im not doing community structure / network analysis (yet)
+what is the point of this para? rbcL, our hot new method, is the shit
+
+These blooms are often dominated by red spherical cells, which until recently were referred to in the literature as *Chlamydomonas cf. nivalis*, but recent taxonomy classifies as *Sanguina nivaloides*, although synonymy was not established [@Prochazkova2019].
+What species? Are snow algae communities distinct, or overlapping gradient?
+
+Snow algae diversity is poorly understood, and whether different species inhabit different niches remains an open question.
+
+A diversity of algae species and cell morphologies are reported from snow algae blooms, yet little is known about the habitat distribution of snow algae species.
+why is this interesting?
+make it obvious what the paper is about early as possible
+
+
+yet community composition is perceived to be relatively homogeneous between sites [@Lutz2016a]; whether there may be different types of snow algae blooms has not been adequately explored.
+
+but their impact on alpine food webs and nutrient cycling has not been explored.
+
+Until recently, snow algae species were defined on the basis of cell morphology.
+
+*Sanguina* currently has only two named species, , and . The competitive exclusion principle suggests that within the melting snowpack microbiome there exist different niches, for example different snow moisture content, shade, or nutrient input from trees [@Hoham1976].
+
+Chloro polyptera absent in rbcL. could we detect this in our samples by 18S? how similar is it to other Chloromonas?
+
+Red cells of *Chlamydomonas cf. nivalis* can be either cosmopolitan or endemic between the poles [@Segawa2018].
+
+What species of Chloromonas? (Chlainomonas within)
+
+
+What potentially novel species look similar, but are genetically distinct?
+
+Are all snow algae communities the same, or different?  Do the differences in cell morphology correspond to genetically different species? What described species are found in the snow? Which of these may be unknown species that looked similar in previous surveys?
+What do we now know? Chlainomonas hi low, above and below treeline specific otus, Chloro krienitzii is widespread in runnels, esp below treeline, green below turning orange on surface. Sanguina less common below treeline.
+
+
+
+what we now know: (Old studies suggested... here we are blowing open the door. )
+
+
+- gradient, dom morph vs mix
+  - chlainomonas is widespread in all blooms
+  - X17
+
+- alpine vs subalpine
+  - Some unknown Chloromonas OTUs with no match in ref databases
+  - distinct clade Chlainomonas above treeline
+
+- krienitzii
+  - in snow runnels (more seen below treeline), green below, orange above
+  - sphere krienitzii, oval, same? or closely related...
+  - Chlainomonas more at surface than depth
+
+
+
+
+
+
+# results ------------------------------------------------------------------
+
+One *Chlainomonas* dominated sample (S9) was from snow near the edge of a pool, but we also collected *Chlainomonas* at sites where we did not see evidence of water nearby (S13, G16.1), and one from a pink snow runnel (S6) that looked the same as the runnels dominated by *C. krienitzii*. *Chlainomonas* dominated samples appeared indistinguishable to pink snow caused by *Sanguina* to the naked eye, although it was less frequently collected than *Sanguina*. This suggests that *Chlainomonas* could play a role in albedo-driven snow melt previously ascribed to *Chlamydomonas cf. nivalis* or *Sanguina*. *Chlainomonas* was not previously reported to be so prevalent in snow algae blooms of mixed composition. This could be because *Chlainomonas* is not distinguishable from *Chloromonas* with 18S primers in previous alpine HTS surveys [@Brown2016a,@Hamilton2017]. It is not reported from either pole, although this could be due to lack of sampling as well as lack of detect ability with HTS.
+
+ to use named OTUs, or not. The line drawn by our classifier is also arbitrary, depending on database etc but less so than me circling some dots. But I could make a definition in methods, refer to OTU by the most abundant species in it
+ 
+ 
+We were surprised to find that
+H5 was dominated by *Chlainomonas* reads, but this sample contained few cells matching this morphology
+
+
+Runnels could provide habitat, e.g. liquid water for motility, nutrient mobilization, alternatively the algae could passively accumulate due to gravity. These green cells could swim up from the base of the snowpack, or be passively washed into the runnels from the surface. We observed some green snow ice lenses below these runnels, which could be due to higher snow moisture in the runnel, or due to the algae themselves through antifreeze production or albedo.
+
+Although all samples dominated by *C. krienitzii* were taken from elevations near or below treeline, our microscopy observations suggest that *C. krienitzii* blooms infrequently at higher elevations as well. Why *C. krienitzii* dominates below treeline is a mystery, since we observed it in high light clearings.
+Exposure to light can trigger astaxanthin production in Haematococcus pluvialis [@Shah2016],
+
+
+
+# discussion -----------------------------------------------------------------
+
+
+Where to put these?
+cross validation
+Sample composition varied between our three data sets (rbcL, 18S, and cell count), although some robust correlations were found between them. *Sanguina* relative abundance was strongly correlated between data sets, between rbcL and 18s (Spearman's rho=0.78, p<0.001) and rbcL and "*Sanguina*-like" cell morphologies (Spearman's rho=0.92, p<0.001). *Chlainomonas* was strongly correlated with "*Chlainomonas*-like" cells (Spearman's rho=0.7, p<0.001), but IDTaxa did not identify any *Chlainomonas* in our 18S library (in spite of the fact that we included one sample in our 18S reference database). *Chloromonas krienitzii* was not correlated with cell count data (because green cells), nor any 18S ASVs or OTUs. Koliellaceae was not strongly correlated between 18S and rbcL datasets by either relative abundance data or presence absence. No strong correlations were found between Unk8 and taxa or OTUs in other datasets. Sample S4 was dominated by cell morphologies we classified as *Chloromonas cf. brevispina*, and this sample was dominated by reads best matching *Chloromonas krienitzii*. *Sanguina* and *Trebouxiophyceae* was in proportionally higher among 18S algae reads than in rbcL (respectively 40% vs 25%, and 0.9% vs 2%), while *Chloromonas* was lower in 18S than rbcL *Chloromonas* and *Chlainomonas* combined (24% vs 45%).
+
+mention our brevispina sample
+Cell morphology also suggests rbcL underestimates diversity. Sample S4 was dominated by *C. krienitzii* reads, but the cell morphologies dominant in this samples were similar to *Chloromonas cf. brevispina* Cryocystis-type [@Matsuzaki2015], which is a distinct but closely related species to *C. krienitzii*. Consistent with @Nedbalova2008a, we found these cells in bronze snow in well-shaded forest sites. Likely our short-read rbcL fragment would not offer enough genetic resolution to differentiate between the two, with the genetic "signal" of *C. cf. brevispina* getting lost in the "noise" of haplotype variation in *C. krienitzii*.
+
+primer bias
+Primer bias likely impacted our estimates of relative abundance. Samples containing 80-90% *Sanguina* 18S were only 50-60% *Sanguina* rbcL. This is likely because we designed our rbcL primers off of *Chloromonas* and *Chlainomonas*, as *Sanguina* sequences were not available at the time, thus leading to their disproportionate representation. Perhaps the three uppermost outliers in Figure 2 (K7, K19.1, and G16.2) could be because these samples contained very little *Chloromonas* initially. Although *Chloromonas* and *Chlainomonas* may be artificially inflated by rbcL, they are likely a significant secondary component of *Sanguina* blooms, as our 18S data suggests, as well as microscopy. Other studies also found that *Chlamydomonas cf. nivalis* blooms contained lower abundance of *Chloromonas* [@Lutz2016a;@Terashima2017]. Furthermore extraction bias could likewise have resulted in over-representation of *Chloromonas* and *Chlainomonas*, since we observed that *Sanguina* were difficult to lyse by light microscopy cell counts, and contained lower DNA yields per dry weight than samples containing green cells.
+
+
+
+Our rbcL amplicon library was dominated by reads assigned to *Chloromonas*, *Sanguina*, and *Chlainomonas* (Fig. 1). The most abundant species were *Chloromonas krienitzii*, *Chlainomonas rubra*, and *Sanguina nivaloides*. <!--exact percentage?--> <!--X% of reads were assigned to genus, and X% of reads were assigned to species. Many ASVs were not assigned to genus level by our taxonomic classifier IDTaxa, but were nevertheless closely related to *Chloromonas* (Fig. 1, Supp. Fig. 1 and 2). Although one OTU "Chloro7" was distant from other *Chloromonas* ASVs (Supp. Fig. 2), best BLAST matches were all *Chloromonas* snow algae (best match 92%). Similarly, Chloro9 had best BLAST matches to Chloromonas, with a best match of 94%. Another OTU "Unk8" was only assigned to domain level by IDTaxa, but top BLAST hits included algae from both Chlamydomonadaceae and Trebouxiophyceae, with a best match of 88% similarity. <!--This cluster did not correlate with any 18S OTUs. However, another unidentified clade (labeled as “Chlorophyceae X” in Figure 1) was highly correlated with an 18S OTU that was similarly placed taxonomically.
+
+
+
+Did 18S identify any of the unknown clusters? What was in the unknown clusters?
+
+Three green snow samples from above treeline were dominated by *Chloromonas* reads.
+Two Sanguina dominated samples contained high proportion of smaller orange cells...
+
+move some of this to discussion?
+
+However, the low abundance community was less differentiated between samples<!-- too discussion-y?-->  <!--How to mention the higher diversity at higher elevation? Chao with fossil pkg? There was greater genetic variation between high elevation samples than there was between lower elevation samples (Fig. 2b) this is because there were more samples? more sites? hard to make comparisons. <!-- ... becayse Chloromonas and Chlainomonas are closely related
+
+should I go into Chlain genetics, above and below treeline? morph differences? If I get into the morphology, I am characterising new species. Maybe reviewers will want me to go back and flesh out the details of the unknown species, but for now I won't mention it to provoke their curiosity
+
+
+todo, get 18S clade -> OTU that correlates to Chloro 7. get correl.
+
+
+
+
+
+remind of the problem: we have all this diversity, where is it? what are the differences?
+
+
+
+
+Chloro3, what to make of this. Are we suggesting it is a single species? (NO)
+why do we care if there are new species?
+
+minor point, whittle down
+
+
+Red, orange, or green snow can be caused by different species of snow algae. Much of the snow algae literature has focussed on the eye-catching red snow prevalent throughout polar and alpine regions caused by red spherical cells [@Leya2013;@Segawa2018;@Lutz2016a]. Until recently, these cells were referred to in the literature as *Chlamydomonas cf. nivalis*, but were recently re-classified as *Sanguina nivaloides* [@Prochazkova2019]. Red snow can also be caused by *Chlainomonas*, whose distinctive large (40 $\mu$m diameter) quadriflagellate red cells can be found in waterlogged snow over alpine lakes [@Novis2008;@Prochazkova2018c]. Snow algae that lack secondary pigments can color snow green, which occurs in slushy wet snow in the Arctic and Antarctic [@Fogg1967;@Lutz2015;@Remias2013], or in subalpine forests [@Hoham1979b]. Green snow is now thought to be caused by different genera than in red snow, including *Microglena* [@Lutz2015], and various *Chloromonas* [Hoham1979b;@Remias2013a;@Terashima2017]. Two studies (in USA and Slovakia) found green and orange snow to be more common below treeline, while red snow is prevalent in the alpine [@Hoham1979a;@Nedbalova2008a]. <!-- add element of unknown to this, emphasize how little we know
+
+Although
+
+Cell morphology can be ambiguous in snow algae taxonomy; different species can look nearly identical, and the same species can look completely different depending on the life stage. Recent molecular work shows that strains formerly lumped together as *Chloromonas. cf. nivalis* contain four genetically-distinct lineages [@Matsuzaki2019], while cells described as *C. cf. brevispina* contain at least two genetically distinct clades [@Matsuzaki2015].
+
+S.aurantia
+sky27 and gar 2 couldbe had fewer Chloromonas, so there were no Chloromonas to preferentially amplify
+haplotypes, a single ASV difference may not be biologically meaningful
+future directions: what is the unknowns?
+Below treeline, trees shade snowpack and provide a potential source of nutrients through conifer needles [@Hoham1976]; furthermore the window of opportunity for snow algae growth is much shorter as snow melts out sooner at low elevations.
+
+
+Problems with snow algae 18S amplicon high-throughput sequencing (HTS). Although these studies report taxonomy to the species level, outdated annotation in reference databases, algorithms prone to overclassification [@Murali2018], lack of cross-referenced marker genes and microscopy samples, primers targeting highly conserved regions, and arbitrary OTU thresholds [@Callahan2017] could have hidden or mislabelled taxa, potentially obscuring variation between samples.
+- Most species of *Chloromonas* are known from a single sample.
+
+blooms side by side different community, which sample?
+rbcL underestimates non Chloromonas, less differentiated within Sanguina
+nes18.01, has chlainomonas, but visually more sanguina. primer bias, check 18s.
+are the citrine cells sanguina?
+return to this in discussion, we found that green snow near red snow was Chloromonas, but we did see some green cells below the surface in transition to red, similar to reported in Prochazkova2019. Where these cells come from is a enduring mystery, how the bloom is seeded. We observed red snow in patches on the saddles, with no green below. The snow was shallow below the alpine green Chloromonas.
+
