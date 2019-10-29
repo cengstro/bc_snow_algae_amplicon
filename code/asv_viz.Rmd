@@ -15,6 +15,7 @@ library(treeio)
 library(dbscan)
 library(ggthemes)
 library(ggpubr)
+library(ggdark)
 # library(plotly)
 # library(crosstalk)
 # library(DT)
@@ -22,7 +23,6 @@ library(ggpubr)
 
 ```{r set}
 theme_set(theme_few())
-set.seed(123)
 ```
 
 ```{r read}
@@ -53,6 +53,8 @@ dists <-  asv.aligns %>%
 t-SNE with distance matrix
 ```{r tsne}
 perplexity <- 30
+
+set.seed(123)
 
 tsne <- dists %>% 
   Rtsne(pca=F, perplexity = perplexity)
@@ -117,6 +119,8 @@ tsne.mat <- tsne %>%
   select(1,2) %>% 
   as.matrix()
 
+set.seed(123)
+
 dbscan.out <- dbscan::dbscan(tsne.mat, eps=eps) # eps=4 gives best results
 
 tsne <- tsne %>% 
@@ -157,13 +161,13 @@ tsne_plot <- tsne_plot +
 # extract the legend
 tsne_plot %>% 
   get_legend() %>% 
-  as_ggplot()
-ggsave(here("figs","asv-cluster","asv-legend.pdf"), height = 7, width = 3)
+  as_ggplot 
+ggsave(here("figs","asv-cluster","asv-legend-dark.pdf"), height = 7, width = 3)
 
 # plot and save the main plot
 tsne_plot +
   theme(legend.position = "none")
-ggsave(here("figs","asv-cluster","asv-cluster.pdf"), height = 5, width = 5)
+ggsave(here("figs","asv-cluster","asv-cluster-dark.pdf"), height = 5, width = 5)
 ```
 
 # Phylogenetic tree
@@ -174,7 +178,7 @@ asv.aligns %>% writeXStringSet(here("output","tree","rbcl","rbcl_aligns.fasta"))
 ```
 
 Run IQtree
-```{r}
+```{r tree, fig.width=8, fig.height=20}
 rbcl.tree <- read.tree(here("output","tree","rbcl","asv613.fasta.treefile"))
 
 idtax %>% filter(species == "Raphidonema_nivale")

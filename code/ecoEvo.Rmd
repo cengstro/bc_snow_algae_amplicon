@@ -1,9 +1,0 @@
----
-title: "Rel abund plots for ecoevo presentation"
----
-
-```{r}
-library(tidyverse)
-
-```
-
