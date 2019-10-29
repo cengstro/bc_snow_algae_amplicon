@@ -1,0 +1,197 @@
+---
+title: "Wrangle 18s rel abund data"
+output: html_notebook
+---
+
+
+```{r libs, results="hide"}
+library(tidyverse)
+library(here)
+library(metagenomeSeq)
+```
+
+Read in file, and view contents
+
+```{r input, results="hide"}
+path_18s_ra <- here("data/raw/ky_18s_seqtab.nochim_April2019.txt")
+raw_18s_ra <- read.csv(rel_abund_18S_path, sep=" ", stringsAsFactors = F)
+
+# also read in the rbcl rel abund tidy data, since I'm only using the 18s data as a cross reference I can filter by this
+path_rbcl_ra <- here("data/clean/rbcl_rel_abund_clean.csv")
+clean_rbcl_ra <- read_csv(path_rbcl_ra)
+```
+
+Object naming convention: 
+- first what the objects is in its local context, then any globel identifiers
+- I'll refer to 18S relative abundance table object as "18s_ra"
+
+
+Rename sample IDs
+- remove MiSeq lane identifier ("S" followed by a number)
+```{r}
+head(raw_18s_ra)
+renamed_sids_18s_ra <- raw_18s_ra %>%
+  as_tibble(rownames = "sample_id") %>% 
+  mutate(sample_id = sample_id %>% 
+           str_remove("_S.*_") %>% # remove _S*_ ending
+           str_replace_all("-",".")) #replace hyphen with period
+head(renamed_sids_18s_ra)
+```
+
+Transpose so each ASV a row, each sample a column
+```{r}
+transposed_18s_ra <- renamed_sids_18s_ra %>% 
+  column_to_rownames("sample_id") %>% 
+  t() %>% 
+  as_tibble(rownames = "asv_sequence")
+head(transposed_18s_ra)
+```
+
+
+Remove actual sequences from tbl, set aside in a seperate tbl
+
+First check each ASV unique
+```{r asv_seq_key}
+selected_asvs <- transposed_18s_ra %>% 
+  select(asv_sequence)
+distinct_asvs <- transposed_18s_ra %>% 
+  distinct(asv_sequence)
+identical(selected_asvs, distinct_asvs)
+```
+
+Make a key table
+```{r}
+asv_seq_key_18s <- distinct_asvs %>% 
+  rownames_to_column("asv_id") %>% 
+  mutate(asv_id = asv_id %>% 
+           as.character() %>% 
+           str_pad(width=3, pad="0"))
+glimpse(asv_seq_key_18s)
+```
+
+Remove the sequence from the main table
+```{r}
+seq_removed_18s_ra <- asv_seq_key_18s %>% 
+  left_join(transposed_18s_ra, by="asv_sequence") %>% # left_join ensures that we are matching id with sequence by the master key
+  select(-asv_sequence) # remove sequence, put asv_id first
+
+head(seq_removed_18s_ra)
+```
+
+
+Normalize
+
+Do this before we start to filter and select names
+
+Convert to metagemoneSeq format
+```{r normalize}
+# mr_obj_18s_ra <- seq_removed_18s_ra %>% 
+#   column_to_rownames("asv_id") %>% 
+#   newMRexperiment()
+# 
+# mr_obj_18s_ra
+```
+
+```{r normalize2}
+# 
+# # calculate percentile by which to normalize
+# p <- cumNormStatFast(mr_obj_18s_ra)
+# 
+# 
+# # normed_18s_ra <- 
+#   
+# mr_obj_18s_ra %>% 
+#   
+#   
+#   cumNorm(
+#   MRcounts(norm=T) %>% 
+#   as_tibble(rownames = "asv_id")
+# 
+# %>% 
+#   gather("sample_id","norm_reads", -asv_id)
+# 
+# rbcl_norm <- rbcl_norm %>% 
+#   filter(norm_reads!=0) %>% 
+#   group_by(sample_id) %>% 
+#   mutate(norm_rel_abund = norm_reads/sum(norm_reads))
+# 
+# rbcl_rel_abund %>% 
+#   left_join(rbcl_norm, by=c("sample_id","asv_id")) %>% 
+#   select(asv_id, sample_id, rel_abund, norm_rel_abund) %>% 
+#   mutate(same = if_else(rel_abund == norm_rel_abund, T, F),
+#          diff = rel_abund - norm_rel_abund) %>% 
+#   arrange(-diff)
+# filter(same==F)
+```
+
+Convert to long format
+```{r long}
+long_18s_ra <- seq_removed_18s_ra %>% 
+  pivot_longer(cols = -asv_id, names_to = "sample_id", values_to = "n_reads") %>% 
+  filter(n_reads != 0) # now that its in long format we can remove 0s
+
+glimpse(long_18s_ra)
+
+```
+
+
+Calculate relative abundance as percentage
+```{r}
+as_percent_18s_ra <- long_18s_ra %>% 
+  group_by(sample_id) %>% 
+  mutate(rel_abund = n_reads/sum(n_reads)) %>% 
+  ungroup()
+glimpse(as_percent_18s_ra)
+```
+
+# Set aside negative controls
+
+look for duplicate sample ids
+```{r}
+as_percent_18s_ra %>% 
+  distinct(sample_id)
+```
+
+set aside duplicate sample ids
+```{r}
+duplicate_sample_18s_ra <- as_percent_18s_ra %>%
+  filter(sample_id %>% str_detect("gar18.01|sax18.01|sey18.25|sey18.74|sky18.12"))
+glimpse(duplicate_sample_18s_ra)
+```
+
+remove duplicates from my main analysis tbl
+```{r}
+no_dups_18s_ra <- as_percent_18s_ra %>% 
+  filter(!(sample_id %in% c("gar18.01.p2", "sax18.01.p1", "sey18.25.p1", "sey18.74.p1", "sky18.12.p1")))
+glimpse(no_dups_18s_ra)
+```
+
+remove the "p" from the sample id
+```{r}
+sample_id_fixed_18s_ra <- no_dups_18s_ra %>% 
+  mutate(sample_id = str_remove(sample_id, "\\.p[:digit:]"))
+glimpse(sample_id_fixed_18s_ra)
+```
+
+remove negative controls
+```{r}
+clean_18s_ra <- sample_id_fixed_18s_ra %>% 
+  filter(sample_id %in% clean_rbcl_ra$sample_id)
+
+glimpse(clean_18s_ra)
+```
+
+Check number of reads per sample
+```{r}
+clean_18s_ra %>% 
+  group_by(sample_id) %>% 
+  summarise(sum_n = sum(n_reads)) %>% 
+  arrange(sum_n)
+```
+
+write clean csv as output
+```{r}
+clean_18s_ra_path <- here("data/clean/clean_18s_ra.csv")
+write_csv(clean_18s_ra, clean_18s_ra_path)
+```
+
