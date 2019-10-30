@@ -1,0 +1,116 @@
+---
+title: "18S Community Comparison"
+output: html_notebook
+---
+
+```{r libs, results="hide"}
+library(tidyverse)
+library(here)
+library(GUniFrac)
+library(vegan)
+library(vegalite)
+library(fossil)
+library(picante)
+
+# ggplot themes
+library(ggthemes)
+library(ggdark)
+```
+
+```{r set}
+theme_set(theme_classic())
+```
+
+
+```{r}
+path_18s_ra <- here("data/clean/only_algae_18s_rel_abund.csv")
+clean_18s_ra <- read_csv(path_18s_ra)
+
+path_tree <- here("intermediate_output/tree/algae_18s/algae_18s_seqs.fasta.treefile")
+tree_18s <- read.tree(path_tree)
+
+path_full_18s_tree <- here("intermediate_output/tree/18s/")
+full_tree_18s <- read.tree(path_full_18s_tree)
+
+path_silva_assigns <- here("data/clean/clean_silva_18s_assignments.csv")
+silva <- read_csv(path_silva_assigns)
+
+path_field <- here("data/clean/field_clean.csv")
+field <- read_csv(path_field)
+
+path_alias <- here("data/sample_aliases.csv")
+alias <- read_csv(path_alias)
+```
+
+# Unifrac Algae 18s
+
+convert to wide format, asvs as cols
+```{r unifrac}
+wide_18s_ra <- clean_18s_ra %>% 
+  select(asv_id, sample_id, rel_abund) %>% 
+  filter(asv_id %in% tree_18s$tip.label) %>% # Unifrac needs relative abundance table to match the tips on the tree
+  pivot_wider(names_from = asv_id, values_from = rel_abund, values_fill = list(rel_abund = 0)) %>% 
+  column_to_rownames("sample_id")
+head(wide_18s_ra)
+```
+
+Choose a Trebouxiophyceae to root tree by
+```{r}
+root <- silva %>% 
+  filter(class == "Trebouxiophyceae") %>% 
+  head(1) %>% 
+  pull(1)
+  
+tree_18s <- tree_18s %>% root(outgroup = root, resolve.root=T)
+```
+
+
+run Unifrac
+```{r} 
+  
+set.seed(123)
+unifrac_out <- wide_18s_ra %>% 
+  GUniFrac::GUniFrac(tree_18s, alpha=c(0, 0.5, 1)) # ignore error message, we removed some otus from our tree, they should be automatically discluded
+
+# select the weighted UniFrac matrix
+weighted_unifrac_distm <- unifrac_out$unifracs[, , "d_1"]
+dim(weighted_unifrac_distm)
+```
+
+Ordination (NMDS) of 18s UniFrac, check stress value
+```{r}
+mono <- metaMDS(weighted_unifrac_distm)
+iso <- metaMDS(weighted_unifrac_distm, engine = "isoMDS")
+
+mono
+iso
+
+
+```
+
+stress too low to plot... with the few algae asvs, perhaps it all looks too similar
+
+try with all 18s data, not just algae
+
+
+```{r}
+unifrac_plot_data <- nmds %>%
+  scores() %>%
+  as_tibble(rownames = "sample_id") %>%
+  left_join(field, by="sample_id")
+
+# plot unifrac, colored by elevation
+uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
+  geom_point(aes(color=elev_m), size=4) +
+  scale_color_gradientn(colours = terrain.colors(8)[1:8]) +
+  labs(color="Elevation (m)") #+
+  # geom_text(data = unifrac_plot_data %>%   # add sample ID labels
+              # left_join(sample_aliases, by="sample_id"),
+            # aes(label = alias), size=3,
+            # position = position_nudge(y = -0.025))  ######### change to alias for final version. edit overlap txt in svg
+uf_plot
+```
+
+
+
+
