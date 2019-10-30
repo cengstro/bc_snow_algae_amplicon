@@ -1,0 +1,98 @@
+---
+title: "Select Algal 18S ASVs "
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(DECIPHER)
+```
+
+```{r}
+key_path <- here("intermediate_output/asv_seq_key_18s.csv")
+key <- read_csv(key_path)
+
+path <- here("data/raw/18s_assignments_silva.csv")
+assignments <- read_csv(path)
+assignments
+```
+
+
+
+
+# Only Algae
+
+Select Chlorophyta ASVs (according to SILVA)
+```{r}
+algae_18s_seqs <- assignments %>% 
+  dplyr::rename(asv_sequence = asv) %>% 
+  filter(V3 %>% str_detect("Chlorophyta")) %>% 
+  # get the asv_id, for labelling the tree tips
+  left_join(key, by="asv_sequence") %>% 
+  select(asv_id, asv_sequence) %>% 
+  deframe() %>% # to vector
+  DNAStringSet() 
+algae_18s_seqs
+```
+Align
+```{r}
+aligns <- algae_18s_seqs %>%
+  AlignSeqs(verbose=F)
+
+BrowseSeqs(aligns, highlight = T)
+```
+
+Remove ASVs with gaps
+```{r}
+gappy_asvs <- c("508", "570", "581", "586", "587", "591")
+
+quality_aligns <- aligns[!(names(aligns) %in% gappy_asvs)]
+
+# check
+length(quality_aligns) == length(aligns) - length(gappy_asvs)
+```
+
+
+
+
+
+# try with all ASVs
+
+Make another fasta with all 18S ASVs,
+```{r}
+seqs <- assignments %>% 
+  dplyr::rename(asv_sequence = asv) %>% 
+  # get the asv_id, for labelling the tree tips
+  left_join(key, by="asv_sequence") %>% 
+  select(asv_id, asv_sequence) %>% 
+  deframe() %>% # to vector
+  DNAStringSet()
+seqs
+```
+
+Remove gappy seqs
+```{r}
+seqs <- seqs[!(names(seqs) %in% gappy_asvs)]
+seqs
+```
+
+Align
+```{r}
+all_aligns <- seqs %>%
+  AlignSeqs(verbose=F)
+
+BrowseSeqs(all_aligns, highlight = T)
+```
+
+Not the best looking alignment I've ever seen, but roll with it
+
+
+Write fastas
+```{r}
+path_write <- here("intermediate_output/algae_18s_seqs.fasta")
+writeXStringSet(quality_aligns, path_write)
+
+path_all <- here("intermediate_output/all_18s_aligns.fasta")
+writeXStringSet(all_aligns, path_all)
+```
+
