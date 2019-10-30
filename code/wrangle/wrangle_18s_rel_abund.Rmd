@@ -193,5 +193,8 @@ write clean csv as output
 ```{r}
 clean_18s_ra_path <- here("data/clean/clean_18s_ra.csv")
 write_csv(clean_18s_ra, clean_18s_ra_path)
+
+asv_path <- here("intermediate_output/asv_seq_key_18s.csv")
+write_csv(asv_seq_key_18s, asv_path)
 ```
 
