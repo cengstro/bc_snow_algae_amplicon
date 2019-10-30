@@ -69,8 +69,8 @@ mono <- metaMDS(weighted_unifrac_distm)
 mono
 ```
 
-View plot of UniFrac NMDS
-```{r, echo=F}
+
+```{r unifrac_nmds, echo=F}
 unifrac_plot_data <- mono %>%
   scores() %>%
   as_tibble(rownames = "sample_id") %>%
@@ -105,7 +105,7 @@ ra %>%
 ```
 
 
-```{r, echo=F, fig.height=8, fig.width=10}
+```{r set_plot, echo=F}
 p <- ra %>% 
   left_join(assign, by="asv_id") %>% 
   group_by(phylum, sample_id) %>% 
@@ -113,17 +113,42 @@ p <- ra %>%
   ungroup() %>% 
   left_join(field, by="sample_id") %>% 
   select(sample_id, phylum, rel_abund, date, elev_m) %>% 
-  arrange(sample_id)
+  arrange(sample_id) %>% 
+  filter(rel_abund >= 0.01) # only show phyla with >= 1% rel abund
 
-ggplot(p, aes(x=phylum, y=sample_id %>% fct_reorder(elev_m))) +
-  geom_point(aes(color = phylum, size = rel_abund), alpha=0.7) +
-  scale_size(range = c(1, 10)) +
-  ylab("Sample ID") +
-  xlab("OTU") +
-  labs(fill = "OTU", alpha="Relative abundance", title = "Relative abundance plot of 18S phyla ") +
-  scale_x_discrete(position = "bottom") +
-  theme(axis.text.x = element_text(hjust=1,angle=45)) +
-  scale_colour_discrete(guide = FALSE) # turn off legend
+# ggplot(p, aes(x=phylum, y=sample_id %>% fct_reorder(elev_m))) +
+#   geom_point(aes(color = phylum, size = rel_abund), alpha=0.7) +
+#   scale_size(range = c(1, 10)) +
+#   ylab("Sample ID") +
+#   xlab("OTU") +
+#   labs(fill = "OTU", alpha="Relative abundance", title = "Relative abundance plot of 18S phyla ") +
+#   scale_x_discrete(position = "bottom") +
+#   theme(axis.text.x = element_text(hjust=1,angle=45)) +
+#   scale_colour_discrete(guide = FALSE) # turn off legend
+```
+
+
+```{r facet_bar, echo=F, fig.width=10}
+cust_theme <- theme(legend.position = "none",
+                    panel.grid.major.x = element_blank(), # remove vertical lines in background
+                    panel.grid.minor.x = element_blank(),
+                    axis.line=element_blank(), # remove x axis
+                    axis.title.x=element_blank(), 
+                    axis.text.x=element_blank(),
+                    axis.ticks.x=element_blank(),
+                    panel.spacing = unit(-0.01, "lines"), # remove space between facet panels
+                    strip.text.x = element_text(angle = 90, hjust=1.0, vjust = 0.8), # rotate facet labels 90
+                    strip.background = element_blank()) # remove grey boxes around facet labs
+
+# order algae, fungi, protists, other
+phylum_ord <- c("Chlorophyta_ph", "Ochrophyta","Basidiomycota", "Ascomycota", "Chytridiomycota", "Ciliophora","Cercozoa","Protalveolata", "Phragmoplastophyta")
+
+ggplot(p, aes(x=sample_id %>% fct_reorder(elev_m), y=rel_abund)) +
+  geom_bar(aes(fill=phylum), stat="identity") + # classic stacked relative abundance plot
+  coord_flip() +
+  facet_grid(~phylum %>% fct_relevel(phylum_ord), switch = "x") +
+  labs(title = "Relative abundance plot of 18S phyla", x="Sample ID (from lowest to highest elevation)") +
+  cust_theme
 ```
 
 ```{r, echo=FALSE}
@@ -138,43 +163,7 @@ view_phylum_table <- function(phylum){
 
 <br>
 <br>
-Table zoom in on the most abundance phyla
 
-
-### Arthropods
-```{r, echo=F}
-view_phylum_table("Arthropoda")
-```
-
-  - mostly at higher elev red snow sites, and hol47 (which LQ collected, dirty red snow near stream)
-  - hol47 arthropods are all Collembola, similar to other sites
-
-### Ascomycota
-```{r, echo=F}
-view_phylum_table("Ascomycota")
-```
-  - unknown Cordycipitaceae, a family of parasitic fungi
-  - ASV 4 BLAST 100% *Fusarium*, widely distributed in soil, saprophyta assoc w plants (although Wiki places in a different family, Nectriaceae)
-
-### Basidiomycota
-```{r, echo=F}
-view_phylum_table("Basidiomycota")
-```
-
-  - sey7, sey25, hol21, pan.ro, wed2 have highest fungi
-    - pan.ro:
-      - once its off the snow, fungi jump in
-      - high unknown Euks
-    - 
-  - Kriegeriales yeast
-  - asv7 blast matches a bunch of fungi 100%
-  
-### Cercozoa
-```{r, echo=F}
-view_phylum_table("Cercozoa")
-```
-  - Glissomonads
-    - ASV17 BLAST best strain match, 96% *Orciraptor agilis*, a parasite of algae
 
 ### Chlorophyta
 
@@ -202,6 +191,39 @@ ra %>%
   - lowest Chlorophyceae is sey18.25, with 18%
   - highest " " is gar18.01, with 80%
   
+### Ochrophyta
+```{r, echo=F}
+view_phylum_table("Ochrophyta")
+```
+
+  - higher abundance than exected
+  - Xanthophyceae at pan18.01, otherwise mostly *Hydrurus*
+  - Chrysophyceae, Leya found this family causing green snow
+  - seen in microscopy
+  - < 1% rel abundance
+  - could be wind deposited or grow in snow
+    - known to grow in cold, clear waters
+
+### Basidiomycota
+```{r, echo=F}
+view_phylum_table("Basidiomycota")
+```
+
+  - sey7, sey25, hol21, pan.ro, wed2 have highest fungi
+    - pan.ro:
+      - once its off the snow, fungi jump in
+      - high unknown Euks
+    - 
+  - Kriegeriales yeast
+  - asv7 blast matches a bunch of fungi 100%
+  
+### Ascomycota
+```{r, echo=F}
+view_phylum_table("Ascomycota")
+```
+  - unknown Cordycipitaceae, a family of parasitic fungi
+  - ASV 4 BLAST 100% *Fusarium*, widely distributed in soil, saprophyta assoc w plants (although Wiki places in a different family, Nectriaceae)
+
 ### Chytridiomycota
 ```{r, echo=F}
 view_phylum_table("Chytridiomycota")
@@ -215,18 +237,20 @@ view_phylum_table("Ciliophora")
   - highest in hol18.42b (depth)
       - and nes3, green snow sample
 
-### Ochrophyta
+### Cercozoa
 ```{r, echo=F}
-view_phylum_table("Ochrophyta")
+view_phylum_table("Cercozoa")
+```
+  - Glissomonads
+    - ASV17 BLAST best strain match, 96% *Orciraptor agilis*, a parasite of algae
+
+### Arthropods
+```{r, echo=F}
+view_phylum_table("Arthropoda")
 ```
 
-  - higher abundance than exected
-  - Xanthophyceae at pan18.01, otherwise mostly *Hydrurus*
-  - Chrysophyceae, Leya found this family causing green snow
-  - seen in microscopy
-  - < 1% rel abundance
-  - could be wind deposited or grow in snow
-    - known to grow in cold, clear waters
+  - mostly at higher elev red snow sites, and hol47 (which LQ collected, dirty red snow near stream)
+  - hol47 arthropods are all Collembola, similar to other sites
 
 ### Rotifera
 ```{r, echo=F}
