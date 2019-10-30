@@ -1,0 +1,253 @@
+---
+title: "Full 18s Community composition"
+output: html_notebook
+---
+
+```{r libs, include=F}
+library(tidyverse)
+library(here)
+library(GUniFrac)
+library(ape)
+library(ggtree)
+library(ggrepel)
+```
+
+```{r input, include=F}
+tree_path <- here("intermediate_output/tree/full_18s/all_18s_aligns.fasta.treefile")
+all_18s_tree <- read.tree(tree_path)
+
+ra_path <- here("data/clean/clean_18s_ra.csv")
+ra <- read_csv(ra_path)
+
+assignment_path <- here("data/clean/clean_silva_18s_assignments.csv")
+assign <- read_csv(assignment_path)
+
+field_path <- here("data/clean/field_clean.csv")
+field <- read_csv(field_path)
+
+alias_path <- here("data/sample_aliases.csv")
+alias <- read_csv(alias_path)
+```
+
+
+```{r to_wide, include=F}
+wide_ra <- ra %>% 
+  select(asv_id, sample_id, rel_abund) %>% 
+  filter(asv_id %in% all_18s_tree$tip.label) %>% # Unifrac needs relative abundance table to match the tips on the tree
+  pivot_wider(names_from = asv_id, values_from = rel_abund, values_fill = list(rel_abund = 0)) %>% 
+  column_to_rownames("sample_id")
+head(wide_ra)
+```
+
+
+
+[Some background on Eukaryotic phylogeny](http://tolweb.org/Eukaryotes/3)
+```{r root_tree, include=F}
+# rooting by bacteria
+root_id <- assign %>% 
+  filter(kingdom=="Bacteria") %>% 
+  head(1) %>% 
+  pull(asv_id)
+
+all_18s_tree <- all_18s_tree %>% root(outgroup = root, resolve.root=T)
+```
+
+
+```{r unifrac, include=F}
+set.seed(123)
+unifrac_out <- wide_ra %>% 
+  GUniFrac::GUniFrac(all_18s_tree, alpha=c(0, 0.5, 1)) # ignore error message, we removed some otus from our tree, they should be automatically discluded
+
+# select the weighted UniFrac matrix
+weighted_unifrac_distm <- unifrac_out$unifracs[, , "d_1"]
+dim(weighted_unifrac_distm)
+```
+
+
+```{r nmds_stress, include=F}
+mono <- metaMDS(weighted_unifrac_distm)
+mono
+```
+
+View plot of UniFrac NMDS
+```{r, echo=F}
+unifrac_plot_data <- mono %>%
+  scores() %>%
+  as_tibble(rownames = "sample_id") %>%
+  left_join(field, by="sample_id")
+
+# plot unifrac, colored by elevation
+uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
+  geom_point(aes(color=elev_m), size=4, alpha=0.7) +
+  scale_color_gradientn(colours = terrain.colors(8)[1:7]) +
+  labs(color="Elevation (m)") +
+  geom_text_repel(aes(label=sample_id)) +
+  ggtitle("UniFrac NMDS of 18S amplicon data (only 2019 MiSeq run)")
+  # geom_text(data = unifrac_plot_data %>%   # add sample ID labels
+  #                   left_join(alias, by="sample_id"),
+  #                   aes(label = sample_id), size=3,
+  #                   position = position_nudge(y = -0.025))  ######### change to alias for final version. edit overlap txt in svg
+uf_plot
+```
+
+  - Seymour samples clustered somewhat, except for sey18.25, sey18.63o
+    - sey25 = brevispina, big biofilms
+  - Hollyburn, 42b close to sey, but 21 and 47 were closer to high elevation samples
+  - Sky12 closer to high elevation samples despite being from below treeline
+  - Sax1, gar1, bre1, nes3 outliers from other high elevation samples
+
+Check out sey18.25
+```{r, echo=F}
+ra %>% 
+  filter(sample_id == "sey18.25") %>% 
+  arrange(-rel_abund) %>% 
+  left_join(assign, by="asv_id")
+```
+
+
+```{r, echo=F, fig.height=8, fig.width=10}
+p <- ra %>% 
+  left_join(assign, by="asv_id") %>% 
+  group_by(phylum, sample_id) %>% 
+  summarise(rel_abund = sum(rel_abund)) %>% 
+  ungroup() %>% 
+  left_join(field, by="sample_id") %>% 
+  select(sample_id, phylum, rel_abund, date, elev_m) %>% 
+  arrange(sample_id)
+
+ggplot(p, aes(x=phylum, y=sample_id %>% fct_reorder(elev_m))) +
+  geom_point(aes(color = phylum, size = rel_abund), alpha=0.7) +
+  scale_size(range = c(1, 10)) +
+  ylab("Sample ID") +
+  xlab("OTU") +
+  labs(fill = "OTU", alpha="Relative abundance", title = "Relative abundance plot of 18S phyla ") +
+  scale_x_discrete(position = "bottom") +
+  theme(axis.text.x = element_text(hjust=1,angle=45)) +
+  scale_colour_discrete(guide = FALSE) # turn off legend
+```
+
+```{r, echo=FALSE}
+view_phylum_table <- function(phylum){
+  phylum <- enquo(phylum)
+  ra %>% 
+  left_join(assign, by="asv_id") %>% 
+  filter(phylum == !!phylum) %>% 
+  arrange(-rel_abund)
+}
+```
+
+<br>
+<br>
+Table zoom in on the most abundance phyla
+
+
+### Arthropods
+```{r, echo=F}
+view_phylum_table("Arthropoda")
+```
+
+  - mostly at higher elev red snow sites, and hol47 (which LQ collected, dirty red snow near stream)
+  - hol47 arthropods are all Collembola, similar to other sites
+
+### Ascomycota
+```{r, echo=F}
+view_phylum_table("Ascomycota")
+```
+  - unknown Cordycipitaceae, a family of parasitic fungi
+  - ASV 4 BLAST 100% *Fusarium*, widely distributed in soil, saprophyta assoc w plants (although Wiki places in a different family, Nectriaceae)
+
+### Basidiomycota
+```{r, echo=F}
+view_phylum_table("Basidiomycota")
+```
+
+  - sey7, sey25, hol21, pan.ro, wed2 have highest fungi
+    - pan.ro:
+      - once its off the snow, fungi jump in
+      - high unknown Euks
+    - 
+  - Kriegeriales yeast
+  - asv7 blast matches a bunch of fungi 100%
+  
+### Cercozoa
+```{r, echo=F}
+view_phylum_table("Cercozoa")
+```
+  - Glissomonads
+    - ASV17 BLAST best strain match, 96% *Orciraptor agilis*, a parasite of algae
+
+### Chlorophyta
+
+####Trebouxiophyceae
+```{r, echo=F}
+ra %>% 
+  left_join(assign, by="asv_id") %>% 
+  filter(class == "Trebouxiophyceae") %>% 
+  group_by(sample_id) %>% 
+  summarise(rel_abund=sum(rel_abund)) %>% 
+  arrange(-rel_abund)
+```
+  - sax18.01 outlier, much higher Trebouxiophyceae
+    - could explain why an outlier in *rbc*L data?
+    
+####Chlorophyceae
+```{r, echo=F}
+ra %>% 
+  left_join(assign, by="asv_id") %>% 
+  filter(class == "Chlorophyceae") %>% 
+  group_by(sample_id) %>% 
+  summarise(rel_abund=sum(rel_abund)) %>% 
+  arrange(rel_abund)
+```
+  - lowest Chlorophyceae is sey18.25, with 18%
+  - highest " " is gar18.01, with 80%
+  
+### Chytridiomycota
+```{r, echo=F}
+view_phylum_table("Chytridiomycota")
+```
+
+### Ciliophora:
+```{r, echo=F}
+view_phylum_table("Ciliophora")
+```
+  - SILVA assigns most to *Stokesia*, but best BLAST match for asv5 is *Frontonia* 
+  - highest in hol18.42b (depth)
+      - and nes3, green snow sample
+
+### Ochrophyta
+```{r, echo=F}
+view_phylum_table("Ochrophyta")
+```
+
+  - higher abundance than exected
+  - Xanthophyceae at pan18.01, otherwise mostly *Hydrurus*
+  - Chrysophyceae, Leya found this family causing green snow
+  - seen in microscopy
+  - < 1% rel abundance
+  - could be wind deposited or grow in snow
+    - known to grow in cold, clear waters
+
+### Rotifera
+```{r, echo=F}
+view_phylum_table("Rotifera")
+```
+  - sey18.25: highest rotifers, matches photos. 
+    - could explain why its an outlier in NMDS above
+    - 
+
+
+
+
+
+
+
+
+
+
+# Check differences between surface and depth samples:
+  - 
+
+
+# Check differences in high vs low diversity
+  - 
