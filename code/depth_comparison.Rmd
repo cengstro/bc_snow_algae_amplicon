@@ -9,10 +9,67 @@ library(here)
 ```
 
 ```{r include=F}
-rbcl_rel_abund <- read_csv(here("data/"))
-s18_all_rel_abund
+rbcl_rel_abund <- read_csv(here("data/03_filtered/rbcl/depth_rbcl_rel_abund.csv"))
+s18_all_rel_abund <- read_csv(here("data/03_filtered/18s/depth_18s_rel_abund.csv"))
 
-rbcl_tax
-s18_tax
+rbcl_tax <- read_csv(here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
+s18_tax <- read_csv(here("data/02_tidied/tidied_silva_18s_assignments.csv"))
+
+rbcl_otus <- read_csv(here("output/asv_otu_key.csv"))
+
+field <- read_csv(here("data/02_tidied/tidied_field.csv"))
 ```
 
+```{r rbcl_wrangle, include=F}
+rbcl <- rbcl_rel_abund %>% 
+  left_join(rbcl_tax, by="asv_id") %>% 
+  left_join(field, by="sample_id") %>% 
+  left_join(rbcl_otus, by="asv_id")
+glimpse(rbcl)
+rbcl %>% distinct(sample_id, alias, depth_cm)
+
+depth_sample_info <- rbcl %>% 
+  distinct(sample_id, alias, depth_cm) %>% 
+  mutate(depth_chr = if_else(is.na(depth_cm), "surface", "sub-surface"),
+         top_sample = case_when(alias == "H2.10"~"H2.10*", # add a star, same site, but different date
+                                alias == "H3.4"~"H2.10*",
+                                alias == "H4.3"~"H4.4",
+                                alias == "S9.2"~"S9.1",
+                                TRUE ~ alias)) %>% 
+  select(sample_id, top_sample, depth_chr)
+depth_sample_info
+
+
+rbcl_1 <- rbcl %>% 
+  left_join(depth_sample_info, by="sample_id") %>% 
+  group_by(top_sample, depth_chr, otu_name) %>% 
+  summarise(rel_abund= sum(rel_abund)) %>% 
+  ungroup()
+
+rbcl_1
+```
+
+```{r}
+ggplot(rbcl_1, aes(x=top_sample, y=rel_abund, fill = otu_name))+
+  geom_bar(stat="identity") +
+  facet_grid(rows = vars(depth_chr %>% fct_relevel("surface","sub-surface"))) +
+  labs(x="Sample ID", y="Relative abundance", fill="OTU")
+```
+
+```{r 18s_wrangle, include=F}
+s18 <- s18_all_rel_abund %>% 
+  left_join(s18_tax, by="asv_id") %>% 
+  left_join(field, by="sample_id") %>% 
+  left_join(depth_sample_info, by="sample_id") %>% 
+  select(top_sample, depth_chr, phylum:genus, rel_abund)
+
+glimpse(s18)
+```
+
+```{r}
+ggplot(s18, aes(x=top_sample, y=rel_abund, fill = phylum))+
+  geom_bar(stat="identity") +
+  facet_grid(rows = vars(depth_chr %>% fct_relevel("surface","sub-surface"))) +
+  labs(x="Sample ID", y="Relative abundance", fill="OTU")
+```
+More fungi on surface, one sample with more rotifers on surface, more ciliates on surface also
