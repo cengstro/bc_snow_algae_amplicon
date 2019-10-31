@@ -1,0 +1,85 @@
+---
+title: "Map of 2018 snow algae sample locations"
+output: html_notebook
+---
+
+```{r libs, include=F}
+library(tidyverse)
+library(lubridate)
+library(ggmap)
+
+library(ggdark)
+```
+
+```{r include=F}
+field <- read_csv(here::here("data/02_tidied/tidied_field.csv"))
+cities <- read_csv(here::here("output/map/city_coords.csv"))
+
+load(here::here("output/map/raw_google_map.rda")) # loads .rda called "algae_map"... not sure how avoid using.rda format, maybe png?
+```
+
+
+```{r all_samples_map, echo=F}
+# one point per mountain, with moutain code, colored by mean elevation
+# site tbl: each mtn, total samples, visits, n sequenced samples
+
+
+full_map <- ggmap(algae_map, extent = "device") +
+  # jitter points to make it easier to read
+  geom_point(data = field, 
+              size = 2, alpha=0.5, 
+              width = 0.05, height = 0.05, # specify jitter
+              aes(color=elev_m)) +
+  scale_color_gradientn(colours = terrain.colors(8)[1:7], limits = c(850,2200)) +
+  geom_point(data = city_coords, shape = 15) +
+  geom_text(data = city_coords, aes(label = name), hjust = 1.1)+
+  labs(title = "Snow algae sample sites, summer 2018", color="Elevation (m)") 
+
+full_map
+```
+
+```{r plot_function}
+plot_map <- function(my_month){
+  # input: chr with capitalized complete month name, eg "May","June"
+  # output: ggplot showing the location of samples from that month
+  filtered_sample_coords <- field %>% 
+    filter( lubridate::month(date, label=TRUE, abbr=FALSE) == my_month)
+  
+  ggmap(algae_map, extent = "device") +
+    # jitter points to make it easier to read
+    geom_jitter(data = filtered_sample_coords, 
+                size = 2, alpha=0.7, 
+                width = 0.05, height = 0.05, # specify jitter
+                aes(color=elev_m)) +
+    scale_color_gradientn(colours = terrain.colors(8)[1:7], limits = c(850,2200)) +
+    geom_point(data = city_coords, shape = 15) +
+    geom_text(data = city_coords, aes(label = name), hjust = 1.1)+
+    labs(title = my_month, color="Elevation (m)")}
+
+#test
+plot_map("May")
+```
+
+```{r save_maps, include=F}
+
+# ggsave(filename = here("")
+
+# for the month by month maps
+save_map <- function(my_month, num){
+  map <- plot_map(my_month)
+  
+  ggsave(filename = here::here("figs","map",paste0("map_",num,"_", my_month,".png")),
+       plot = map, height = 15, width = 20, units = "cm")
+}
+
+save_map("May",1)
+save_map("June",2)
+save_map("July",3)
+save_map("August",4)
+save_map("September",5)
+
+
+
+
+```
+
