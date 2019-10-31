@@ -313,25 +313,4 @@ field <- field %>%
 
 # cell count data -------
 
-# rename, select algae
-cellct <- cellct %>% 
-  rowwise() %>% 
-  mutate(green=sum(green_oval, green_sphere,misc_small_green,tiny_green, spiny, na.rm = T),) %>% #lump green
-  select(sample_id, orb, citrine, redwall, ruby, balloon,tangerine, hedgehog, lemon, oval, zuke, green) # select only algae
 
-# to long, drop na, calculate per_algae
-cellct <- cellct %>% 
-  pivot_longer(names_to="morpho_sp", values_to="count", -sample_id ) %>% 
-  drop_na() %>% 
-  group_by(sample_id) %>% 
-  mutate(percent = count / sum(count))
-
-# remove samples with less than 50 entries (some with many fungi will be lost)
-count.sum.less.50 <- cellct %>% 
-  group_by(sample_id) %>% 
-  summarise(sum=sum(count)) %>% 
-  filter(sum<50) %>% 
-  pull(sample_id)
-
-cellct <- cellct %>% 
-  filter(!(sample_id %in% count.sum.less.50))

@@ -18,7 +18,7 @@ library(ggthemes)
 library(ggdark)
 ```
 
-```{r input, echo=F}
+```{r input, include=F}
 rbcl_rel_abund <- read_csv(here("data/clean/rbcl_rel_abund_clean.csv"))
 idtax <- read_csv(here("data/clean/rbcl_taxonomy_clean.csv"))
 field <- read_csv(here("data/clean/field_clean.csv"))
@@ -29,7 +29,7 @@ alias <- read_csv(here("data/sample_aliases.csv"))
 rbcl.tree <- read.tree(here("intermediate_output/tree/rbcl/asv613.fasta.treefile"))
 ```
 
-```{r unifrac, echo=F}
+```{r unifrac, include=F}
 ra_wide <- rbcl_rel_abund %>% 
   select(asv_id, sample_id, rel_abund) %>% 
   pivot_wider(names_from = asv_id, values_from = rel_abund, values_fill = list(rel_abund = 0)) %>% 
@@ -52,7 +52,10 @@ unifrac <- unifracs$unifracs[, , "d_1"]
 
 # run NMDS ordination on results 
 nmds <- metaMDS(unifrac, autotransform = F)
+```
 
+
+```{r unifrac_plot, echo=F}
 # plot
 unifrac_plot_data <- nmds %>% 
   scores() %>% 
@@ -71,7 +74,7 @@ uf_plot
 
 
 
-```{r rel_abund_barplot, fig.width=10, fig.height=7, echo=F}
+```{r setup_rel_abund_barplot, fig.width=10, fig.height=7, include=F}
 plot_data <- rbcl_rel_abund %>% 
   left_join(rbcl_asv_otu_key, by="asv_id") %>% 
   group_by(sample_id, otu_name) %>% 
@@ -85,7 +88,10 @@ plot_data <- rbcl_rel_abund %>%
 plot_data %>%
   group_by(alias) %>%
   summarise(sum(rel_abund))
+```
 
+
+```{r plot_barplot, fig.width=10, fig.height=7, echo=F}
 cust_theme <- theme(legend.position = "none",
                     panel.grid.major.x = element_blank(), # remove vertical lines in background
                     panel.grid.minor.x = element_blank(),

@@ -1,0 +1,152 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+# asdf
+test
+
+```{r libs}
+library(tidyverse)
+library(here)
+library(metagenomeSeq)
+print("a")
+```
+
+Read in file, and view contents
+
+Object naming convention: first what the objects is in its local context, then any globel identifiers
+
+I'll refer to 18S relative abundance table object as "18s_ra"
+
+```{r input}
+path_18s_ra <- here("data/raw/ky_18s_seqtab.nochim_April2019.txt")
+raw_18s_ra <- read.csv(rel_abund_18S_path, sep=" ", stringsAsFactors = F)
+head(raw_18s_ra)
+```
+
+
+Transpose so each ASV a row, each sample a column
+```{r}
+transposed_18s_ra <- raw_18s_ra %>%
+  t() %>% 
+  as_tibble(rownames = "asv_sequence")
+head(transposed_18s_ra)
+```
+
+
+Remove actual sequences from tbl, set aside in a seperate tbl
+
+First check each ASV unique
+```{r asv_seq_key}
+selected_asvs <- transposed_18s_ra %>% 
+  select(asv_sequence)
+distinct_asvs <- transposed_18s_ra %>% 
+  distinct(asv_sequence)
+identical(selected_asvs, distinct_asvs)
+```
+
+Make a key table
+```{r}
+asv_seq_key_18s <- distinct_asvs %>% 
+  rownames_to_column("asv_id") %>% 
+  mutate(asv_id = asv_id %>% 
+           as.character() %>% 
+           str_pad(width=3, pad="0"))
+nrow(asv_seq_key_18s)
+```
+
+Remove the sequence from the main table
+```{r}
+seq_removed_18s_ra <- asv_seq_key_18s %>% 
+  left_join(transposed_18s_ra, by="asv_sequence") %>% # left_join ensures that we are matching id with sequence by the master key
+  select(-asv_sequence) # remove sequence, put asv_id first
+
+head(seq_removed_18s_ra)
+```
+
+
+Normalize
+
+Do this before we start to filter and select names
+
+Convert to metagemoneSeq format
+```{r normalize}
+# mr_obj_18s_ra <- seq_removed_18s_ra %>% 
+#   column_to_rownames("asv_id") %>% 
+#   newMRexperiment()
+# 
+# mr_obj_18s_ra
+```
+
+```{r normalize2}
+# 
+# # calculate percentile by which to normalize
+# p <- cumNormStatFast(mr_obj_18s_ra)
+# 
+# 
+# # normed_18s_ra <- 
+#   
+# mr_obj_18s_ra %>% 
+#   
+#   
+#   cumNorm(
+#   MRcounts(norm=T) %>% 
+#   as_tibble(rownames = "asv_id")
+# 
+# %>% 
+#   gather("sample_id","norm_reads", -asv_id)
+# 
+# rbcl_norm <- rbcl_norm %>% 
+#   filter(norm_reads!=0) %>% 
+#   group_by(sample_id) %>% 
+#   mutate(norm_rel_abund = norm_reads/sum(norm_reads))
+# 
+# rbcl_rel_abund %>% 
+#   left_join(rbcl_norm, by=c("sample_id","asv_id")) %>% 
+#   select(asv_id, sample_id, rel_abund, norm_rel_abund) %>% 
+#   mutate(same = if_else(rel_abund == norm_rel_abund, T, F),
+#          diff = rel_abund - norm_rel_abund) %>% 
+#   arrange(-diff)
+# filter(same==F)
+```
+
+Convert to long format
+```{r long}
+long_18s_ra <- seq_removed_18s_ra %>% 
+  pivot_longer(cols = -asv_id, names_to = "sample_id", values_to = "n_reads")
+
+head(long_18s_ra)
+nrow(long_18s_ra)
+```
+
+Format sample IDs properly (thanks to our poor organization during sequencing)
+```{r reformat_sample_id}
+fixed_sample_ids_18s_ra <- long_18s_ra %>% 
+  mutate(sample_id = 
+           # remove underscores
+           str_extract(sample_id, ".*(?=_S.*_)") %>% 
+           # replace hyphen
+           str_replace_all("-","."), 
+         # parse protocol version used from the sample ID col
+         protocol = str_extract(sample_id, "(?<=[:alpha:]{3}18\\..{2}\\.p)[:digit:]"), 
+         # remove protocol identifier from the sample ID col
+         sample_id = str_replace(sample_id, ".p[:digit:]",""), 
+         # protocol 3 was default, so can assume that these remaining are p3
+         protocol = replace_na(protocol, 3))
+fixed_sample_ids_18s_ra %>% 
+  select(sample_id) %>% 
+  distinct()
+```
+
+Calculate relative abundance as percentage
+```{r}
+as_percent_18s_ra <- fixed_sample_ids_18s_ra %>% 
+  group_by(sample_id, protocol) %>% 
+  mutate(rel_abund = n_reads/sum(n_reads)) %>% 
+  ungroup()
+as_percent_18s_ra
+```
+
+Set aside negative controls, and 

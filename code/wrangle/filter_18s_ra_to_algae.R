@@ -1,26 +1,44 @@
-# this script takes in the clean algae 18s relative abundance table, and returns a filtered version that only contains the Chlorophyta assigned by IDTaxa using SILVA
+# this script takes in the clean, filtered 18s data, and limits it taxonomically to just algae
 
 library(tidyverse)
 library(here)
 
-path <- here("data/clean/clean_18s_ra.csv")
-ra <- read_csv(path)
 
-path2 <- here("data/clean/clean_silva_18s_assignments.csv")
-silva <- read_csv(path2)
+depth <- read_csv(here("data/03_filtered/18s/depth_18s_rel_abund.csv"))
+main <- read_csv(here("data/03_filtered/18s/filtered_cleaned_18s_rel_abund.csv"))
+protocol <- read_csv(here("data/03_filtered/18s/protocol_comparison_18s_rel_abund.csv"))
+scrape <- read_csv(here("data/03_filtered/18s/scrape_comparison_18s_rel_abund.csv"))
+water <- read_csv(here("data/03_filtered/18s/water_controls_18s_rel_abund.csv"))
+white <- read_csv(here("data/03_filtered/18s/white_snow_18s_rel_abund.csv"))
 
-filtered_rel_abund <- ra %>% 
-  left_join(silva, by="asv_id") %>% 
-  filter(phylum %>% str_detect("Chlorophyta"))
+taxonomy <- read_csv(here("data/02_tidied/tidied_silva_18s_assignments.csv"))
 
-# check
-filtered_rel_abund %>% 
-  distinct(asv_id, phylum)
+algae_asv_ids <- taxonomy %>%
+  filter(phylum == "Chlorophyta") %>% 
+  pull(asv_id)
 
-# remove the taxonomy columns
-filtered_rel_abund_final <- filtered_rel_abund %>% 
-  select(asv_id, sample_id, n_reads, rel_abund)
+filter_to_algae <- function(tbl){
+  tbl %>% 
+    left_join(taxonomy, by="asv_id") %>% 
+    filter(asv_id %in% algae_asv_ids) %>% 
+    select(1:4)
+}
 
-# write file
-path_out <- here("data/clean/only_algae_18s_rel_abund.csv")
-write_csv(filtered_rel_abund_final, path_out)
+# run filters
+depth_2 <- depth %>% filter_to_algae()
+main_2 <- main %>% filter_to_algae()
+protocol_2 <- protocol %>% filter_to_algae()
+scrape_2 <- scrape %>% filter_to_algae()
+water_2 <- water %>% filter_to_algae()
+white_2 <- white %>% filter_to_algae()
+
+# save 
+dir.create(here("data/03_filtered/18s_algae"))
+
+
+write_csv(depth_2, here("data/03_filtered/18s_algae/18s_algae.depth_rel_abund.csv"))
+write_csv(main_2, here("data/03_filtered/18s_algae/18s_algae.filtered_cleaned_rel_abund.csv"))
+write_csv(protocol_2, here("data/03_filtered/18s_algae/18s_algae.protocol_rel_abund.csv"))
+write_csv(scrape_2, here("data/03_filtered/18s_algae/18s_algae.scrape_rel_abund.csv"))
+write_csv(water_2, here("data/03_filtered/18s_algae/18s_algae.water_rel_abund.csv"))
+write_csv(white_2, here("data/03_filtered/18s_algae/18s_algae.white_rel_abund.csv"))
