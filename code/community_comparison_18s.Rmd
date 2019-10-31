@@ -93,22 +93,22 @@ stress too low to plot... with the few algae asvs, perhaps it all looks too simi
 try with all 18s data, not just algae
 
 
-```{r}
-unifrac_plot_data <- nmds %>%
-  scores() %>%
-  as_tibble(rownames = "sample_id") %>%
-  left_join(field, by="sample_id")
-
-# plot unifrac, colored by elevation
-uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
-  geom_point(aes(color=elev_m), size=4) +
-  scale_color_gradientn(colours = terrain.colors(8)[1:8]) +
-  labs(color="Elevation (m)") #+
-  # geom_text(data = unifrac_plot_data %>%   # add sample ID labels
-              # left_join(sample_aliases, by="sample_id"),
-            # aes(label = alias), size=3,
-            # position = position_nudge(y = -0.025))  ######### change to alias for final version. edit overlap txt in svg
-uf_plot
+    ```{r}
+    unifrac_plot_data <- nmds %>%
+      scores() %>%
+      as_tibble(rownames = "sample_id") %>%
+      left_join(field, by="sample_id")
+    
+    # plot unifrac, colored by elevation
+    uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
+      geom_point(aes(color=elev_m), size=4) +
+      scale_color_gradientn(colours = terrain.colors(8)[1:8]) +
+      labs(color="Elevation (m)") #+
+      # geom_text(data = unifrac_plot_data %>%   # add sample ID labels
+                  # left_join(sample_aliases, by="sample_id"),
+                # aes(label = alias), size=3,
+                # position = position_nudge(y = -0.025))  ######### change to alias for final version. edit overlap txt in svg
+    uf_plot
 ```
 
 

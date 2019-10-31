@@ -30,6 +30,8 @@ in the same Chlamydomonadaceae family as *Sangiuna* and *Chlainomonas*,
 Microscopy surveys Green snow containing the genus *Chloromonas* is reported from forested habitat [@Lutz2015;@Remias2013;@Novis2008;@Prochazkova2018c], but *Chloromonas*
 
 
+ *Chlainomonas* also produce red pigment, but are physically much larger than *Sanguina* (up to 40 $\mu$m diameter). Although *Chlainomonas* look very different from *Chloromonas*, *rbc*L and 18S phylogeny places them within the *Chloromonas* clade [@Novis2008]. *Chloromonas* are highly diverse, with at least 13 named species [@Matsuzaki2019]; in contrast, only two species are currently described in *Chlainomonas* [@Novis2008].
+
 
 18S data
 write discussion

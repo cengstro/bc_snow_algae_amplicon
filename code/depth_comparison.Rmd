@@ -1,0 +1,18 @@
+---
+title: "Depth sample comparison"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(here)
+```
+
+```{r include=F}
+rbcl_rel_abund <- read_csv(here("data/"))
+s18_all_rel_abund
+
+rbcl_tax
+s18_tax
+```
+

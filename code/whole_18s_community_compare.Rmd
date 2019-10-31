@@ -147,7 +147,7 @@ ggplot(p, aes(x=sample_id %>% fct_reorder(elev_m), y=rel_abund)) +
   geom_bar(aes(fill=phylum), stat="identity") + # classic stacked relative abundance plot
   coord_flip() +
   facet_grid(~phylum %>% fct_relevel(phylum_ord), switch = "x") +
-  labs(title = "Relative abundance plot of 18S phyla", x="Sample ID (from lowest to highest elevation)") +
+  labs(title = "Relative abundance plot of 18S phyla (SILVA assignments)", x="Sample ID (from lowest to highest elevation)") +
   cust_theme
 ```
 
