@@ -53,6 +53,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction {-}
 
+
+where we were: there are red and green blooms
+where we are: there are multiple types of red and green blooms
+
 Snow algae are cold-adapted microalgae that bloom in melting summer snow throughout alpine and polar regions [@Leya2013]. Red snow algae blooms can cover vast areas of snowfield, which decreases snow surface albedo---by one estimate, enough to substantially increase the rate of snow melt [@Ganey2017]. Earlier snow melt exposes darker surfaces below, contributing to snow-albedo feedback and global warming [@Dery2007], which can threaten water supplies [@Staudinger2014] and worsten drought [@Barnhart2016]. Thus, snow algae could play an important role in snow melt regulation, but little is known about how these blooms form. We don't know the spatial extent of snow algae blooms worldwide, what conditions trigger snow algae bloom formation, or how cells arrive on the surface of the snow to "seed" the bloom. Critically, we lack basic understanding of the species composition and diversity in snow algae blooms, which is fundamental to answering these long-standing mysteries about snow algae blooms. 
 
 Historically snow algae were classified by cell morphology, however, morphology can be deceptive when identifying microalgae. Until recently, all red cells from red snow were referred to as *Chlamydomonas cf. nivalis* [@Remias2013;@Segawa2018], desipte the fact that this morphology-based species was thought to contain multiple distinct species [@Kol1961]. Recent genetic work designated found that some of these cells were not closely related to *Chlamydomonas* at all, and were designated as a new genus and species: *Sanguina nivaloides* [@Prochazkova2018c]. Other genetic work shows that morphology-based species of snow algae may in fact contain multiple genetically unrelated clades: for example, *Chloromonas cf. nivalis* contains at least four distinct clades [@Matsuzaki2019].
@@ -102,6 +106,37 @@ Until recently, snow algae sequences were lacking in reference databases,
 
 
 # Results {-}
+
+### Morphologically diverse snow algae blooms across a variety of habitats
+
+Snow algae was widespread in our study area, beginning on May _ when we first observed snow algae blooming in the trees. Over the course of the season, we collected 309 samples from 33 dates and 13 moutains. We did not observe pink snow above treeline until June 6, despite several visits above treeline before that (site data table). We observed snow algae until the first snows of winter, although by later in the season most of the snow had melted out at lower elevations. 
+
+Visually, several patterns in snow algae site characteristics and cell morphology were apparent. Most frequently, we observed pink or red snow, typically in areas recieving high sunlight, dominated by cells that looked similar to *Sanguina nivaloides*, frequently containing green cells of varying shapes and sizes. However, red snow could also be dominated by *Chlainomonas* morphologies, in red snow that was visually indistinguishible from red snow containing primarily *S. nivaloides*. *Chlainomonas* was frequently mixed in with *S. nivaloides* as well (Fig. 1d). We also occasionally observed green snow above treeline, which was dominated by green or yellow oval cells with flanges, similar to those described for *Chloromonas muramotoi*. Colored snow often appeared in snow runnels, frequently at elevations near or below treeline. These runnels containing colored snow formed linear streaks, often with orange on the surface and green snow just below the surface (Fig. 1b). At two sites like this that we visited repeatedly, the runnel began with green snow hidden 1-2 cm below the surface, but on subsequent visits the surface snow had changed color to orange. The subsurface snow contained green, often flagellated algae, while surface snow was dominated by orange cells resembling *Chloro. krienitzii* (Fig. 1e) [@Matsuzaki2015]. Below treeline, orange and green snow was common, often dominated by orange oval cells with short spines, similar to *Chloromonas cf. brevispina* (Fig. 1g). Snow dominated by *Chloromonas cf. brevispina* and *Chloromonas cf. nivalis* was abundnat in shady areas below treeline, often in distinctively bronze colored snow (supp data). 
+
+
+
+
+### Diverse *rbc*L reveals species-level snow algae taxonomy
+
+
+
+
+
+### Snow algae community composition varies with date and elevation
+
+
+This is supported by our 18S and cell count data. Although we found Chlainomonas 
+
+
+
+
+### High elevation, high diversity
+
+
+
+### Green snow algae turns orange at the surface
+
+
 
 **A gradient between snow algae communities**. Variation in snow algae communities was primarily driven by the presence or absence of *Sanguina nivaloides*, *Chloromonas krienitzii*, *Chlainomonas rubra*, or *Chlainomonas* OTU3 (Fig. 2a). However, most samples contained a mix of species; few samples were relatively "pure". However, sample comparison with weighted UniFrac [@Lozupone2005] found little difference between *Chlainomonas* and *Chloromonas* dominated sites, and the presence or absence of *Sanguina* was the driving factor, which was generally found in higher relative abundance at higher elevation (Fig. 2b).
 
