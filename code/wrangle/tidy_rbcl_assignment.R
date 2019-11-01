@@ -2,6 +2,7 @@
 
 library(tidyverse)
 library(here)
+library(Biostrings)
 
 raw_assignments <- read_csv(here("data/01_raw/rbcl_taxonomy_genbank.csv"))
 
@@ -81,10 +82,30 @@ fixed_annotations <- assigns_w_asv_id %>%
                              TRUE~species),
          id_level = case_when(str_detect(genus,"Stichococcus")~"genus", # and update this
                               TRUE~id_level))
+
+
+# make new categorical to tell ggplot what taxonomy to plot
+# include both species and genus level assignments
+# lump low abundance Trebouxiophyceae
+misc_treb <- c("Myrmecia","Trebouxia","Coccomyxa","Dictyochloropsis","Diplosphaera")
+plot_taxonomy <- fixed_annotations %>% 
+  mutate(plot_taxa = case_when(genus %in% misc_treb ~"other Trebouxiophyceae",
+                                  genus == "Stichococcus" ~ "Stichococcus",
+                                  id_level == "species" ~ assignment,
+                                  id_level == "genus" ~ assignment))
+
 # species list
-fixed_annotations %>% distinct(genus)
-fixed_annotations %>% distinct(species)
+plot_taxonomy %>% distinct(genus)
+plot_taxonomy %>% distinct(species)
+plot_taxonomy %>% distinct(plot_taxa)
 
 
-write_csv(fixed_annotations, here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
-write_csv(asv_id, here("output/rbcl_asv_sequence_key.csv"))
+
+write_csv(plot_taxonomy, here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
+write_csv(asv_id, here("data/asv_seq_data/rbcl_asv_sequence_key.csv"))
+
+# make this into a fasta as well
+asv_id %>% 
+  deframe() %>% 
+  DNAStringSet() %>% 
+  writeXStringSet(here("data/asv_seq_data/rbcl.fasta"))
