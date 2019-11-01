@@ -14,6 +14,7 @@ library(ape)
 library(ggtree)
 library(treeio)
 library(dbscan)
+library(ggrepel)
 
 library(ggpubr)
 library(ggthemes)
@@ -46,24 +47,23 @@ dists <-  aligns %>%
 perplexity <- 30
 
 set.seed(123)
-
-tsne <- dists %>% 
+tsne_full_output <- dists %>% 
   Rtsne(pca=F, perplexity = perplexity)
 
-tsne <- tsne$Y %>% 
+tsne_pts <- tsne_full_output$Y %>% 
   as_tibble()
 
-ggplot(tsne, aes(x=V1,y=V2))+
+ggplot(tsne_pts, aes(x=V1,y=V2))+
   geom_point() +
   labs(title="rbcL ASV clustering with t-SNE")
 ```
 
 ```{r genus_tsne, echo=F}
-tsne <- tsne %>% 
+tsne_pts_taxonomy <- tsne_pts %>% 
   add_column(asv_id = colnames(dists)) %>% # label each point by it's ASV ID
   left_join(taxonomy, by="asv_id")
 
-ggplot(tsne, aes(x=V1,y=V2))+
+ggplot(tsne_pts_taxonomy, aes(x=V1,y=V2))+
   geom_point(aes(color = genus)) +
   labs(title = "Points labeled by genus")
 ```
@@ -71,7 +71,7 @@ ggplot(tsne, aes(x=V1,y=V2))+
 
 
 ```{r sp_tsne, echo=F}
-ggplot(tsne, aes(x=V1,y=V2))+
+ggplot(tsne_pts_taxonomy, aes(x=V1,y=V2))+
   geom_point(aes(color = species)) +
   labs(title="Pts labeled by species")
 ```
@@ -80,27 +80,16 @@ ggplot(tsne, aes(x=V1,y=V2))+
 Make it look nice, show both genus and species level assignments
 ```{r tsne-plot1, echo=F}
 
-# make new categorical to tell ggplot what taxonomy to plot
-# include both species and genus level assignments
-# lump low abundance Trebouxiophyceae
-treb <- c("Myrmecia","Trebouxia","Coccomyxa","Dictyochloropsis","Diplosphaera")
-tsne <- tsne %>% 
-    mutate(display_taxa = case_when(genus %in% treb ~"other Trebouxiophyceae",
-                                  genus == "Stichococcus" ~ "Stichococcus",#########not sure why I need this...
-                                  id_level == "species" ~ assignment,
-                                  id_level == "genus" ~ assignment))
-
-
-# order
 taxa.order <- c("Chloromonas","Chloromonas_muramotoi","Chloromonas_hohamii","Chloromonas_krienitzii","Chloromonas_Group_B","Raphidonema_nivale","Stichococcus","other Trebouxiophyceae","Chlainomonas", "Chlainomonas_rubra","Sanguina","Sanguina_aurantia","Sanguina_nivaloides" )
 
-ggplot(tsne, aes(x=V1, y=V2)) +
+ggplot(tsne_pts_taxonomy, aes(x=V1, y=V2)) +
   # plot points not assigned to genus or species
-  geom_point(data = filter(tsne, is.na(display_taxa)), 
-             color = "grey",alpha = 0.8, size = 3) +
+  geom_point(data = filter(tsne_pts_taxonomy, is.na(plot_taxa)), 
+             color = "grey", alpha = 0.8, size = 3) +
   # color points that were assigned to genus or species
-  geom_point(data = filter(tsne, !is.na(display_taxa)), 
-             aes(color = display_taxa %>% fct_relevel(taxa.order)), alpha = 0.8, size = 3) +
+  geom_point(data = filter(tsne_pts_taxonomy, !is.na(plot_taxa)), 
+             aes(color = plot_taxa %>% fct_relevel(taxa.order)), 
+             alpha = 0.8, size = 3) +
   labs(title = "Points colored by both genus and species", color="ASV taxonomic assignment") +
   theme_few()
 ```
@@ -109,18 +98,18 @@ ggplot(tsne, aes(x=V1, y=V2)) +
 ```{r otu-cluster, echo=F}
 eps <- 4
 
-tsne.mat <- tsne %>% 
+tsne_mat <- tsne_pts_taxonomy %>% 
   select(1,2) %>% 
   as.matrix()
 
 set.seed(123)
 
-dbscan.out <- dbscan::dbscan(tsne.mat, eps=eps) # eps=4 gives best results
+dbscan_out <- dbscan::dbscan(tsne_mat, eps=eps) # eps=4 gives best results
 
-tsne <- tsne %>% 
-  add_column(otu = as.character(dbscan.out$cluster)) # tsne is in order of asv_id
+tsne_taxa_otu <- tsne_pts_taxonomy %>% 
+  add_column(otu = as.character(dbscan_out$cluster)) # tsne is in order of asv_id
 
-ggplot(tsne, aes(x=V1, y=V2)) +
+ggplot(tsne_taxa_otu, aes(x=V1, y=V2)) +
   geom_point(aes(color = otu)) +
   labs(title="dbscan clustering")
 ```
@@ -129,39 +118,47 @@ Manually edit the clustering:
   - *Chloromonas krienitzii* gets its own cluster, since this is highly abundant
   - split *Chlainomonas* into two, based on the observation in IQTree the two clades of *Chlainomonas* seperate out by elevation
 
-```{r edit-otus, echo=F}
-tsne <- tsne %>%
+```{r edit-otus, echo=F, fig.width=8, fig.height=6}
+tsne_edited_otus <- tsne_taxa_otu %>%
   mutate(otu = case_when((V2 < (-5) & V1 < -17) ~ "9", # chlain "high"
                          (V2 < 14  & V2 > 8 & V1 > (-20) & V1 < (-12)) ~ "10",# krienitzii
                          TRUE ~ otu))
 
-tsne %>% 
-  select(display_taxa, otu) %>% 
+tsne_edited_otus %>% 
+  select(plot_taxa, otu) %>% 
   distinct() %>% 
   arrange(otu)
 
 # name each OTU
-otu_names <- tibble(otu = as.character(1:10), otu_name = c("Chloromonas spp. C","Sanguina A","Chlainomonas B", "Chloromonas muramotoi E","Chloromonas G","Chloromonas I","Algae H","Trebouxiophyceae J","Chlainomonas F","Chloromonas krienitzii D"))
+otu_names <- tibble(otu = as.character(1:10), 
+                    otu_name = c("Chloromonas spp. C",
+                                 "Sanguina A","Chlainomonas B",
+                                 "Chloromonas muramotoi E",
+                                 "Chloromonas G",
+                                 "Chloromonas I",
+                                 "Algae H",
+                                 "Trebouxiophyceae J",
+                                 "Chlainomonas F",
+                                 "Chloromonas krienitzii D"))
 
-tsne <- tsne %>% 
+tsne_otu_names <- tsne_edited_otus %>% 
   left_join(otu_names, by="otu")
 
-asv_otu_key <- tsne %>% 
+
+# make a key for downstream use (write to file at end of script)
+asv_otu_key <- tsne_otu_names %>% 
   select(asv_id, otu, otu_name)
   
-ggplot(tsne, aes(x=V1, y=V2)) +
+ggplot(tsne_otu_names, aes(x=V1, y=V2)) +
   # plot points not assigned to genus or species
-  geom_point(data = filter(tsne, is.na(display_taxa)), 
+  geom_point(data = filter(tsne_otu_names, is.na(plot_taxa)), 
              color = "grey",alpha = 0.8, size = 3) +
   # color points that were assigned to genus or species
-  geom_point(data = filter(tsne, !is.na(display_taxa)), 
-             aes(color = display_taxa %>% fct_relevel(taxa.order)), alpha = 0.8, size = 3) +
+  geom_point(data = filter(tsne_otu_names, !is.na(plot_taxa)), 
+             aes(color = plot_taxa %>% fct_relevel(taxa.order)), alpha = 0.8, size = 3) +
   labs(title = "Points colored by both genus and species", color="ASV taxonomic assignment") +
   theme_few() +
-  ggforce::geom_mark_ellipse(data = tsne, aes(fill=otu_name, label=otu_name), show.legend = FALSE)
-
-
-
+  ggforce::geom_mark_ellipse(aes(fill=otu_name, label=otu_name), show.legend = FALSE)
 ```
 
 ```{r include_rel_abund, echo=F, fig.width=8, fig.height=6}
@@ -169,43 +166,80 @@ total_rel_abund <- rel_abund %>%
   group_by(asv_id) %>% 
   summarise(global_rel_abund = sum(rel_abund))
 
-tsne_2 <- tsne %>% 
+tsne_rel_abund <- tsne_otu_names %>% 
   left_join(total_rel_abund, by="asv_id")
 
-ggplot(tsne_2, aes(x=V1, y=V2)) +
-  ggforce::geom_mark_ellipse(data = tsne, aes(fill=otu_name, label=otu_name), show.legend = FALSE) +
+final_tsne <- ggplot(tsne_rel_abund, aes(x=V1, y=V2)) +
+  ggforce::geom_mark_ellipse(aes(fill=otu_name, label=otu_name), 
+                             show.legend = FALSE, 
+                             alpha=0.2, 
+                             linetype="blank", 
+                             expand = unit(2, "mm")) +
   # plot points not assigned to genus or species
-  geom_point(data = filter(tsne_2, is.na(display_taxa)), 
+  geom_point(data = filter(tsne_rel_abund, is.na(plot_taxa)), 
              aes(size = global_rel_abund),
              color = "grey",alpha = 0.7) +
   # color points that were assigned to genus or species
-  geom_point(data = filter(tsne_2, !is.na(display_taxa)), 
-             aes(color = display_taxa %>% fct_relevel(taxa.order),
+  geom_point(data = filter(tsne_rel_abund, !is.na(plot_taxa)), 
+             aes(color = plot_taxa %>% fct_relevel(taxa.order),
                  size = global_rel_abund), 
              alpha = 0.7) +
   labs(title = "rbcL ASV t-SNE clustering", color="ASV taxonomic assignment") +
-  theme_few() +
-  scale_size(range = c(1, 6), guide="none")
+  ggthemes::theme_few() +
+  scale_size(range = c(1, 6), guide="none") ################################################# not changing the scale size
+final_tsne
 ```
 
 
 ```{r tsne-output, echo=F}
 
-tsne_plot +
-  theme(legend.position = "none")
-
-# extract the legend
-tsne_plot %>% 
-  get_legend() %>% 
-  as_ggplot 
-
-ggsave(here("figs","asv-cluster","asv-legend-dark.pdf"), height = 7, width = 3)
-ggsave(here("figs","asv-cluster","asv-cluster-dark.pdf"), height = 5, width = 5)
+# finel_tsne +
+#   theme(legend.position = "none")
+# 
+# # extract the legend
+# tsne_plot %>% 
+#   get_legend() %>% 
+#   as_ggplot 
+# 
+# ggsave(here("figs","asv-cluster","asv-legend-dark.pdf"), height = 7, width = 3)
+# ggsave(here("figs","asv-cluster","asv-cluster-dark.pdf"), height = 5, width = 5)
 ```
 
-```{r asv_mds, echo=F}
+```{r asv_mds, echo=F, fig.width=10, fig.height=8}
+mds_coords <- dists %>% 
+  cmdscale() %>% # ok to use euclidian dist, no null values when comparing relatedness
+  as_tibble() %>% 
+  add_column(asv_id = colnames(dists), .before=1)
+
+mds_asv_plot <- mds_coords %>% 
+  left_join(taxonomy, by="asv_id") %>% 
+  left_join(asv_otu_key, by="asv_id") %>% 
+  left_join(total_rel_abund, by="asv_id") %>% 
+  filter(!(asv_id %in% c("639", "534", "646"))) # remove two trebouxiophyceae outliers
+
+ggplot(mds_asv_plot, aes(V1, V2)) + 
+  ggforce::geom_mark_ellipse(data = mds_asv_plot %>% 
+                               filter(otu_name != "Trebouxiophyceae J"), # dont plot the ellipse around other treb
+                             aes(fill = otu_name, label=otu_name),
+                             show.legend = FALSE, 
+                             alpha=0.2, 
+                             linetype="blank",
+                             expand = unit(2, "mm")) +
+  geom_point(aes(alpha = 0.7, color = plot_taxa, size = global_rel_abund)) +
+  labs(title = "MDS clustering rbcL ASVs", color="ASV taxonomic assignment") +
+  scale_size(range = c(1, 6), guide="none") +
+  scale_alpha(guide="none")+
+  theme_few() #+
+  # geom_text(aes(label = asv_id)) # too see outliers, asv_id=c("639", "534")
+```
+
+```{r write_mds, include=F}
+
+
 
 ```
+
+
 
 
 # Phylogenetic tree
