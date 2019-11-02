@@ -1,612 +1,612 @@
-asv_id,otu,otu_name
-001,10,Chloromonas krienitzii D
-002,2,Sanguina A
-003,3,Chlainomonas B
-004,4,Chloromonas muramotoi E
-005,9,Chlainomonas F
-006,3,Chlainomonas B
-007,5,Chloromonas G
-008,4,Chloromonas muramotoi E
-009,2,Sanguina A
-010,6,Chloromonas I
-011,3,Chlainomonas B
-012,7,Algae H
-013,2,Sanguina A
-014,2,Sanguina A
-015,10,Chloromonas krienitzii D
-016,3,Chlainomonas B
-017,5,Chloromonas G
-018,5,Chloromonas G
-019,1,Chloromonas spp. C
-020,2,Sanguina A
-021,1,Chloromonas spp. C
-022,2,Sanguina A
-023,9,Chlainomonas F
-024,10,Chloromonas krienitzii D
-025,1,Chloromonas spp. C
-026,1,Chloromonas spp. C
-027,2,Sanguina A
-028,1,Chloromonas spp. C
-029,7,Algae H
-030,9,Chlainomonas F
-031,9,Chlainomonas F
-032,2,Sanguina A
-033,10,Chloromonas krienitzii D
-034,1,Chloromonas spp. C
-035,6,Chloromonas I
-036,2,Sanguina A
-037,3,Chlainomonas B
-038,1,Chloromonas spp. C
-039,10,Chloromonas krienitzii D
-040,7,Algae H
-041,5,Chloromonas G
-042,2,Sanguina A
-043,8,Trebouxiophyceae J
-044,10,Chloromonas krienitzii D
-045,1,Chloromonas spp. C
-046,4,Chloromonas muramotoi E
-047,4,Chloromonas muramotoi E
-048,9,Chlainomonas F
-049,10,Chloromonas krienitzii D
-050,10,Chloromonas krienitzii D
-051,2,Sanguina A
-052,9,Chlainomonas F
-053,9,Chlainomonas F
-054,1,Chloromonas spp. C
-055,7,Algae H
-056,3,Chlainomonas B
-057,3,Chlainomonas B
-058,7,Algae H
-059,6,Chloromonas I
-060,1,Chloromonas spp. C
-061,1,Chloromonas spp. C
-062,3,Chlainomonas B
-063,5,Chloromonas G
-064,1,Chloromonas spp. C
-065,1,Chloromonas spp. C
-066,8,Trebouxiophyceae J
-067,3,Chlainomonas B
-068,3,Chlainomonas B
-069,10,Chloromonas krienitzii D
-070,9,Chlainomonas F
-071,1,Chloromonas spp. C
-072,1,Chloromonas spp. C
-073,1,Chloromonas spp. C
-074,3,Chlainomonas B
-075,1,Chloromonas spp. C
-076,10,Chloromonas krienitzii D
-077,1,Chloromonas spp. C
-078,6,Chloromonas I
-079,1,Chloromonas spp. C
-080,1,Chloromonas spp. C
-081,2,Sanguina A
-082,9,Chlainomonas F
-083,1,Chloromonas spp. C
-084,1,Chloromonas spp. C
-085,1,Chloromonas spp. C
-086,4,Chloromonas muramotoi E
-087,3,Chlainomonas B
-088,5,Chloromonas G
-089,4,Chloromonas muramotoi E
-090,1,Chloromonas spp. C
-091,4,Chloromonas muramotoi E
-092,7,Algae H
-093,2,Sanguina A
-094,3,Chlainomonas B
-095,5,Chloromonas G
-096,1,Chloromonas spp. C
-097,2,Sanguina A
-098,8,Trebouxiophyceae J
-099,5,Chloromonas G
-100,9,Chlainomonas F
-101,1,Chloromonas spp. C
-102,5,Chloromonas G
-103,1,Chloromonas spp. C
-104,10,Chloromonas krienitzii D
-105,1,Chloromonas spp. C
-106,10,Chloromonas krienitzii D
-107,4,Chloromonas muramotoi E
-108,1,Chloromonas spp. C
-109,2,Sanguina A
-110,9,Chlainomonas F
-111,1,Chloromonas spp. C
-112,1,Chloromonas spp. C
-113,4,Chloromonas muramotoi E
-114,10,Chloromonas krienitzii D
-115,8,Trebouxiophyceae J
-116,4,Chloromonas muramotoi E
-117,1,Chloromonas spp. C
-118,6,Chloromonas I
-119,2,Sanguina A
-120,5,Chloromonas G
-121,7,Algae H
-122,1,Chloromonas spp. C
-123,8,Trebouxiophyceae J
-124,1,Chloromonas spp. C
-125,4,Chloromonas muramotoi E
-126,6,Chloromonas I
-127,7,Algae H
-128,1,Chloromonas spp. C
-129,1,Chloromonas spp. C
-130,5,Chloromonas G
-131,2,Sanguina A
-132,7,Algae H
-133,9,Chlainomonas F
-134,5,Chloromonas G
-135,6,Chloromonas I
-136,6,Chloromonas I
-137,5,Chloromonas G
-138,8,Trebouxiophyceae J
-139,7,Algae H
-140,4,Chloromonas muramotoi E
-141,1,Chloromonas spp. C
-142,3,Chlainomonas B
-143,4,Chloromonas muramotoi E
-144,9,Chlainomonas F
-145,1,Chloromonas spp. C
-146,2,Sanguina A
-147,1,Chloromonas spp. C
-148,8,Trebouxiophyceae J
-149,6,Chloromonas I
-150,3,Chlainomonas B
-151,1,Chloromonas spp. C
-152,6,Chloromonas I
-153,1,Chloromonas spp. C
-154,2,Sanguina A
-155,2,Sanguina A
-156,10,Chloromonas krienitzii D
-157,1,Chloromonas spp. C
-158,1,Chloromonas spp. C
-159,5,Chloromonas G
-160,9,Chlainomonas F
-161,10,Chloromonas krienitzii D
-162,4,Chloromonas muramotoi E
-163,1,Chloromonas spp. C
-164,1,Chloromonas spp. C
-165,4,Chloromonas muramotoi E
-166,1,Chloromonas spp. C
-167,4,Chloromonas muramotoi E
-168,1,Chloromonas spp. C
-169,3,Chlainomonas B
-170,10,Chloromonas krienitzii D
-171,1,Chloromonas spp. C
-172,1,Chloromonas spp. C
-173,4,Chloromonas muramotoi E
-174,1,Chloromonas spp. C
-175,8,Trebouxiophyceae J
-176,1,Chloromonas spp. C
-177,9,Chlainomonas F
-178,8,Trebouxiophyceae J
-179,9,Chlainomonas F
-180,5,Chloromonas G
-181,2,Sanguina A
-182,2,Sanguina A
-183,1,Chloromonas spp. C
-184,1,Chloromonas spp. C
-185,1,Chloromonas spp. C
-186,1,Chloromonas spp. C
-187,1,Chloromonas spp. C
-188,5,Chloromonas G
-189,9,Chlainomonas F
-190,7,Algae H
-191,1,Chloromonas spp. C
-192,4,Chloromonas muramotoi E
-193,1,Chloromonas spp. C
-194,1,Chloromonas spp. C
-195,6,Chloromonas I
-196,4,Chloromonas muramotoi E
-197,1,Chloromonas spp. C
-198,1,Chloromonas spp. C
-199,7,Algae H
-200,10,Chloromonas krienitzii D
-201,9,Chlainomonas F
-202,10,Chloromonas krienitzii D
-203,1,Chloromonas spp. C
-204,1,Chloromonas spp. C
-205,5,Chloromonas G
-206,9,Chlainomonas F
-207,7,Algae H
-208,1,Chloromonas spp. C
-209,1,Chloromonas spp. C
-210,6,Chloromonas I
-211,1,Chloromonas spp. C
-212,7,Algae H
-213,1,Chloromonas spp. C
-214,2,Sanguina A
-215,10,Chloromonas krienitzii D
-216,7,Algae H
-217,1,Chloromonas spp. C
-218,2,Sanguina A
-219,1,Chloromonas spp. C
-220,4,Chloromonas muramotoi E
-221,1,Chloromonas spp. C
-222,2,Sanguina A
-223,9,Chlainomonas F
-224,10,Chloromonas krienitzii D
-225,7,Algae H
-226,1,Chloromonas spp. C
-227,7,Algae H
-228,5,Chloromonas G
-229,9,Chlainomonas F
-230,2,Sanguina A
-231,1,Chloromonas spp. C
-232,1,Chloromonas spp. C
-233,1,Chloromonas spp. C
-234,3,Chlainomonas B
-235,1,Chloromonas spp. C
-236,2,Sanguina A
-237,10,Chloromonas krienitzii D
-238,9,Chlainomonas F
-239,4,Chloromonas muramotoi E
-240,1,Chloromonas spp. C
-241,10,Chloromonas krienitzii D
-242,2,Sanguina A
-243,2,Sanguina A
-244,9,Chlainomonas F
-245,1,Chloromonas spp. C
-246,8,Trebouxiophyceae J
-247,4,Chloromonas muramotoi E
-248,5,Chloromonas G
-249,1,Chloromonas spp. C
-250,1,Chloromonas spp. C
-251,9,Chlainomonas F
-252,1,Chloromonas spp. C
-253,5,Chloromonas G
-254,5,Chloromonas G
-255,6,Chloromonas I
-256,1,Chloromonas spp. C
-257,4,Chloromonas muramotoi E
-258,8,Trebouxiophyceae J
-259,1,Chloromonas spp. C
-260,5,Chloromonas G
-261,9,Chlainomonas F
-262,1,Chloromonas spp. C
-263,1,Chloromonas spp. C
-264,4,Chloromonas muramotoi E
-265,2,Sanguina A
-266,9,Chlainomonas F
-267,1,Chloromonas spp. C
-268,3,Chlainomonas B
-269,1,Chloromonas spp. C
-270,3,Chlainomonas B
-271,3,Chlainomonas B
-272,9,Chlainomonas F
-273,1,Chloromonas spp. C
-274,1,Chloromonas spp. C
-275,10,Chloromonas krienitzii D
-276,7,Algae H
-277,8,Trebouxiophyceae J
-278,4,Chloromonas muramotoi E
-279,9,Chlainomonas F
-280,9,Chlainomonas F
-281,6,Chloromonas I
-282,10,Chloromonas krienitzii D
-283,8,Trebouxiophyceae J
-284,1,Chloromonas spp. C
-285,7,Algae H
-286,1,Chloromonas spp. C
-287,1,Chloromonas spp. C
-288,3,Chlainomonas B
-289,7,Algae H
-290,8,Trebouxiophyceae J
-291,5,Chloromonas G
-292,1,Chloromonas spp. C
-293,3,Chlainomonas B
-294,9,Chlainomonas F
-295,10,Chloromonas krienitzii D
-296,2,Sanguina A
-297,10,Chloromonas krienitzii D
-298,4,Chloromonas muramotoi E
-299,4,Chloromonas muramotoi E
-300,1,Chloromonas spp. C
-301,9,Chlainomonas F
-302,9,Chlainomonas F
-303,1,Chloromonas spp. C
-304,1,Chloromonas spp. C
-305,2,Sanguina A
-306,9,Chlainomonas F
-307,1,Chloromonas spp. C
-308,1,Chloromonas spp. C
-309,6,Chloromonas I
-310,7,Algae H
-311,7,Algae H
-312,5,Chloromonas G
-313,1,Chloromonas spp. C
-314,1,Chloromonas spp. C
-315,1,Chloromonas spp. C
-316,1,Chloromonas spp. C
-317,1,Chloromonas spp. C
-318,1,Chloromonas spp. C
-319,10,Chloromonas krienitzii D
-320,8,Trebouxiophyceae J
-321,4,Chloromonas muramotoi E
-322,2,Sanguina A
-323,1,Chloromonas spp. C
-324,1,Chloromonas spp. C
-325,7,Algae H
-326,1,Chloromonas spp. C
-327,3,Chlainomonas B
-328,1,Chloromonas spp. C
-329,9,Chlainomonas F
-330,9,Chlainomonas F
-331,1,Chloromonas spp. C
-332,9,Chlainomonas F
-333,1,Chloromonas spp. C
-334,5,Chloromonas G
-335,1,Chloromonas spp. C
-336,5,Chloromonas G
-337,1,Chloromonas spp. C
-338,9,Chlainomonas F
-339,8,Trebouxiophyceae J
-340,6,Chloromonas I
-341,10,Chloromonas krienitzii D
-342,2,Sanguina A
-343,9,Chlainomonas F
-344,4,Chloromonas muramotoi E
-345,1,Chloromonas spp. C
-346,1,Chloromonas spp. C
-347,9,Chlainomonas F
-348,6,Chloromonas I
-349,2,Sanguina A
-350,1,Chloromonas spp. C
-351,1,Chloromonas spp. C
-352,8,Trebouxiophyceae J
-353,1,Chloromonas spp. C
-354,1,Chloromonas spp. C
-355,10,Chloromonas krienitzii D
-356,2,Sanguina A
-357,1,Chloromonas spp. C
-358,6,Chloromonas I
-359,8,Trebouxiophyceae J
-360,7,Algae H
-361,1,Chloromonas spp. C
-362,6,Chloromonas I
-363,8,Trebouxiophyceae J
-364,1,Chloromonas spp. C
-365,8,Trebouxiophyceae J
-366,8,Trebouxiophyceae J
-367,1,Chloromonas spp. C
-368,1,Chloromonas spp. C
-369,1,Chloromonas spp. C
-370,1,Chloromonas spp. C
-371,4,Chloromonas muramotoi E
-372,5,Chloromonas G
-373,1,Chloromonas spp. C
-374,9,Chlainomonas F
-375,8,Trebouxiophyceae J
-376,1,Chloromonas spp. C
-377,10,Chloromonas krienitzii D
-378,1,Chloromonas spp. C
-379,6,Chloromonas I
-380,4,Chloromonas muramotoi E
-381,2,Sanguina A
-382,2,Sanguina A
-383,6,Chloromonas I
-384,6,Chloromonas I
-385,1,Chloromonas spp. C
-386,1,Chloromonas spp. C
-387,4,Chloromonas muramotoi E
-388,9,Chlainomonas F
-389,3,Chlainomonas B
-390,1,Chloromonas spp. C
-391,1,Chloromonas spp. C
-392,1,Chloromonas spp. C
-393,5,Chloromonas G
-394,1,Chloromonas spp. C
-395,1,Chloromonas spp. C
-396,3,Chlainomonas B
-397,8,Trebouxiophyceae J
-398,10,Chloromonas krienitzii D
-399,4,Chloromonas muramotoi E
-400,1,Chloromonas spp. C
-401,2,Sanguina A
-402,5,Chloromonas G
-403,2,Sanguina A
-404,6,Chloromonas I
-405,4,Chloromonas muramotoi E
-406,4,Chloromonas muramotoi E
-407,2,Sanguina A
-408,8,Trebouxiophyceae J
-409,1,Chloromonas spp. C
-410,1,Chloromonas spp. C
-411,1,Chloromonas spp. C
-412,4,Chloromonas muramotoi E
-413,1,Chloromonas spp. C
-414,8,Trebouxiophyceae J
-415,5,Chloromonas G
-416,4,Chloromonas muramotoi E
-417,1,Chloromonas spp. C
-418,8,Trebouxiophyceae J
-419,6,Chloromonas I
-420,8,Trebouxiophyceae J
-421,3,Chlainomonas B
-422,1,Chloromonas spp. C
-423,9,Chlainomonas F
-424,7,Algae H
-425,7,Algae H
-426,2,Sanguina A
-427,1,Chloromonas spp. C
-428,3,Chlainomonas B
-429,6,Chloromonas I
-430,5,Chloromonas G
-431,5,Chloromonas G
-432,1,Chloromonas spp. C
-433,9,Chlainomonas F
-434,8,Trebouxiophyceae J
-435,4,Chloromonas muramotoi E
-436,1,Chloromonas spp. C
-437,1,Chloromonas spp. C
-438,2,Sanguina A
-439,9,Chlainomonas F
-440,7,Algae H
-441,1,Chloromonas spp. C
-442,4,Chloromonas muramotoi E
-443,1,Chloromonas spp. C
-444,1,Chloromonas spp. C
-445,8,Trebouxiophyceae J
-446,1,Chloromonas spp. C
-447,1,Chloromonas spp. C
-448,1,Chloromonas spp. C
-449,6,Chloromonas I
-450,3,Chlainomonas B
-451,1,Chloromonas spp. C
-452,1,Chloromonas spp. C
-453,1,Chloromonas spp. C
-454,2,Sanguina A
-455,2,Sanguina A
-456,5,Chloromonas G
-457,5,Chloromonas G
-458,5,Chloromonas G
-459,1,Chloromonas spp. C
-460,5,Chloromonas G
-461,7,Algae H
-462,5,Chloromonas G
-463,1,Chloromonas spp. C
-464,1,Chloromonas spp. C
-465,4,Chloromonas muramotoi E
-466,1,Chloromonas spp. C
-467,4,Chloromonas muramotoi E
-468,1,Chloromonas spp. C
-469,1,Chloromonas spp. C
-470,8,Trebouxiophyceae J
-471,1,Chloromonas spp. C
-472,1,Chloromonas spp. C
-473,6,Chloromonas I
-474,8,Trebouxiophyceae J
-475,1,Chloromonas spp. C
-476,3,Chlainomonas B
-477,1,Chloromonas spp. C
-478,1,Chloromonas spp. C
-479,7,Algae H
-480,1,Chloromonas spp. C
-481,4,Chloromonas muramotoi E
-482,2,Sanguina A
-483,1,Chloromonas spp. C
-484,5,Chloromonas G
-485,3,Chlainomonas B
-486,1,Chloromonas spp. C
-487,3,Chlainomonas B
-488,1,Chloromonas spp. C
-489,9,Chlainomonas F
-490,10,Chloromonas krienitzii D
-491,1,Chloromonas spp. C
-492,4,Chloromonas muramotoi E
-493,1,Chloromonas spp. C
-494,1,Chloromonas spp. C
-495,1,Chloromonas spp. C
-496,1,Chloromonas spp. C
-497,10,Chloromonas krienitzii D
-498,1,Chloromonas spp. C
-499,1,Chloromonas spp. C
-500,1,Chloromonas spp. C
-501,1,Chloromonas spp. C
-502,3,Chlainomonas B
-503,6,Chloromonas I
-504,1,Chloromonas spp. C
-505,2,Sanguina A
-506,2,Sanguina A
-507,8,Trebouxiophyceae J
-508,8,Trebouxiophyceae J
-509,7,Algae H
-510,1,Chloromonas spp. C
-511,6,Chloromonas I
-512,1,Chloromonas spp. C
-513,4,Chloromonas muramotoi E
-514,5,Chloromonas G
-515,2,Sanguina A
-516,2,Sanguina A
-517,1,Chloromonas spp. C
-518,7,Algae H
-519,5,Chloromonas G
-520,3,Chlainomonas B
-521,7,Algae H
-522,8,Trebouxiophyceae J
-523,3,Chlainomonas B
-524,8,Trebouxiophyceae J
-525,5,Chloromonas G
-526,3,Chlainomonas B
-527,1,Chloromonas spp. C
-528,2,Sanguina A
-529,1,Chloromonas spp. C
-530,1,Chloromonas spp. C
-531,1,Chloromonas spp. C
-532,10,Chloromonas krienitzii D
-533,3,Chlainomonas B
-534,1,Chloromonas spp. C
-535,1,Chloromonas spp. C
-536,2,Sanguina A
-537,1,Chloromonas spp. C
-538,2,Sanguina A
-539,5,Chloromonas G
-540,2,Sanguina A
-541,2,Sanguina A
-542,1,Chloromonas spp. C
-543,1,Chloromonas spp. C
-544,1,Chloromonas spp. C
-545,6,Chloromonas I
-546,10,Chloromonas krienitzii D
-547,7,Algae H
-548,1,Chloromonas spp. C
-549,10,Chloromonas krienitzii D
-550,1,Chloromonas spp. C
-551,8,Trebouxiophyceae J
-552,1,Chloromonas spp. C
-553,1,Chloromonas spp. C
-554,1,Chloromonas spp. C
-555,8,Trebouxiophyceae J
-556,4,Chloromonas muramotoi E
-557,7,Algae H
-558,1,Chloromonas spp. C
-559,8,Trebouxiophyceae J
-560,5,Chloromonas G
-561,3,Chlainomonas B
-562,1,Chloromonas spp. C
-563,1,Chloromonas spp. C
-564,1,Chloromonas spp. C
-565,1,Chloromonas spp. C
-566,1,Chloromonas spp. C
-567,4,Chloromonas muramotoi E
-568,8,Trebouxiophyceae J
-569,2,Sanguina A
-570,8,Trebouxiophyceae J
-571,1,Chloromonas spp. C
-572,2,Sanguina A
-573,1,Chloromonas spp. C
-574,8,Trebouxiophyceae J
-575,10,Chloromonas krienitzii D
-576,1,Chloromonas spp. C
-577,1,Chloromonas spp. C
-578,8,Trebouxiophyceae J
-579,9,Chlainomonas F
-580,5,Chloromonas G
-581,1,Chloromonas spp. C
-582,1,Chloromonas spp. C
-583,4,Chloromonas muramotoi E
-584,8,Trebouxiophyceae J
-585,6,Chloromonas I
-586,1,Chloromonas spp. C
-587,1,Chloromonas spp. C
-588,1,Chloromonas spp. C
-589,7,Algae H
-590,7,Algae H
-591,1,Chloromonas spp. C
-592,8,Trebouxiophyceae J
-593,1,Chloromonas spp. C
-594,1,Chloromonas spp. C
-595,1,Chloromonas spp. C
-596,1,Chloromonas spp. C
-597,2,Sanguina A
-598,8,Trebouxiophyceae J
-599,8,Trebouxiophyceae J
-600,8,Trebouxiophyceae J
-601,10,Chloromonas krienitzii D
-602,7,Algae H
-603,8,Trebouxiophyceae J
-604,9,Chlainomonas F
-605,8,Trebouxiophyceae J
-606,5,Chloromonas G
-607,7,Algae H
-608,7,Algae H
-609,1,Chloromonas spp. C
-610,8,Trebouxiophyceae J
-611,1,Chloromonas spp. C
+asv_id,otu_name
+001,Chloromonas krienitzii D
+002,Sanguina B
+003,Chlainomonas A
+004,Chloromonas muramotoi E
+005,Chlainomonas A
+006,Chlainomonas A
+007,Chloromonas F
+008,Chloromonas muramotoi E
+009,Sanguina B
+010,Chloromonas H
+011,Chlainomonas A
+012,Algae G
+013,Sanguina B
+014,Sanguina B
+015,Chloromonas krienitzii D
+016,Chlainomonas A
+017,Chloromonas F
+018,Chloromonas F
+019,Chloromonas spp. C
+020,Sanguina B
+021,Chloromonas spp. C
+022,Sanguina B
+023,Chlainomonas A
+024,Chloromonas krienitzii D
+025,Chloromonas spp. C
+026,Chloromonas spp. C
+027,Sanguina B
+028,Chloromonas spp. C
+029,Algae G
+030,Chlainomonas A
+031,Chlainomonas A
+032,Sanguina B
+033,Chloromonas krienitzii D
+034,Chloromonas spp. C
+035,Chloromonas H
+036,Sanguina B
+037,Chlainomonas A
+038,Chloromonas spp. C
+039,Chloromonas krienitzii D
+040,Algae G
+041,Chloromonas F
+042,Sanguina B
+043,Trebouxiophyceae I
+044,Chloromonas krienitzii D
+045,Chloromonas spp. C
+046,Chloromonas muramotoi E
+047,Chloromonas muramotoi E
+048,Chlainomonas A
+049,Chloromonas krienitzii D
+050,Chloromonas krienitzii D
+051,Sanguina B
+052,Chlainomonas A
+053,Chlainomonas A
+054,Chloromonas spp. C
+055,Algae G
+056,Chlainomonas A
+057,Chlainomonas A
+058,Algae G
+059,Chloromonas H
+060,Chloromonas spp. C
+061,Chloromonas spp. C
+062,Chlainomonas A
+063,Chloromonas F
+064,Chloromonas spp. C
+065,Chloromonas spp. C
+066,Trebouxiophyceae I
+067,Chlainomonas A
+068,Chlainomonas A
+069,Chloromonas krienitzii D
+070,Chlainomonas A
+071,Chloromonas spp. C
+072,Chloromonas spp. C
+073,Chloromonas spp. C
+074,Chlainomonas A
+075,Chloromonas spp. C
+076,Chloromonas krienitzii D
+077,Chloromonas spp. C
+078,Chloromonas H
+079,Chloromonas spp. C
+080,Chloromonas spp. C
+081,Sanguina B
+082,Chlainomonas A
+083,Chloromonas spp. C
+084,Chloromonas spp. C
+085,Chloromonas spp. C
+086,Chloromonas muramotoi E
+087,Chlainomonas A
+088,Chloromonas F
+089,Chloromonas muramotoi E
+090,Chloromonas spp. C
+091,Chloromonas muramotoi E
+092,Algae G
+093,Sanguina B
+094,Chlainomonas A
+095,Chloromonas F
+096,Chloromonas spp. C
+097,Sanguina B
+098,Trebouxiophyceae I
+099,Chloromonas F
+100,Chlainomonas A
+101,Chloromonas spp. C
+102,Chloromonas F
+103,Chloromonas spp. C
+104,Chloromonas krienitzii D
+105,Chloromonas spp. C
+106,Chloromonas krienitzii D
+107,Chloromonas muramotoi E
+108,Chloromonas spp. C
+109,Sanguina B
+110,Chlainomonas A
+111,Chloromonas spp. C
+112,Chloromonas spp. C
+113,Chloromonas muramotoi E
+114,Chloromonas krienitzii D
+115,Trebouxiophyceae I
+116,Chloromonas muramotoi E
+117,Chloromonas spp. C
+118,Chloromonas H
+119,Sanguina B
+120,Chloromonas F
+121,Algae G
+122,Chloromonas spp. C
+123,Trebouxiophyceae I
+124,Chloromonas spp. C
+125,Chloromonas muramotoi E
+126,Chloromonas H
+127,Algae G
+128,Chloromonas spp. C
+129,Chloromonas spp. C
+130,Chloromonas F
+131,Sanguina B
+132,Algae G
+133,Chlainomonas A
+134,Chloromonas F
+135,Chloromonas H
+136,Chloromonas H
+138,Chloromonas F
+139,Trebouxiophyceae I
+140,Algae G
+141,Chloromonas muramotoi E
+142,Chloromonas spp. C
+143,Chlainomonas A
+144,Chloromonas muramotoi E
+145,Chlainomonas A
+146,Chloromonas spp. C
+147,Sanguina B
+148,Chloromonas spp. C
+149,Trebouxiophyceae I
+150,Chloromonas H
+151,Chlainomonas A
+152,Chloromonas spp. C
+153,Chloromonas H
+154,Chloromonas spp. C
+155,Sanguina B
+156,Sanguina B
+157,Chloromonas krienitzii D
+158,Chloromonas spp. C
+159,Chloromonas spp. C
+160,Chloromonas F
+161,Chlainomonas A
+162,Chloromonas krienitzii D
+163,Chloromonas muramotoi E
+164,Chloromonas spp. C
+165,Chloromonas spp. C
+166,Chloromonas muramotoi E
+167,Chloromonas spp. C
+168,Chloromonas muramotoi E
+169,Chloromonas spp. C
+170,Chlainomonas A
+171,Chloromonas krienitzii D
+172,Chloromonas spp. C
+173,Chloromonas spp. C
+174,Chloromonas muramotoi E
+175,Chloromonas spp. C
+176,Trebouxiophyceae I
+177,Chloromonas spp. C
+178,Chlainomonas A
+179,Trebouxiophyceae I
+180,Chlainomonas A
+181,Chloromonas F
+182,Sanguina B
+183,Sanguina B
+184,Chloromonas spp. C
+185,Chloromonas spp. C
+186,Chloromonas spp. C
+187,Chloromonas spp. C
+188,Chloromonas spp. C
+189,Chloromonas F
+190,Chlainomonas A
+191,Algae G
+192,Chloromonas spp. C
+193,Chloromonas muramotoi E
+194,Chloromonas spp. C
+195,Chloromonas spp. C
+196,Chloromonas H
+197,Chloromonas muramotoi E
+198,Chloromonas spp. C
+199,Chloromonas spp. C
+200,Algae G
+201,Chloromonas krienitzii D
+202,Chlainomonas A
+203,Chloromonas krienitzii D
+204,Chloromonas spp. C
+205,Chloromonas spp. C
+206,Chloromonas F
+207,Chlainomonas A
+208,Algae G
+209,Chloromonas spp. C
+210,Chloromonas spp. C
+211,Chloromonas H
+212,Chloromonas spp. C
+213,Algae G
+214,Chloromonas spp. C
+215,Sanguina B
+216,Chloromonas krienitzii D
+217,Algae G
+218,Chloromonas spp. C
+219,Sanguina B
+220,Chloromonas spp. C
+221,Chloromonas muramotoi E
+222,Chloromonas spp. C
+223,Sanguina B
+224,Chlainomonas A
+225,Chloromonas krienitzii D
+226,Algae G
+227,Chloromonas spp. C
+228,Algae G
+229,Chloromonas F
+230,Chlainomonas A
+231,Sanguina B
+232,Chloromonas spp. C
+233,Chloromonas spp. C
+234,Chloromonas spp. C
+235,Chlainomonas A
+236,Chloromonas spp. C
+237,Sanguina B
+238,Chloromonas krienitzii D
+239,Chlainomonas A
+240,Chloromonas muramotoi E
+241,Chloromonas spp. C
+242,Chloromonas krienitzii D
+243,Sanguina B
+244,Sanguina B
+245,Chlainomonas A
+246,Chloromonas spp. C
+247,Trebouxiophyceae I
+248,Chloromonas muramotoi E
+249,Chloromonas F
+250,Chloromonas spp. C
+251,Chloromonas spp. C
+252,Chlainomonas A
+253,Chloromonas spp. C
+254,Chloromonas F
+255,Chloromonas F
+256,Chloromonas H
+257,Chloromonas spp. C
+258,Chloromonas muramotoi E
+259,Trebouxiophyceae I
+260,Chloromonas spp. C
+261,Chloromonas F
+262,Chlainomonas A
+263,Chloromonas spp. C
+264,Chloromonas spp. C
+265,Chloromonas muramotoi E
+266,Sanguina B
+267,Chlainomonas A
+268,Chloromonas spp. C
+269,Chlainomonas A
+270,Chloromonas spp. C
+271,Chlainomonas A
+272,Chlainomonas A
+273,Chlainomonas A
+274,Chloromonas spp. C
+275,Chloromonas spp. C
+276,Chloromonas krienitzii D
+277,Algae G
+278,Trebouxiophyceae I
+279,Chloromonas muramotoi E
+280,Chlainomonas A
+281,Chlainomonas A
+282,Chloromonas H
+283,Chloromonas krienitzii D
+284,Trebouxiophyceae I
+285,Chloromonas spp. C
+286,Algae G
+287,Chloromonas spp. C
+288,Chloromonas spp. C
+289,Chlainomonas A
+290,Algae G
+291,Trebouxiophyceae I
+292,Chloromonas F
+293,Chloromonas spp. C
+294,Chlainomonas A
+295,Chlainomonas A
+296,Chloromonas krienitzii D
+297,Sanguina B
+298,Chloromonas krienitzii D
+299,Chloromonas muramotoi E
+300,Chloromonas muramotoi E
+301,Chloromonas spp. C
+302,Chlainomonas A
+303,Chlainomonas A
+304,Chloromonas spp. C
+305,Chloromonas spp. C
+306,Sanguina B
+307,Chlainomonas A
+308,Chloromonas spp. C
+309,Chloromonas spp. C
+310,Chloromonas H
+311,Algae G
+312,Algae G
+313,Chloromonas F
+314,Chloromonas spp. C
+315,Chloromonas spp. C
+316,Chloromonas spp. C
+317,Chloromonas spp. C
+318,Chloromonas spp. C
+319,Chloromonas spp. C
+320,Chloromonas krienitzii D
+321,Trebouxiophyceae I
+322,Chloromonas muramotoi E
+323,Sanguina B
+324,Chloromonas spp. C
+325,Chloromonas spp. C
+326,Algae G
+327,Chloromonas spp. C
+328,Chlainomonas A
+329,Chloromonas spp. C
+330,Chlainomonas A
+331,Chlainomonas A
+332,Chloromonas spp. C
+333,Chlainomonas A
+334,Chloromonas spp. C
+335,Chloromonas F
+336,Chloromonas spp. C
+337,Chloromonas F
+338,Chloromonas spp. C
+339,Chlainomonas A
+340,Trebouxiophyceae I
+341,Chloromonas H
+342,Chloromonas krienitzii D
+343,Sanguina B
+344,Chlainomonas A
+345,Chloromonas muramotoi E
+346,Chloromonas spp. C
+347,Chloromonas spp. C
+348,Chlainomonas A
+349,Chloromonas H
+350,Sanguina B
+351,Chloromonas spp. C
+352,Chloromonas spp. C
+353,Trebouxiophyceae I
+354,Chloromonas spp. C
+355,Chloromonas spp. C
+356,Chloromonas krienitzii D
+358,Sanguina B
+359,Chloromonas spp. C
+360,Chloromonas H
+361,Trebouxiophyceae I
+362,Algae G
+363,Chloromonas spp. C
+364,Chloromonas H
+366,Trebouxiophyceae I
+368,Chloromonas spp. C
+369,Trebouxiophyceae I
+370,Trebouxiophyceae I
+371,Chloromonas spp. C
+372,Chloromonas spp. C
+374,Chloromonas spp. C
+375,Chloromonas spp. C
+376,Chloromonas muramotoi E
+377,Chloromonas F
+378,Chloromonas spp. C
+379,Chlainomonas A
+380,Trebouxiophyceae I
+381,Chloromonas spp. C
+382,Chloromonas krienitzii D
+383,Chloromonas spp. C
+384,Chloromonas H
+385,Chloromonas muramotoi E
+387,Sanguina B
+388,Sanguina B
+389,Chloromonas H
+390,Chloromonas H
+391,Chloromonas spp. C
+392,Chloromonas spp. C
+393,Chloromonas muramotoi E
+394,Chlainomonas A
+395,Chlainomonas A
+397,Chloromonas spp. C
+398,Chloromonas spp. C
+399,Chloromonas spp. C
+400,Chloromonas F
+401,Chloromonas spp. C
+403,Chloromonas spp. C
+404,Chlainomonas A
+407,Trebouxiophyceae I
+408,Chloromonas krienitzii D
+409,Chloromonas muramotoi E
+410,Chloromonas spp. C
+411,Sanguina B
+412,Chloromonas F
+414,Sanguina B
+415,Chloromonas H
+416,Chloromonas muramotoi E
+417,Chloromonas muramotoi E
+418,Sanguina B
+419,Trebouxiophyceae I
+420,Chloromonas spp. C
+421,Chloromonas spp. C
+422,Chloromonas spp. C
+423,Chloromonas muramotoi E
+424,Chloromonas spp. C
+425,Trebouxiophyceae I
+426,Chloromonas F
+427,Chloromonas muramotoi E
+428,Chloromonas spp. C
+429,Trebouxiophyceae I
+430,Chloromonas H
+431,Trebouxiophyceae I
+433,Chlainomonas A
+435,Chloromonas spp. C
+436,Chlainomonas A
+437,Algae G
+438,Algae G
+439,Sanguina B
+440,Chloromonas spp. C
+441,Chlainomonas A
+443,Chloromonas H
+444,Chloromonas F
+445,Chloromonas F
+446,Chloromonas spp. C
+447,Chlainomonas A
+448,Trebouxiophyceae I
+449,Chloromonas muramotoi E
+450,Chloromonas spp. C
+452,Chloromonas spp. C
+453,Sanguina B
+455,Chlainomonas A
+456,Algae G
+457,Chloromonas spp. C
+458,Chloromonas muramotoi E
+459,Chloromonas spp. C
+460,Chloromonas spp. C
+462,Trebouxiophyceae I
+463,Chloromonas spp. C
+464,Chloromonas spp. C
+465,Chloromonas spp. C
+466,Chloromonas H
+467,Chlainomonas A
+468,Chloromonas spp. C
+469,Chloromonas spp. C
+471,Chloromonas spp. C
+472,Sanguina B
+473,Sanguina B
+474,Chloromonas F
+475,Chloromonas F
+476,Chloromonas F
+477,Chloromonas spp. C
+478,Chloromonas F
+479,Algae G
+480,Chloromonas F
+481,Chloromonas spp. C
+482,Chloromonas spp. C
+483,Chloromonas muramotoi E
+484,Chloromonas spp. C
+485,Chloromonas muramotoi E
+486,Chloromonas spp. C
+487,Chloromonas spp. C
+488,Trebouxiophyceae I
+491,Chloromonas spp. C
+492,Chloromonas spp. C
+493,Chloromonas H
+494,Trebouxiophyceae I
+495,Chloromonas spp. C
+496,Chlainomonas A
+497,Chloromonas spp. C
+498,Chloromonas spp. C
+499,Algae G
+500,Chloromonas spp. C
+502,Chloromonas muramotoi E
+503,Sanguina B
+505,Chloromonas spp. C
+506,Chloromonas F
+507,Chlainomonas A
+508,Chloromonas spp. C
+509,Chlainomonas A
+511,Chloromonas spp. C
+512,Chlainomonas A
+513,Chloromonas krienitzii D
+514,Chloromonas spp. C
+515,Chloromonas muramotoi E
+516,Chloromonas spp. C
+517,Chloromonas spp. C
+518,Chloromonas spp. C
+519,Chloromonas spp. C
+521,Chloromonas krienitzii D
+522,Chloromonas spp. C
+523,Chloromonas spp. C
+525,Chloromonas spp. C
+526,Chloromonas spp. C
+529,Chlainomonas A
+530,Chloromonas H
+531,Chloromonas spp. C
+532,Sanguina B
+533,Sanguina B
+534,Trebouxiophyceae I
+536,Trebouxiophyceae I
+537,Algae G
+538,Chloromonas spp. C
+539,Chloromonas H
+540,Chloromonas spp. C
+541,Chloromonas muramotoi E
+542,Chloromonas F
+543,Sanguina B
+544,Sanguina B
+546,Chloromonas spp. C
+547,Algae G
+549,Chloromonas F
+551,Chlainomonas A
+552,Algae G
+553,Trebouxiophyceae I
+555,Chlainomonas A
+556,Trebouxiophyceae I
+557,Chloromonas F
+558,Chlainomonas A
+560,Chloromonas spp. C
+561,Sanguina B
+562,Chloromonas spp. C
+563,Chloromonas spp. C
+564,Chloromonas spp. C
+565,Chloromonas krienitzii D
+566,Chlainomonas A
+567,Chloromonas spp. C
+568,Chloromonas spp. C
+569,Sanguina B
+570,Chloromonas spp. C
+571,Sanguina B
+572,Chloromonas F
+573,Sanguina B
+574,Sanguina B
+575,Chloromonas spp. C
+576,Chloromonas spp. C
+577,Chloromonas spp. C
+578,Chloromonas H
+580,Chloromonas krienitzii D
+581,Algae G
+582,Chloromonas spp. C
+583,Chloromonas krienitzii D
+584,Chloromonas spp. C
+585,Trebouxiophyceae I
+586,Chloromonas spp. C
+587,Chloromonas spp. C
+588,Chloromonas spp. C
+589,Trebouxiophyceae I
+590,Chloromonas muramotoi E
+591,Algae G
+592,Chloromonas spp. C
+593,Trebouxiophyceae I
+594,Chloromonas F
+595,Chlainomonas A
+596,Chloromonas spp. C
+598,Chloromonas spp. C
+599,Chloromonas spp. C
+601,Chloromonas spp. C
+602,Chloromonas spp. C
+603,Chloromonas muramotoi E
+605,Trebouxiophyceae I
+606,Sanguina B
+607,Trebouxiophyceae I
+608,Chloromonas spp. C
+609,Sanguina B
+610,Chloromonas spp. C
+612,Trebouxiophyceae I
+615,Chloromonas krienitzii D
+616,Chloromonas spp. C
+617,Chloromonas spp. C
+618,Trebouxiophyceae I
+619,Chlainomonas A
+621,Chloromonas F
+622,Chloromonas spp. C
+623,Chloromonas spp. C
+624,Chloromonas muramotoi E
+625,Trebouxiophyceae I
+626,Chloromonas H
+627,Chloromonas spp. C
+628,Chloromonas spp. C
+629,Chloromonas spp. C
+630,Algae G
+631,Algae G
+632,Chloromonas spp. C
+633,Trebouxiophyceae I
+634,Chloromonas spp. C
+635,Chloromonas spp. C
+636,Chloromonas spp. C
+637,Chloromonas spp. C
+638,Sanguina B
+639,Trebouxiophyceae I
+640,Trebouxiophyceae I
+641,Trebouxiophyceae I
+642,Chloromonas krienitzii D
+643,Algae G
+644,Trebouxiophyceae I
+645,Chlainomonas A
+646,Trebouxiophyceae I
+647,Chloromonas F
+648,Algae G
+649,Algae G
+650,Chloromonas spp. C
+651,Trebouxiophyceae I
+652,Chloromonas spp. C
