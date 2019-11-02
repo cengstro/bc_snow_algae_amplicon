@@ -3,6 +3,10 @@ title: "rbcL community comparison"
 output: html_notebook
 ---
 
+```{r, echo=FALSE}
+knitr::opts_chunk$set(fig.path='figs/', echo=FALSE, warning=FALSE, message=FALSE)
+```
+
 ```{r libs, include=F}
 library(tidyverse)
 library(here)
@@ -12,6 +16,7 @@ library(ggrepel)
 # library(vegalite)
 # library(fossil)
 library(picante)
+library(gridExtra)
 
 # ggplot themes
 library(ggthemes)
@@ -19,34 +24,46 @@ library(ggdark)
 ```
 
 ```{r input, include=F}
-rbcl_rel_abund <- read_csv(here("data/clean/rbcl_rel_abund_clean.csv"))
-idtax <- read_csv(here("data/clean/rbcl_taxonomy_clean.csv"))
-field <- read_csv(here("data/clean/field_clean.csv"))
+rel_abund <- read_csv(here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abund.csv")) # not looking at the depth samples, controls, etc
+tax <- read_csv(here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
+field <- read_csv(here("data/02_tidied/tidied_field.csv"))
 
-rbcl_asv_id_key <- read_csv(here("intermediate_output/rbcl_asv_key.csv"))
-rbcl_asv_otu_key <- read_csv(here("intermediate_output/asv_otu_key.csv"))
-alias <- read_csv(here("data/sample_aliases.csv"))
-rbcl.tree <- read.tree(here("intermediate_output/tree/rbcl/asv613.fasta.treefile"))
+asv_seqs <- read_csv(here("data/asv_seq_data/rbcl_asv_sequence_key.csv"))
+otus <- read_csv(here("output/asv_otu_key.csv"))
+
+rbcl.tree <- read.tree(here("output/tree/rbcl/all_asvs/rbcl_aligns_all.fasta.treefile")) ### this tree should only contain the asvs we found in the "main" sites, not looking at controls, etc
 ```
 
 ```{r unifrac, include=F}
-ra_wide <- rbcl_rel_abund %>% 
-  select(asv_id, sample_id, rel_abund) %>% 
+
+ra_wide <- rel_abund %>% 
+  select(sample_id, asv_id, rel_abund) %>% 
+  arrange(asv_id) %>% 
   pivot_wider(names_from = asv_id, values_from = rel_abund, values_fill = list(rel_abund = 0)) %>% 
   column_to_rownames("sample_id")
 
 # root tree with Trebouxiophyceae
-root <- idtax %>% 
+root <- tax %>% 
   filter(class=="Trebouxiophyceae") %>% 
   head(1) %>% 
   pull(asv_id)
 
 rbcl.tree <- rbcl.tree %>% root(outgroup = root, resolve.root=T)
 
+
+# check for differences between asvs in tree and rel abund table (all names must appear in tree)
+asvs_rel_abund <- colnames(ra_wide)
+asvs_tree <- rbcl.tree$tip.label %>% sort()
+
+length(asvs_rel_abund)
+length(asvs_tree)
+
+setdiff(asvs_rel_abund, asvs_tree) # output elts unique to asvs_rel_abund
+
 # run weighted UniFrac
 set.seed(123)
 unifracs <- ra_wide %>% 
-  GUniFrac::GUniFrac(rbcl.tree, alpha=1)
+  GUniFrac::GUniFrac(rbcl.tree, alpha=1) 
 unifrac <- unifracs$unifracs[, , "d_1"]
 
 
@@ -60,8 +77,7 @@ nmds <- metaMDS(unifrac, autotransform = F)
 unifrac_plot_data <- nmds %>% 
   scores() %>% 
   as_tibble(rownames = "sample_id") %>% 
-  left_join(field, by="sample_id") %>% 
-  left_join(alias, by="sample_id")
+  left_join(field, by="sample_id")
 
 # plot unifrac, colored by elevation
 uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
@@ -74,13 +90,12 @@ uf_plot
 
 
 
-```{r setup_rel_abund_barplot, fig.width=10, fig.height=7, include=F}
-plot_data <- rbcl_rel_abund %>% 
-  left_join(rbcl_asv_otu_key, by="asv_id") %>% 
+```{r setup_rel_abund_barplot, include=F}
+plot_data <- rel_abund %>% 
+  left_join(otus, by="asv_id") %>% 
   group_by(sample_id, otu_name) %>% 
   summarise(rel_abund = sum(rel_abund)) %>%   
   left_join(field, by="sample_id") %>%
-  left_join(alias, by="sample_id") %>% 
   ungroup() %>% 
   mutate(rel_abund = if_else(rel_abund <0.01, 0.01, rel_abund)) # artificially boost rel abund <1% to 1% so its visible on plot
 
@@ -91,7 +106,7 @@ plot_data %>%
 ```
 
 
-```{r plot_barplot, fig.width=10, fig.height=7, echo=F}
+```{r plot_barplot, echo=F}
 cust_theme <- theme(legend.position = "none",
                     panel.grid.major.x = element_blank(), # remove vertical lines in background
                     panel.grid.minor.x = element_blank(),
@@ -103,18 +118,26 @@ cust_theme <- theme(legend.position = "none",
                     strip.text.x = element_text(angle = 90, hjust=1.0, vjust = 0.8), # rotate facet labels 90
                     strip.background = element_blank()) # remove grey boxes around facet labs
 
-# order OTUs
-otu_ord <- c("Sanguina A","Chloromonas I","Chloromonas G","Chloromonas muramotoi E","Chloromonas krienitzii D","Chloromonas spp. C","Chlainomonas B","Chlainomonas F","Algae H", "Trebouxiophyceae J")
+otu_names %>% distinct(otu_name)
 
-plot <- ggplot(plot_data, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
+# order OTUs
+otu_ord <- c("Chlainomonas A","Sanguina B", "Chloromonas spp. C","Chloromonas krienitzii D","Chloromonas muramotoi E","Chloromonas F", "Algae G","Chloromonas H", "Trebouxiophyceae I")
+
+barplot <- ggplot(plot_data, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
   geom_bar(aes(fill=otu_name), stat="identity") + # classic stacked relative abundance plot
   coord_flip() +
   facet_grid(~otu_name %>% fct_relevel(otu_ord), switch = "x") +
-  labs( x="Sample ID (from lowest to highest elevation)") +
+  labs( x="Sample ID") +
   cust_theme
-plot
-# add sparkline on side for elevation
+barplot
+
 ```
+
+```{r combine, fig.width=7, fig.height=10}
+combined_fig_3 <- grid.arrange(uf_plot, barplot, nrow=2)
+```
+
+
 
 ```{r faiths, echo=F}
 re_wide_mat <- ra_wide %>% as.matrix()
@@ -123,8 +146,7 @@ faiths <- re_wide_mat %>%
   picante::pd(rbcl.tree) %>% 
   # attach elevation data
   rownames_to_column("sample_id") %>% 
-  left_join(field, by="sample_id") %>% 
-  left_join(alias, by="sample_id")
+  left_join(field, by="sample_id")
 
 faith_date_plot <- ggplot(faiths, aes(y=PD, x=date))+
   geom_point(aes(color=elev_m), size=4) +
@@ -171,6 +193,7 @@ car::vif(lm_out)
 
 
 ```{r output, include=F}
-# ggsave
+ggsave(filename = here("manuscript/figs/3_community/combined_fig_3.pdf"), plot=combined_fig_3, height=10, width=7)
+ggsave(filename = here("manuscript/figs/supplementary/diversity.png"), plot = faith_date_plot, height = 5, width = 7)
 ```
 
