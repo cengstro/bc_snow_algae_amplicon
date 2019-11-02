@@ -22,22 +22,16 @@ library(ggdark)
 ```
 
 ```{r read, include=F}
-asv_key <- read_csv(here("data/asv_seq_data/rbcl_asv_sequence_key.csv"))
+
 rel_abund <- read_csv(here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abund.csv"))
 taxonomy <- read_csv(here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
+
+aligns <- readDNAStringSet(here("output/alignments/rbcl_aligns_in_main.fasta"))
+tree <- read.tree(file=here("output/tree/rbcl/asv613.fasta.treefile")) # this is the tree with only the ASVs that appear in the filtered rel abund dataset (not including protocol stuff, etc)
 ```
 
 ```{r asv_distance_matrix, include=F}
-
-aligns <- asv_key %>%
-  filter(asv_id %in% rel_abund$asv_id) %>% # only want asvs used in the main analysis
-  deframe() %>% 
-  DNAStringSet() %>% 
-  DECIPHER::AlignSeqs(verbose=F)
-
-# check alignments
-aligns %>% DECIPHER::BrowseSeqs(highlight = T) # ASV 639 has a ~70 bp insert, 646 ~45 bp deletion, 535 ~110 bp deletion
-length(aligns)
+BrowseSeqs(aligns, highlight = T)
 
 dists <-  aligns %>% 
   DECIPHER::DistanceMatrix(type="matrix", correction = "JC")
@@ -85,13 +79,12 @@ taxa.order <- c("Chloromonas","Chloromonas_muramotoi","Chloromonas_hohamii","Chl
 ggplot(tsne_pts_taxonomy, aes(x=V1, y=V2)) +
   # plot points not assigned to genus or species
   geom_point(data = filter(tsne_pts_taxonomy, is.na(plot_taxa)), 
-             color = "grey", alpha = 0.8, size = 3) +
+             color = "grey", alpha = 0.8) +
   # color points that were assigned to genus or species
   geom_point(data = filter(tsne_pts_taxonomy, !is.na(plot_taxa)), 
              aes(color = plot_taxa %>% fct_relevel(taxa.order)), 
-             alpha = 0.8, size = 3) +
-  labs(title = "Points colored by both genus and species", color="ASV taxonomic assignment") +
-  theme_few()
+             alpha = 0.8) +
+  labs(title = "Points colored by both genus and species", color="ASV taxonomic assignment")
 ```
 
 
@@ -116,33 +109,57 @@ ggplot(tsne_taxa_otu, aes(x=V1, y=V2)) +
 
 Manually edit the clustering:
   - *Chloromonas krienitzii* gets its own cluster, since this is highly abundant
-  - split *Chlainomonas* into two, based on the observation in IQTree the two clades of *Chlainomonas* seperate out by elevation
 
-```{r edit-otus, echo=F, fig.width=8, fig.height=6}
+```{r edit-otus, echo=F}
 tsne_edited_otus <- tsne_taxa_otu %>%
-  mutate(otu = case_when((V2 < (-5) & V1 < -17) ~ "9", # chlain "high"
-                         (V2 < 14  & V2 > 8 & V1 > (-20) & V1 < (-12)) ~ "10",# krienitzii
+  mutate(otu = case_when((V2 < 14  & V2 > 8 & V1 > (-20) & V1 < (-12)) ~ "9",# krienitzii
                          TRUE ~ otu))
 
+otus <- tsne_edited_otus %>% 
+  select(asv_id, otu)
+
+# get names for each otu
+rel_abund %>% 
+  left_join(otus, by="asv_id") %>% 
+  left_join(taxonomy, by="asv_id") %>% 
+  distinct(otu, plot_taxa) %>% 
+  arrange(otu)
+
+# get rel abund of each otu
+rel_abund %>% 
+  left_join(otus, by="asv_id") %>% 
+  group_by(otu) %>% 
+  summarise(rel_abund = sum(rel_abund)) %>% 
+  arrange(-rel_abund) %>% 
+  select(-rel_abund) %>% 
+  add_column(letter = LETTERS[1:9])
+
+# name each OTU, lettered in order of rel abund
+otu_names <- tibble(otu = as.character(1:9), 
+                    otu_name = c("Chloromonas spp. C",
+                                 "Sanguina B",
+                                 "Chlainomonas A",
+                                 "Chloromonas muramotoi E",
+                                 "Chloromonas F",
+                                 "Chloromonas H",
+                                 "Algae G",
+                                 "Trebouxiophyceae I",
+                                 "Chloromonas krienitzii D"))
+
+otus_asv_name <- otus %>% 
+  left_join(otu_names, by="otu") %>% 
+  select(asv_id, otu_name)
+```
+
+
+```{r echo=F, fig.width=8, fig.height=6}
 tsne_edited_otus %>% 
   select(plot_taxa, otu) %>% 
   distinct() %>% 
   arrange(otu)
 
-# name each OTU
-otu_names <- tibble(otu = as.character(1:10), 
-                    otu_name = c("Chloromonas spp. C",
-                                 "Sanguina A","Chlainomonas B",
-                                 "Chloromonas muramotoi E",
-                                 "Chloromonas G",
-                                 "Chloromonas I",
-                                 "Algae H",
-                                 "Trebouxiophyceae J",
-                                 "Chlainomonas F",
-                                 "Chloromonas krienitzii D"))
 
-tsne_otu_names <- tsne_edited_otus %>% 
-  left_join(otu_names, by="otu")
+
 
 
 # make a key for downstream use (write to file at end of script)
@@ -150,6 +167,7 @@ asv_otu_key <- tsne_otu_names %>%
   select(asv_id, otu, otu_name)
   
 ggplot(tsne_otu_names, aes(x=V1, y=V2)) +
+  ggforce::geom_mark_ellipse(aes(fill=otu_name, label=otu_name), alpha=0.3, show.legend = FALSE) +
   # plot points not assigned to genus or species
   geom_point(data = filter(tsne_otu_names, is.na(plot_taxa)), 
              color = "grey",alpha = 0.8, size = 3) +
@@ -157,11 +175,10 @@ ggplot(tsne_otu_names, aes(x=V1, y=V2)) +
   geom_point(data = filter(tsne_otu_names, !is.na(plot_taxa)), 
              aes(color = plot_taxa %>% fct_relevel(taxa.order)), alpha = 0.8, size = 3) +
   labs(title = "Points colored by both genus and species", color="ASV taxonomic assignment") +
-  theme_few() +
-  ggforce::geom_mark_ellipse(aes(fill=otu_name, label=otu_name), show.legend = FALSE)
+  theme_few() 
 ```
 
-```{r include_rel_abund, echo=F, fig.width=8, fig.height=6}
+```{r include_rel_abund, echo=F}
 total_rel_abund <- rel_abund %>% 
   group_by(asv_id) %>% 
   summarise(global_rel_abund = sum(rel_abund))
@@ -178,34 +195,21 @@ final_tsne <- ggplot(tsne_rel_abund, aes(x=V1, y=V2)) +
   # plot points not assigned to genus or species
   geom_point(data = filter(tsne_rel_abund, is.na(plot_taxa)), 
              aes(size = global_rel_abund),
-             color = "grey",alpha = 0.7) +
+             color = "grey",alpha = 0.5) +
   # color points that were assigned to genus or species
   geom_point(data = filter(tsne_rel_abund, !is.na(plot_taxa)), 
              aes(color = plot_taxa %>% fct_relevel(taxa.order),
                  size = global_rel_abund), 
-             alpha = 0.7) +
-  labs(title = "rbcL ASV t-SNE clustering", color="ASV taxonomic assignment") +
+             alpha = 0.5) +
+  labs(color="ASV taxonomic assignment") +
   ggthemes::theme_few() +
-  scale_size(range = c(1, 6), guide="none") ################################################# not changing the scale size
+  scale_size(range = c(1, 6), guide="none") + ################################################# not changing the scale size
+  theme(legend.position = "none")
 final_tsne
 ```
 
 
-```{r tsne-output, echo=F}
-
-# finel_tsne +
-#   theme(legend.position = "none")
-# 
-# # extract the legend
-# tsne_plot %>% 
-#   get_legend() %>% 
-#   as_ggplot 
-# 
-# ggsave(here("figs","asv-cluster","asv-legend-dark.pdf"), height = 7, width = 3)
-# ggsave(here("figs","asv-cluster","asv-cluster-dark.pdf"), height = 5, width = 5)
-```
-
-```{r asv_mds, echo=F, fig.width=10, fig.height=8}
+```{r asv_mds, echo=F}
 mds_coords <- dists %>% 
   cmdscale() %>% # ok to use euclidian dist, no null values when comparing relatedness
   as_tibble() %>% 
@@ -217,7 +221,7 @@ mds_asv_plot <- mds_coords %>%
   left_join(total_rel_abund, by="asv_id") %>% 
   filter(!(asv_id %in% c("639", "534", "646"))) # remove two trebouxiophyceae outliers
 
-ggplot(mds_asv_plot, aes(V1, V2)) + 
+mds <- ggplot(mds_asv_plot, aes(V1, V2)) + 
   ggforce::geom_mark_ellipse(data = mds_asv_plot %>% 
                                filter(otu_name != "Trebouxiophyceae J"), # dont plot the ellipse around other treb
                              aes(fill = otu_name, label=otu_name),
@@ -226,36 +230,30 @@ ggplot(mds_asv_plot, aes(V1, V2)) +
                              linetype="blank",
                              expand = unit(2, "mm")) +
   geom_point(aes(alpha = 0.7, color = plot_taxa, size = global_rel_abund)) +
-  labs(title = "MDS clustering rbcL ASVs", color="ASV taxonomic assignment") +
   scale_size(range = c(1, 6), guide="none") +
   scale_alpha(guide="none")+
-  theme_few() #+
+  theme_few() +
+  labs(color="ASV taxonomic assignment")
   # geom_text(aes(label = asv_id)) # too see outliers, asv_id=c("639", "534")
+mds
 ```
-
-```{r write_mds, include=F}
-
-
-
-```
-
 
 
 
 # Phylogenetic tree
 
-Write fasta for IQTree web serv
-```{r}
-asv.aligns %>% writeXStringSet(here("output","tree","rbcl","rbcl_aligns.fasta"))
-```
 
 Run IQtree
 ```{r tree, fig.width=8, fig.height=20}
-rbcl.tree <- read.tree(here("output","tree","rbcl","asv613.fasta.treefile"))
+# root tree with Trebouxiophyceae
+root <- taxonomy %>% 
+  filter(class=="Trebouxiophyceae") %>% 
+  head(1) %>% 
+  pull(asv_id)
 
-idtax %>% filter(species == "Raphidonema_nivale")
-# re-root tree
-rbcl.tree <- rbcl.tree %>% root(outgroup = "559", resolve.root=T)
+rbcl.tree <- rbcl.tree %>% root(outgroup = root, resolve.root=T)
+
+
 
 rbcl_ggtree <- ggtree(rbcl.tree)
 
@@ -268,46 +266,38 @@ rbcl_ggtree_data <- rbcl_ggtree$data %>%
          insignificant_edge = if_else(boot > 80, "black", "red"))# round boot to nearest integer
 
 # Plot trees
-rbcl_ggtree %<+% select(tsne, asv_id, display_taxa) + # attach taxonomic assignment for tip label
-  geom_tippoint(aes(color=display_taxa, alpha=0.7), size=3) + # 
+
+# tips colored by taxonomy
+taxonomy_tree <- rbcl_ggtree %<+% taxonomy + 
+  geom_tippoint(aes(color=plot_taxa, alpha=0.7), size=3) + # 
   geom_text2(data=rbcl_ggtree_data, aes(label=paste0(boot,";",bayes)),  vjust= 0.01, hjust = 1, size=3) + # add bootstrap vals
   theme(legend.position = c(0.2,0.7), 
         legend.title = element_blank(), 
         legend.key = element_blank()) 
 
-rbcl_ggtree %<+% asv_otu_key + # attach OTU
+# clades annotated by OTU
+otu_tree <- rbcl_ggtree %<+% asv_otu_key + 
   geom_tippoint(aes(color=otu_name, alpha=0.7), size=3) + # 
   geom_text2(data=rbcl_ggtree_data, aes(label=paste0(boot,";",bayes)),  vjust= 0.01, hjust = 1, size=3) + # add bootstrap vals
   theme(legend.position = c(0.2,0.7), 
         legend.title = element_blank(), 
         legend.key = element_blank()) 
 
-# color edge red if boot < 80
-# ggtree_conf <- rbcl_ggtree$data %>% 
-#   separate(label, c("boot", "bayes"), sep = "/") %>% #split label into boots and bayes vals
-#   mutate(insignificant_edge = case_when((boot < 80 & isTip == FALSE)~"dotted", 
-#                                         TRUE~"solid"),
-#          asv_id = case_when(isTip == TRUE~boot,
-#                             TRUE~NA_character_)) %>% # round boot to nearest integer
-#   left_join(otu_tbl, by="asv_id") 
+otu_tree
 
-
-
-# rbcl_ggtree %<+% ggtree_conf +
-#   aes(linetype = I(insignificant_edge)) +
-#   geom_tippoint(aes(color=otu),alpha=0.7, size=3) + #
-#   theme(legend.position = c(0.2,0.7), 
-#         legend.title = element_blank(), 
-#         legend.key = element_blank()) 
-# ggsave("figs/ggtree.pdf", height = 10, width=7.5)
 ```
 
-
+todo: 
+- better color choices
+- circular tree
 
 
 ```{r output}
+write_csv(otus_asv_name, path = here("output/asv_otu_key.csv"))
 
-write_csv(asv_otu_key, here("output","keys","asv_otu_key.csv"))
+ggsave(filename = here("manuscript/figs/2_taxonomy/tsne.png"), plot=final_tsne, height = 6, width = 8)
+ggsave(filename = here("manuscript/figs/2_taxonomy/mds.png"), plot=mds,  height = 6, width = 8)
+ggsave(filename = here("manuscript/figs/tree.png"), plot=otu_tree, width=8, height = 20)
 ```
 
 
