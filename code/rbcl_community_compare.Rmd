@@ -83,7 +83,7 @@ unifrac_plot_data <- nmds %>%
 uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
   geom_point(aes(color=elev_m), size=4) +
   scale_color_gradientn(colours = terrain.colors(8)[1:7]) +
-  labs(color="Elevation (m)") +
+  labs(color="Elevation (m)", tag="A") +
   geom_text_repel(aes(label=alias))
 uf_plot
 ```
@@ -99,7 +99,7 @@ plot_data <- rel_abund %>%
   ungroup() %>% 
   mutate(rel_abund = if_else(rel_abund <0.01, 0.01, rel_abund)) # artificially boost rel abund <1% to 1% so its visible on plot
 
-# check rel abund sums = 1
+# check rel abund sums ~= 1 (will be slightly higher, due to rounding)
 plot_data %>%
   group_by(alias) %>%
   summarise(sum(rel_abund))
@@ -120,21 +120,21 @@ cust_theme <- theme(legend.position = "none",
 
 otu_names %>% distinct(otu_name)
 
-# order OTUs
-otu_ord <- c("Chlainomonas A","Sanguina B", "Chloromonas spp. C","Chloromonas krienitzii D","Chloromonas muramotoi E","Chloromonas F", "Algae G","Chloromonas H", "Trebouxiophyceae I")
+
+otu_ord <- c("Chlainomonas A","Sanguina B", "Other Chloromonas","Chloromonas krienitzii","Chloromonas muramotoi C","Chloromonas D", "Algae E","Chloromonas F", "Trebouxiophyceae G")
 
 barplot <- ggplot(plot_data, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
-  geom_bar(aes(fill=otu_name), stat="identity") + # classic stacked relative abundance plot
+  geom_bar(aes(fill=otu_name %>% fct_relevel(otu_ord)), stat="identity") + # classic stacked relative abundance plot
   coord_flip() +
   facet_grid(~otu_name %>% fct_relevel(otu_ord), switch = "x") +
-  labs( x="Sample ID") +
+  labs( x="Sample ID", tag="B") +
   cust_theme
 barplot
 
 ```
 
 ```{r combine, fig.width=7, fig.height=10}
-combined_fig_3 <- grid.arrange(uf_plot, barplot, nrow=2)
+combined_fig_3 <- gridExtra::grid.arrange(uf_plot, barplot, nrow=2)
 ```
 
 
@@ -155,6 +155,15 @@ faith_date_plot <- ggplot(faiths, aes(y=PD, x=date))+
   geom_text_repel(aes(label=alias))+
   labs(title="Phylogenetic diversity of snow algae rbcL throughout the summer of 2018",y="Faith's phylogenetic diversity (PD)",x="Date", color="Elevation (m)")
 faith_date_plot
+```
+
+```{r}
+faith_elev_plot <- ggplot(faiths, aes(y=PD, x=elev_m))+
+  geom_point() +
+  geom_smooth(method = "lm")+
+  geom_text_repel(aes(label=alias))+
+  labs(title="Phylogenetic diversity of snow algae rbcL vs elevation",y="Faith's phylogenetic diversity (PD)",x="Elevation (m)")
+faith_elev_plot
 ```
 
 
