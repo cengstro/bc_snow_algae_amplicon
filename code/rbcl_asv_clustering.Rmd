@@ -107,12 +107,11 @@ ggplot(tsne_taxa_otu, aes(x=V1, y=V2)) +
   labs(title="dbscan clustering")
 ```
 
-Manually edit the clustering:
-  - *Chloromonas krienitzii* gets its own cluster, since this is highly abundant
+Manually edit the clustering to show *Chloromonas krienitzii* on relative abundance barplot
 
 ```{r edit-otus, echo=F}
 tsne_edited_otus <- tsne_taxa_otu %>%
-  mutate(otu = case_when((V2 < 14  & V2 > 8 & V1 > (-20) & V1 < (-12)) ~ "9",# krienitzii
+  mutate(otu = case_when((plot_taxa == "Chloromonas_krienitzii") ~ "9",
                          TRUE ~ otu))
 
 otus <- tsne_edited_otus %>% 
@@ -139,12 +138,12 @@ otu_names <- tibble(otu = as.character(1:9),
                     otu_name = c("Chloromonas spp. C",
                                  "Sanguina B",
                                  "Chlainomonas A",
-                                 "Chloromonas muramotoi E",
-                                 "Chloromonas F",
-                                 "Chloromonas H",
-                                 "Algae G",
-                                 "Trebouxiophyceae I",
-                                 "Chloromonas krienitzii D"))
+                                 "Chloromonas muramotoi D",
+                                 "Chloromonas E",
+                                 "Chloromonas G",
+                                 "Algae F",
+                                 "Trebouxiophyceae H",
+                                 "Chloromonas krienitzii"))
 
 otus_asv_name <- otus %>% 
   left_join(otu_names, by="otu") %>% 
@@ -201,7 +200,7 @@ final_tsne <- ggplot(tsne_rel_abund, aes(x=V1, y=V2)) +
              aes(color = plot_taxa %>% fct_relevel(taxa.order),
                  size = global_rel_abund), 
              alpha = 0.5) +
-  labs(color="ASV taxonomic assignment") +
+  labs(color="ASV taxonomic assignment", tag="A") +
   ggthemes::theme_few() +
   scale_size(range = c(1, 6), guide="none") + ################################################# not changing the scale size
   theme(legend.position = "none")
@@ -219,7 +218,7 @@ mds_asv_plot <- mds_coords %>%
   left_join(taxonomy, by="asv_id") %>% 
   left_join(asv_otu_key, by="asv_id") %>% 
   left_join(total_rel_abund, by="asv_id") %>% 
-  filter(!(asv_id %in% c("639", "534", "646"))) # remove two trebouxiophyceae outliers
+  filter(!(asv_id %in% c("639", "534", "646"))) # remove Trebouxiophyceae outliers
 
 mds <- ggplot(mds_asv_plot, aes(V1, V2)) + 
   ggforce::geom_mark_ellipse(data = mds_asv_plot %>% 
@@ -233,7 +232,7 @@ mds <- ggplot(mds_asv_plot, aes(V1, V2)) +
   scale_size(range = c(1, 6), guide="none") +
   scale_alpha(guide="none")+
   theme_few() +
-  labs(color="ASV taxonomic assignment")
+  labs(color="ASV taxonomic assignment", tag="B")
   # geom_text(aes(label = asv_id)) # too see outliers, asv_id=c("639", "534")
 mds
 ```
@@ -301,8 +300,3 @@ ggsave(filename = here("manuscript/figs/tree.png"), plot=otu_tree, width=8, heig
 ```
 
 
-# TO do
-- add MDS
-- point size proportional to relative abundance
-- ggtree
-- show different values of perplexity yield comparable results
