@@ -100,78 +100,39 @@ Until recently, snow algae sequences were lacking in reference databases,
 # Results {-}
 
 
-## Morphologically diverse snow algae blooms across a variety of habitats
+## Field and microscopy observations of distinct snow algae bloom types
 
-Snow algae was widespread in our study area, beginning on May _ when we first observed snow algae blooming in the trees. Over the course of the season, we collected 309 samples from 33 dates and 13 moutains. We did not observe pink snow above treeline until June 6, despite several visits above treeline before that (S2). We observed snow algae until the first snows of winter, although by later in the season most of the snow had melted out at lower elevations. 
+We observed pink and green patches of snow algae in forested sites beginning on May 14. Snow algae was widespread in our study area, and we collected 309 samples from 33 dates and 13 moutains over the course of the summer (S1). We observed an elevational shift in snow algae throughout the season: forested sites bloomed earlier in the season and melted out sooner, while high elevation sites did not bloom until later in the season, but persisted until the first snowfall of winter 2019 (S2).
 
-Visually, several patterns in snow algae site characteristics and cell morphology were apparent. Most frequently, we observed pink or red snow, typically in areas recieving high sunlight, dominated by cells that looked similar to *Sanguina nivaloides*, frequently containing green cells of varying shapes and sizes. However, red snow could also be dominated by *Chlainomonas* morphologies, in red snow that was visually indistinguishible from red snow containing primarily *S. nivaloides*. *Chlainomonas* was frequently mixed in with *S. nivaloides* as well (Fig. 1d). We also occasionally observed green snow above treeline, which was dominated by green or yellow oval cells with flanges, similar to those described for *Chloromonas muramotoi*. Colored snow often appeared in snow runnels, frequently at elevations near or below treeline. These runnels containing colored snow formed linear streaks, often with orange on the surface and green snow just below the surface (Fig. 1b). At two sites like this that we visited repeatedly, the runnel began with green snow hidden 1-2 cm below the surface, but on subsequent visits the surface snow had changed color to orange. The subsurface snow contained green, often flagellated algae, while surface snow was dominated by orange cells resembling *Chloro. krienitzii* (Fig. 1e) [@Matsuzaki2015]. Below treeline, orange and green snow was common, often dominated by orange oval cells with short spines, similar to *Chloromonas cf. brevispina* (Fig. 1g). Snow dominated by *Chloromonas cf. brevispina* and *Chloromonas cf. nivalis* was abundnat in shady areas below treeline, often in distinctively bronze colored snow (supp data). 
-
-
-## Diverse *rbc*L reveals species-level snow algae taxonomy
-
-Our *rbc*L amplicon library was dominated by sequences closely related to *Chloromonas*, *Chlainomonas*, and *Sanguina* (Fig. 2). 
-
-60% and 30% of *rbc*L sequences were assigned to genus and species level, while only % and % of our 18S amplicon library was assigned respectively. However, our 18S library generally supported our rbcL findings: samples dominated by *Sanguina* were consistant between markers, however samples containing *Chlainomonas* rbcL were assigned to *Chloromonas* 18S, which could be due to lack of differentiation between the the two genera using 18S (Supp. Fig. X). 
+Often, different colors of snow and habitats contained different cell morphologies. In forest sites, orange or green snow was typically dominated by green or yellow-orange ovate cells with short spines (*Chloromonas cf. brevispina*; Fig. 1). In snow runnels in forest clearings we observed a shift over repeated site visits; on initial visits snow runnels contained green snow hidden from sight 2 - 5 cm below the surface (Fig. 1b, S4_), on subsequent visits the surface of these runnels was orange and contained cell morphologies resembling *Chloromonas krienitzii* (Fig 1e, S3_, S4_). Red or pink snow was mostly found in open areas with high sunlight, and contained cells similar in appearance to *Sanguina nivaloides* or *Chlainomonas rubra*, in many sites mixed in with green cells of variable morphology (Fig 1). *Sanguina nivaloides* morphologies were primarily at high elevation sites, although we did observe several blooms dominated by this morphospecies in shaded forest sites. 
 
 
-*Chloromonas* was the most diverse
+## Diverse *rbc*L reveals snow algae taxonomy with high-resolution
 
-Algae OTU8 has a best BLAST score of 88%, with top hits in both Trebouxiophyceae and Chlorophyceae. 
+Samples were dominated by green algae (Chlorophytes), primarily the genera *Chloromonas*, *Chlainomonas*, and *Sanguina* (Fig. 2). Trebouxiophyceae (Chlorophytes) such as *Raphidonema* were present in low abundance primarily at high elevation sites (Fig. 2), as well as low abundance of several Ochrophytes such as *Hydrurus* at several low elevation sites (S5). One *rbc*L OTU defied taxonomic classification, with a best BLAST score of 88%, and top hits in both Trebouxiophyceae and Chlorophyceae (Algae H, Fig. 2). 
 
-Currently there are just two species *Chlainomonas* in reference databases, but our results suggest there may be genetically distinct populations *Chlainomonas* at higher elevations (Fig. 1, Supp. Fig. 1, Supp. Fig 2).
+Our taxa-specific *rbc*L primers showed considerable variation within *Chloromonas* and the closely-related *Chlainomonas* (Fig 2, S6). We found several distinct clusters among *Chloromonas* ASVs not matching any known species on GenBank (I, G, Fig. 2), but the majority of *Chloromonas* ASVs did not form distinct clusters (*Chloromonas spp* C, Fig. 2). 
 
-
-There were fewer *rbc*L ASVs in *Sanguina* than in *Chloromonas* and *Chlainomonas*, and there were no visible sub-clusters within *Sanguina* in our t-SNE or phylogenetic tree (Fig. 2, S). 
+Our three relative abundance data sets were generally consistant. 18S, *rbc*L, and cell count data were correlated for *Sanguina* (stats). *Chloromonas* and *Chlainomonas* cell counts were correlated with *rbc*L (stats, stats); however, 18S classified samples dominated by *Chlainomonas* as containing *Chloromonas* (S5), likely due to high target region similarity (S7). However, in at least one case cell morphology was a poor predictor of taxonomic composition. We were surprised to find sample X1.1 contained few *Sanguina* reads (Fig. 3b, S5b) despite being dominated by red cells similar of similar morphology to *Sanguina* (Fig. 1g, S4_). 
 
 
 
 ## Snow algae community composition varies with date and elevation
 
-
-This is supported by our 18S and cell count data. Although we found Chlainomonas (Fig. 3))
-
-
-
-
-Sites at higher elevation had higher *rbc*L diversity.
-
+We found snow algae community composition was strongly influenced by elevation. Low elevation sites were compositionally similar, while high elevation sites were more diverse (Fig. 3a, S8). Low elevation sites were dominated by *Chloromonas krienitzii* and *Chlainomonas rubra*, while *Sanguina nivaloides* was nearly exclusive to sites above treeline (Fig. 3b), along with one OTU of *Chloromonas*, and *Raphidonema* (H, I, Fig. 3b). Several sites above treeline were more similar to low elevation sites, including patches of green snow above treeline dominated by *Chloromonas* (N1.5, G1.4, Fig. 3) and red snow patches dominated by *Chlainomonas* (G1.2, P1.9, Fig. 3).
 
 
 
 
 ## Green snow algae turns orange at the surface
 
+At several sites dominated by *Chloromonas krienitzii* we sampled both the surface orange snow as well as the underlying green snow (Fig. 4a) to see if the difference in color and cell morphology was due to different species, or different life stages of the same species inhabiting different habitats. The surface samples contained primarily orange cells resembling *Chloromonas krienitzii*, while the subsurface samples contained green cells including biflagellates and polar quadriflagellates (Fig. 4b, c). Both surface and subsurface samples were dominated by *Chloromonas krienitzii* reads (Fig. 4d). Unexpectedly, we found high relative abundance of *Chlainomonas* in surface samples, and in one subsurface sample, which we did not detect in cell counts. 
+
+
+# Discussion
 
 
 
-**A gradient between snow algae communities**. Variation in snow algae communities was primarily driven by the presence or absence of *Sanguina nivaloides*, *Chloromonas krienitzii*, *Chlainomonas rubra*, or *Chlainomonas* OTU3 (Fig. 2a). However, most samples contained a mix of species; few samples were relatively "pure". However, sample comparison with weighted UniFrac [@Lozupone2005] found little difference between *Chlainomonas* and *Chloromonas* dominated sites, and the presence or absence of *Sanguina* was the driving factor, which was generally found in higher relative abundance at higher elevation (Fig. 2b).
-
-Although *Chlainomonas* is reported to only grow in slushy snow above alpine tarns [@Novis2008;@Prochazkova2018c], we found *Chlainomonas* was present in low relative abundance at most sites sampled. Only one site high in Chlainomonas was near water (S9), the other Chlainomonas dominated sites were not near water, nor was the snow noticeably mushier than the surrounding snow. This does not rule out the possibility that these sites contained high moisture at some point; further sampling is needed to determine its habitat distribution.
-
-# 
-
-**Snow algae community composition co-varies with date and elevation**. *Sanguina* was more abundant in alpine sites, as well as one OTU of *Chlainomonas* and two OTUs of *Chloromonas*, while *Chloromonas krienitzii* and Chlainomonas OTU6 were found in high relative abundance below treeline (Fig. 2, 3). This consistent with the microscopy observations of @Hoham1979a and @Nedbalova2008a, who found primarily *Chlamydomonas cf. nivalis* above treeline and *Chloromonas* below treeline. However, in microscopy surveys we infrequently observed *Sanguina* below treeline, and *Chloromonas krienitzii* above treeline. We found higher diversity in samples from higher elevation, both at the ASV level and OTU level <!--Chao1 w fossil.-->, with several OTUs that were not found at lower elevations. *Raphidonema* and related ASVs were restricted to high alpine sites, with the highest relative abundance occurring in samples from August and September. This fits with the interpretation of @Stibal2005, who suggest that *Raphidonema* is an opportunistic soil algae that blows into snow fields from surrounding dirt to colonize the snow. However, rare taxa should not be discounted as playing an important role in ecosystem functioning [@Jousset2017].
-
-Snowpack above and below treeline are very different habitats, with forest providing shade (and therefore less evaporation). The red pigment of *Sanguina* and *Chlainomonas* (astaxanthin) is likely an adaptation to high light [@Gorton2003;@Holzinger2006], and it has been suggested that *Sanguina* is adapted to the drier snowpacks that form at higher elevations [@Dial2018c].
-
-# 
-
-**_Chloromonas krienitzii_ is green below, turns orange at surface**. On initial visits to Chloromonas krienitzii dominated sites, green snow was hidden 2 to 5 cm below the surface of the runnel (Supp. Fig. 4). Green snow was noticeably moister than surrounding snow, in some locations containing ice lenses not found in the surrounding snowpack. By June 6 the surface of the runnel had turned orange while the snow below remained green, which persisted on three subsequent visits until the snow melted. Cell morphology at the surface closely resembled *Chloromonas cf. brevispina* “Trochiscia” [@Matsuzaki2015] (Fig. 4), while green subsurface snow was dominated by green biflagellate or bipolar quadriflagellate cells (Fig. 4). Both green and orange samples were dominated by reads assigned to *C. krienitzii*, with lower relative abundance of *Chlainomonas*, which was more abundant at the surface (Supp. Fig. 3). 
-
-One possibility is that C. krienitzii cells orange pigmentation is triggered or an adaptation to higher light levels at the surface. Green cells below the surface would be protected from UV radiation<!--cite -->. Possibly, the green cells maintain an optimal light level through phototaxis, similar to marine phytoplankton<!--cite-->. Perhaps higher elevations typically have fewer low angle runnels that would allow a moist enough environment for *C. krienitzii*. It seems unlikely that nutrients from conifer needles would explain this, as several of our *C. krienitzii* dominated sites were in full sunlight, far from any trees.
-
-#
-
-**Snow algae blooms harbor novel diversity**. Several OTUs were not assigned to species level due to low similarity (Fig. 1). Two OTUs of Chloromonas, one OTU of Chlainomonas, and one OTU ("Algae OTU8") that had best BLAST matches to both Trebouxiophyceae and Chlorophyceae algae. Algae OTU8 has a best BLAST score of only 88%; this could represent a free-living algae found in snow, or possibly an endosymbiotic algae from a ciliate, as we noted many ciliates with green organelles in our microscopy samples. Sample X17 contained was dominated by spherical red cells superficially similar to *Sanguina*, this sample was dominated by reads of Chloromonas OTU7 and Algae OTU8. Cells in this sample had thicker cell wall, and some cells were slightly square-shaped (Fig. 4). 18S algae reads from this sample were equivocal, with best BLAST matches to both *Raphidonema* and *Chloromonas*. Currently there are just two species *Chlainomonas* in reference databases, but our results suggest there may be genetically distinct populations *Chlainomonas* at higher elevations (Fig. 1, Supp. Fig. 1, Supp. Fig 2). Although some of the high elevations ASVs were classified as *Chlainomonas rubra*, because we only included this species in our custom snow algae reference this could have biased our classifier, possibly causing over-classification [@Murali2018]. 
-
-Although our rbcL primers successfully detected distinct OTUs, this is likely an underestimate of the true diversity. We did not detect any clustering within *Sanguina* using either 18S or rbcL, however when we included the homologous rbcL fragment of *S. aurentia* in our analysis it did not form a distinct OTU <!--this is where I am quesy about out ghetto OTU method-->. Furthermore, rbcL is highly differentiated in *Chloromonas* relative to other microalgae [@Nozaki2002], which could partly explain why *Sanguina* is less differentiated than *Chloromonas* or *Chlainomonas* (Supp. Fig. 1 and 2).
-
-
-
-
-# Discussion {-}
-
-We found snow algae communities were typically dominated by either *Sanguina*, *Chlainomonas* or *Chloromonas*, with secondary abundance of *Chlainomonas* or *Chloromonas* in most samples. Most samples contained a sizable proportion of secondary or tertiary OTUs, although some some contained nearly 100% *Chlainomonas rubra*, *Sanguina nivaloides*, or *Chloromonas krienitzii*. The drivers of these differences between communities remain unclear; it is likely that within the melting snowpack there may be distinct microhabitats that impacts snow algae distribution, with varying water content with topography, different light levels in shade or at depth [@Gorton2007], different daily freeze-thaw cycles, or possibly varying nutrient levels with proximity to vegetation [@Hoham1976] or bedrock [@Kol1968a]. Further work needs to be done to uncover the micro-habitat niches within the snowpack that allow this differentiation, and what novel species the snow microbiome might contain.
 
 
 
@@ -181,6 +142,8 @@ We found snow algae communities were typically dominated by either *Sanguina*, *
 **Field sampling and microscopy.** We collected snow algae from mountains near Vancouver, British Columbia throughout the summer of 2018. To capture the extent of snow algae diversity in our local mountains we collected as many samples as possible from different elevations, dates, mountains, and micro-habitats within the snow <!--insert suppl table-->. In total we collected 310 colored snow samples from 13 different mountains on 33 different dates from elevations between 880 m and 2150 m above sea level. In early season we sampled at lower elevations, moving uphill as the snow algae bloom progressed upwards in elevation [@Takeuchi2013]. We observed the first small spots of red snow above treeline on June 20. 
 
 We scooped samples from visibly colored snow into 50 mL centrifuge tubes using sterile technique. To prevent melting en route to the lab we stored tubes in a bag of snow. Back in the lab, we melted each sample at room temperature on the bench and removed a 1 mL aliquot for light microscopy. Immediately after, samples were stored at -20 &deg;C for up to eight months until DNA extraction. Most samples were viewed using light microscopy, characterizing the dominant cell morphology in each sample. We prepared a slide of cells fixed in 2% gluteraldehyde, and quantified the most common cell morphologies with a cell count to 100, classifying each cell as either *Sanguina*, *Chloromonas cf. nivalis*, *Chloromonas cf. brevispina*, *Chloromonas krienitzii* *Chlainomonas*, or "other".
+
+Cite refs for why we are calling them that. 
 
 #
 
@@ -200,8 +163,10 @@ We assigned taxonomy using a custom reference databases for both rbcL and 18S, s
 
 To assign 18S reads we initially ran our ASVs against SILVA [@Quast2013], and selected ASVs assigned to Chlorophyta. We then ran this subset of ASVs on our custom 18S snow algae database based on the following GenBank query: "(18S OR ribosomal)[gene] AND (chloromonas OR chlainomonas OR sanguina OR raphidonema OR KMY-2018) NOT (rbcL OR psaB OR atpB) AND 300:3500[slen] NOT plasmid NOT unverified NOT mRNA NOT bacteria NOT mitochondrion". This database was edited to reflect the most recent snow algae taxonomy and remove ambiguous annotations [@Matsuzaki2019;@Prochazkova2018c]. We assigned taxonomy using IDTaxa with threshold = 50.
 
-We assigned OTUs with t-SNE, based on visually distinct clusters [@Graham-Rowe1999] <!--BibTeX header messed up-->(Fig. 1). We split the largest cluster (containing the vast majority of the *Chloromonas* reads) into three clusters, one containing all ASVs assigned to *Chloromonas krienitzii*, and one containing all ASVs assigned to *Chloromonas muramotoi* and *Chloromonas hohamii*. To highlight our observation that one clade of *Chlainomonas* were only found above treeline (Suppl. Fig. 1), we split *Chlainomonas* into two OTUs. The OTUs produced by this naive method were roughly consistent across different methods of visualization (Suppl. Fig. 1 and 2). <!--Other OTU classifiers such swarm [@Mahe2014] are optimized for 18S data, and we found swarm did a poor job of clustering when visualised with MDS, t-SNE, and phylogenetic trees, with various values of d. <!--and CROP [@Chen2013].-->
+We assigned OTUs with t-SNE, based on visually distinct clusters [@Graham-Rowe1999] <!--BibTeX header messed up-->(Fig. 1). We split the largest cluster (containing the vast majority of the *Chloromonas* reads) into three clusters, one containing all ASVs assigned to *Chloromonas krienitzii*, and one containing all ASVs assigned to *Chloromonas muramotoi* and *Chloromonas hohamii*. The OTUs produced by this naive method were consistent across different methods of visualization (Suppl. Fig. 1 and 2). <!--Other OTU classifiers such swarm [@Mahe2014] are optimized for 18S data, and we found swarm did a poor job of clustering when visualised with MDS, t-SNE, and phylogenetic trees, with various values of d. <!--and CROP [@Chen2013].-->
 <!--OTU clustering with t-SNE: based on poor results with other classifiers, we used tsne. since tsne is known to find patterns where there are none depending on the perplexity, we ran this test with perplexity ranging from 5-100, and found the same large scale clusters each time. -->
+
+UniFrac [@Lozupone2005]
 
 **Software information.** All analysis was conducted in R 3.6.1 with tidyverse 1.2.1, with dada2 1.12.1, DECIPHER 2.12.0, Rtsne 0.15, GUniFrac 1.1, and vegan 2.5-6. Phylogenetic analysis was carried out in IQTree [@Nguyen2015] and visualized with ggtree [@Yu2017].
 
