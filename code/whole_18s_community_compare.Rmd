@@ -13,20 +13,10 @@ library(ggrepel)
 ```
 
 ```{r input, include=F}
-tree_path <- here("intermediate_output/tree/full_18s/all_18s_aligns.fasta.treefile")
-all_18s_tree <- read.tree(tree_path)
-
-ra_path <- here("data/clean/clean_18s_ra.csv")
-ra <- read_csv(ra_path)
-
-assignment_path <- here("data/clean/clean_silva_18s_assignments.csv")
-assign <- read_csv(assignment_path)
-
-field_path <- here("data/clean/field_clean.csv")
-field <- read_csv(field_path)
-
-alias_path <- here("data/sample_aliases.csv")
-alias <- read_csv(alias_path)
+all_18s_tree <- read.tree(here("output/tree/full_18s/all_18s_aligns.fasta.treefile"))
+ra <- read_csv(here("data/03_filtered/18s/filtered_cleaned_18s_rel_abund.csv"))
+assign <- read_csv(here("data/02_tidied/tidied_silva_18s_assignments.csv"))
+field <- read_csv(here("data/02_tidied/tidied_field.csv"))
 ```
 
 
@@ -65,6 +55,7 @@ dim(weighted_unifrac_distm)
 
 
 ```{r nmds_stress, include=F}
+set.seed(123)
 mono <- metaMDS(weighted_unifrac_distm)
 mono
 ```
@@ -141,14 +132,15 @@ cust_theme <- theme(legend.position = "none",
                     strip.background = element_blank()) # remove grey boxes around facet labs
 
 # order algae, fungi, protists, other
-phylum_ord <- c("Chlorophyta_ph", "Ochrophyta","Basidiomycota", "Ascomycota", "Chytridiomycota", "Ciliophora","Cercozoa","Protalveolata", "Phragmoplastophyta")
+phylum_ord <- c("Chlorophyta", "Ochrophyta","Basidiomycota", "Ascomycota", "Chytridiomycota", "Ciliophora","Cercozoa","Protalveolata", "Phragmoplastophyta")
 
-ggplot(p, aes(x=sample_id %>% fct_reorder(elev_m), y=rel_abund)) +
+rel_abund_phyla <- ggplot(p, aes(x=sample_id %>% fct_reorder(elev_m), y=rel_abund)) +
   geom_bar(aes(fill=phylum), stat="identity") + # classic stacked relative abundance plot
   coord_flip() +
   facet_grid(~phylum %>% fct_relevel(phylum_ord), switch = "x") +
   labs(title = "Relative abundance plot of 18S phyla (SILVA assignments)", x="Sample ID (from lowest to highest elevation)") +
   cust_theme
+rel_abund_phyla
 ```
 
 ```{r, echo=FALSE}
@@ -275,3 +267,10 @@ view_phylum_table("Rotifera")
 
 # Check differences in high vs low diversity
   - 
+  
+  
+```{r output, include=F}
+dir.create(here("manuscript/figs/S5_18s"))
+ggsave(filename = here("manuscript/figs/S5_18s/18s_rel_abund.pdf"), plot=rel_abund_phyla)
+```
+
