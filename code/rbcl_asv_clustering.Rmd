@@ -135,14 +135,14 @@ rel_abund %>%
 
 # name each OTU, lettered in order of rel abund
 otu_names <- tibble(otu = as.character(1:9), 
-                    otu_name = c("Chloromonas spp. C",
+                    otu_name = c("Other Chloromonas",
                                  "Sanguina B",
                                  "Chlainomonas A",
-                                 "Chloromonas muramotoi D",
-                                 "Chloromonas E",
-                                 "Chloromonas G",
-                                 "Algae F",
-                                 "Trebouxiophyceae H",
+                                 "Chloromonas muramotoi C",
+                                 "Chloromonas D",
+                                 "Chloromonas F",
+                                 "Algae E",
+                                 "Trebouxiophyceae G",
                                  "Chloromonas krienitzii"))
 
 otus_asv_name <- otus %>% 
