@@ -7,6 +7,16 @@ output: word_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Supplemental figures:
+ S1) Map of sample locations
+ S2) Table of sample site information
+ S3) Photos of field sites
+ S4) Microphotos of snow algae samples
+ S5) Plots of snow algae 18S community composition. A. All 18S, Silva assignments. B. Chlorophyta assignments with custom reference database. 
+ S6) Maximum likelihood tree of *rbc*L amplicon
+ S7) Plot of base differences between Genbank 18S and *rbc*L segments
+ S8) Phylogenetic diversity of snow algae. A. Plot of Faith's phylogenetic diversity in snow algae communities by date and elevation B. Linear model results comparing date and elevation as explanatory variables.
+
 
 ```{r table}
 knitr::kable(mtcars[1:5,, 1:5], caption = "A table caption")
