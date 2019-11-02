@@ -67,9 +67,9 @@ field_sample_uid <- field_visit_num %>%
   mutate(alias = paste0(alias_1, ".", uid))
 field_sample_uid %>% distinct(sample_id, alias, date) %>% arrange(date) %>% view()
 
-# remove some of the unnessecary columns
+# remove some of the unused columns
 field_removed_extra_cols <- field_sample_uid %>% 
-  select(sample_id, alias, date, lat, lon, elev_m, color_snow, habitat, substrate, depth_cm, dom_morph)
+  select(sample_id, alias, date, lat, lon, elev_m, color_snow, habitat, substrate, depth_cm, dom_morph, have_seq)
 
 
 
