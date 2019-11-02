@@ -50,10 +50,14 @@ rbcl_1
 ```
 
 ```{r}
-ggplot(rbcl_1, aes(x=top_sample, y=rel_abund, fill = otu_name))+
+
+otu_ord <- c("Chlainomonas A","Sanguina B", "Other Chloromonas","Chloromonas krienitzii","Chloromonas muramotoi C","Chloromonas D", "Algae E","Chloromonas F", "Trebouxiophyceae G")
+
+depth <- ggplot(rbcl_1, aes(x=top_sample, y=rel_abund, fill = otu_name %>% fct_relevel(otu_ord)))+
   geom_bar(stat="identity") +
   facet_grid(rows = vars(depth_chr %>% fct_relevel("surface","sub-surface"))) +
-  labs(x="Sample ID", y="Relative abundance", fill="OTU")
+  labs(x="Sample ID", y="Relative abundance", fill="OTU", tag="D")
+depth
 ```
 
 ```{r 18s_wrangle, include=F}
@@ -73,3 +77,9 @@ ggplot(s18, aes(x=top_sample, y=rel_abund, fill = phylum))+
   labs(x="Sample ID", y="Relative abundance", fill="OTU")
 ```
 More fungi on surface, one sample with more rotifers on surface, more ciliates on surface also
+
+
+```{r output, include=FALSE}
+ggsave(filename = here("manuscript/figs/4_depth_comparison/rbcl.pdf"), plot=depth)
+```
+
