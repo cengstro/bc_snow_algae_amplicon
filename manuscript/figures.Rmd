@@ -5,20 +5,39 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 library(knitr)
-opts_chunk$set(fig.width=12, fig.height=8, fig.path='figs/', echo=FALSE, warning=FALSE, message=FALSE)
+library(tidyverse)
+library(here)
+opts_chunk$set(fig.width=12, fig.height=8, fig.path='figs/', fig.align= "center", echo=FALSE, warning=FALSE, message=FALSE)
 ```
+
+
 
 ```{r input, include=F}
-# field <- knitr::include_graphics("temp.png")
-asvs <- include_graphics("figs/2_taxonomy/combined.png")
-communities <- include_graphics("figs/3_community/combined.png")
-# depth
+field <- include_graphics(here("manuscript/figs/1_field/field.png"))
+asvs <- include_graphics(here("manuscript/figs/2_taxonomy/combined.png"))
+communities <- include_graphics(here("manuscript/figs/3_community/combined_fig_3.png"))
+depth <- include_graphics(here("manuscript/figs/4_depth_comparison/depth_fig.png"))
+
+field_cap <- "Representative photos and microphotos of snow algae. A. Red snow bloom above treeline, sample G1.1. B. Green snow hidden below surface, same sample site as S9. C. Bronze snow spots below trees. D. Red snow containing *Sanguina nivaloides* and *Chlainomonas rubra* morphologies. All scale bars 30 um. E. Orange-green snow containing *Chloromonas krienitzii* and *Chloromonas cf. nivalis*. F. Snow algae from green snow, including *Chloromonas cf. brevispina* and *Chlainomonas rubra*. G. Heatmap of cell count data, with samples on the y axis arranged from low to high elevation, and cell type on the x axis."
+
+asv_cap <- "A. t-SNE clustering of snow algae *rbc*L ASVs. Each point represents an ASV, and is colored by taxonomic assignment, and sized by total relative abundance. OTU labels are superimposed on clusters. B. MDS clustering of the same ASVs as in A, showing genetic distnaces between ASVs. Stress = 0.13"
+
+community_cap <-"Snow algae community composition. A. NMDS clustering of snow algae sample UniFrac, colored by elevation. B. Relative abundance barplot of OTUs present in snow algae samples. Y-axis is ordered from lowest to highest sample elevation."
+
+depth_cap <- "A. Representative field photo of snow runnel, with orange on surface and green below. B. Microphoto of orange snow on surface of sample S9.1. C. Microphoto of snow algae below surface of sample S9.1. D. Relative abundance barplot of OTUs in three snow runnels. Sample H2.10 depth and surface samples were taken 1 week apart, other depth/surface pairs are from the same date."
 ```
 
+```{r, fig.cap=field_cap}
+field
+```
+```{r, fig.cap=asv_cap}
+asvs
+```
 
-
-```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+```{r, fig.cap=community_cap}
 communities
 ```
 
-Figure 1. 
+```{r, fig.cap=depth_cap, out.width = '100%'}
+depth
+```
