@@ -67,6 +67,7 @@ silva_3 <- key %>%
   left_join(silva_2, by="asv_sequence") %>% 
   select(-asv_sequence)
 
+silva_3
 
 write_csv(key, here("output/asv_seq_key_18s.csv"))
 writeXStringSet(seqs_to_fasta, here("output/all_18s.fasta"))
