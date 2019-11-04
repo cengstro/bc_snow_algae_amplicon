@@ -1,0 +1,41 @@
+---
+title: "Negative controls"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(here)
+```
+
+```{r}
+neg_controls <- read_csv(here("data/03_filtered/rbcl/water_controls_rbcl_rel_abund.csv"))
+taxonomy <- read_csv(here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
+otus <- read_csv(here("output/asv_otu_key.csv"))
+
+# source(here("functions/ggplot_functions.R"))  ### not yet working
+```
+
+Which batches were these extracted alongside? check notebook
+
+```{r}
+joined <- neg_controls %>% 
+  left_join(taxonomy, by="asv_id") %>% 
+  left_join(otus, by="asv_id")
+
+
+joined %>% distinct(sample_id)
+```
+
+
+```{r by_otu, echo=F}
+otu_rel_abund <- joined %>% 
+  group_by(otu_name, sample_id) %>% 
+  summarise(rel_abund = sum(rel_abund))
+
+
+ggplot(otu_rel_abund, aes(x=sample_id, y=rel_abund, fill=otu_name)) +
+  geom_bar(stat="identity") +
+  labs(x="Sample ID", y="Relative abundance", fill="OTU", tag="D")
+```
+
