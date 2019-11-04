@@ -40,12 +40,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ### *Run title*: Contrasting snow algae communities
 
 
+
+
+
+
 ##### pagebreak
-
-
-
-
-
 
 # Introduction {-}
 
@@ -58,6 +57,10 @@ Snow algae community composition is largely unknown. Some studies batch sequenci
 Despite over a century of study, no one has sucessfully cultured the snow algae that produce red secondary pigments. In many green algae cells produce secondary pigments in just one life stage, remaining green for much of their life cycle [@Shah2009;@Salome2019; thus red snow algae could originate from green cells. Green snow is frequently found in waterlogged snow, sometimes alongside red snow, leading some to hypothesize that green snow could be an earlier life stage of red snow. Two studies comparing green and red snow using amplicon high-throughput sequencing (HTS) found they were caused by different species [@Lutz2015;@Terashoma2016]; however it remains an open question whether green snow can develop into red snow.
 
 In this study, we surveyed snow algae communities from the mountains surrounding Vancouver, BC, Canada using light microscopy and 18S and *rbc*L amplicon HTS. The *rbc*L gene (coding for the large subunit of ruBiSCo) specifically targets phototrophs, and is more differentiated than the traditional 18S ribosomal marker gene, thus allowing us to specifically target snow algae. Our goal was to see what species were present, and how community composition varies over elevation.
+
+
+
+
 
 
 # Results {-}
@@ -106,8 +109,14 @@ In contrast to typical alpine ecosystems with lower diversity at higher elevatio
 
 Our use of cross-referenced 18S, *rbc*L, and cell count data uniquely allowed us to compare our findings between datasets. *Sanguina* was highly correlated between all three. One notable difference was that no reads were assigned to *Chlainomonas* from our 18S library, despite this genera being highly abundant in *rbc*L. Samples contaiing primarily *Chlainomonas* in our *rbc*L and cell count data were marked as containing only *Chloromonas* in 18S. At the time of publication, only two 18S *Chlainomonas* were present on GenBank (MF803743.1, MF803745.1); possibly our *Chlainomonas* sequences are different enough from the reference that they were mis-labelled as *Chloromonas*, especially likely given how closely related the two genera are. Samples dominated by *Sanguina* in our 18S library contained lower abundance in *rbc*L, which is likely due to primer bias: because our custom *rbc*L primers were designed to target *Chloromonas* and *Chlainomonas* (*Sanguina* not being available at the time), this likely led to a over-representation of these taxa in our *rbc*L library. 
 
+Our findings highlight the remaining unexplored diversity in the snow algae microbiome. One abundant OTU of algae, "Algae H" is widespread and abundant, but poorly matches all *rbc*L GenBank sequences. However, out 18S sequences did not detect any such cluster. Non-specific priming on an unsequenced gene is one possibility, another is that this represents a novel clade of snow algae, or perhaps an endosymbiotic algae within the ciliates that were abundant in many of our samples. Interestingly, the sample with the highest relative abundance of this OTU (X1.1) had red cells that were visually distinct from other *Sanguina*, with thicker cell walls that were slightly less than perfectly spherical in some cells (S4); clearly, further investigation is needed.
+
 
 # Conclusions
+
+Our side by side comparison of snow algae communities shows that they are more diverse than previously thought, and suggests that some snow algae may be adapted to specific micro-habitats such as shade and moisture within the melting snowpack. As the different snow algae species may have varying habitat preferences, different taxa could have different life cycles that permit them to survive in their niche, thus future work to understand the biological mechanisms of snow algae blooms should take community composition into account. Different communities of snow algae will likely affect albedo and local snowpack chemistry in different ways [@Lutz2015], and so different snow algae communities could impact the microbiome and greater ecosystem in unique ways. 
+
+
 
 
 
@@ -117,14 +126,16 @@ Our use of cross-referenced 18S, *rbc*L, and cell count data uniquely allowed us
 
 ## Field sampling and microscopy
 
-We collected snow algae from mountains near Vancouver, British Columbia throughout the summer of 2018. To capture the extent of snow algae diversity in our local mountains we collected as many samples as possible from different elevations, dates, mountains, and micro-habitats within the snow (S2). In total we collected 310 colored snow samples from 13 different mountains on 33 different dates from elevations between 880 m and 2150 m above sea level. In early season we sampled at lower elevations, moving uphill as the snow algae bloom progressed upwards in elevation. 
+We collected snow algae from mountains near Vancouver, British Columbia, Canada throughout the summer of 2018. To capture the extent of snow algae diversity in our local mountains we collected as many samples as possible from different elevations, dates, mountains, and micro-habitats within the snow (S2). In total we collected 310 colored snow samples from 13 different mountains on 33 different dates from elevations between 880 m and 2150 m above sea level. In early season we sampled at lower elevations, moving uphill as the snow algae bloom progressed upwards in elevation. 
 
-We scooped samples from visibly colored snow into 50 mL centrifuge tubes using sterile technique. To prevent melting en route to the lab we stored tubes in a bag of snow. Back in the lab, we melted each sample at room temperature on the bench and removed a 1 mL aliquot for light microscopy. Immediately after, samples were stored at -20 &deg;C for up to eight months until DNA extraction. Most samples were viewed using light microscopy, characterizing the dominant cell morphology in each sample. We prepared a slide of cells fixed in 2% gluteraldehyde, and quantified the most common cell morphologies with a cell count to 100, classifying each cell as either *Sanguina nivaloides* [@Prochazkova2019a], *Chloromonas cf. nivalis* [@Matsuzaki2019;@Prochazkova2017], *Chloromonas cf. brevispina* [@Nedbalova2008, @Matsuzaki2015], *Chloromonas krienitzii* [@Matsuzaki2015] *Chlainomonas rubra* [@Novis2008], or "other" based on similarity to published photographs. 
+We scooped samples from visibly colored snow into 50 mL centrifuge tubes using sterile technique. To prevent melting en route to the lab we stored tubes in a bag of snow. Back in the lab, we melted each sample at room temperature on the bench and removed a 1 mL aliquot for light microscopy. Immediately after, samples were stored at -20 &deg;C for up to eight months until DNA extraction. 
+
+We used light microscopy to characterize the cell morphologies in each sample. We prepared a slide of cells fixed in 2% gluteraldehyde, and at 400x magnification starting from the center of the slide counted up to 100 cells. We classified each cell as either *Sanguina nivaloides* [@Prochazkova2019a], *Chloromonas cf. nivalis* [@Matsuzaki2019;@Prochazkova2017], *Chloromonas cf. brevispina* [@Nedbalova2008, @Matsuzaki2015], *Chloromonas krienitzii* [@Matsuzaki2015] *Chlainomonas rubra* [@Novis2008], or "Other" based on similarity to published photographs. 
 
 
 ## DNA extraction and amplicon library preparation
 
-We selected 35 out of 310 samples for rbcL and 18s high-throughput amplicon sequencing. We chose these samples to represent the variation in date, elevation, geographic location, snow color, micro-habitat, and cell morphology. We freeze-dried these samples for up to 48 hours until until samples appeared completely desiccated. To allow water vapor to escape sample tubes while freeze drying we poked holes in each lid; as a safeguard against cross-contamination from airborne snow algae powder we wrapped tubes individually with paper towels. We mini-pestled 5 mg of sample at room temperature to physically rupture cell walls. Based on our observation that samples dominated by *S. nivaloides* cell morphologies had lower DNA yields, and had many intact cells following various lysis methods, we used 20 mg of these samples to increase our DNA yield. 
+We selected 33 out of 310 samples for rbcL and 18s high-throughput amplicon sequencing. We chose these samples to represent the variation in date, elevation, geographic location, snow color, micro-habitat, and cell morphology. We freeze-dried these samples for up to 48 hours until until samples appeared completely desiccated. To allow water vapor to escape sample tubes while freeze drying we poked holes in each lid; as a safeguard against cross-contamination from airborne snow algae powder we wrapped tubes individually with paper towels. We mini-pestled 5 mg of sample at room temperature to physically rupture cell walls. Based on our observation that samples dominated by *S. nivaloides* cell morphologies had lower DNA yields, and had many intact cells following various lysis methods, we used 20 mg of these samples to increase our DNA yield. 
 
 To extract DNA from the crushed cells we added 800 mL 1x CTAB extraction buffer [@ColdSp2009], 1% B-mercaptoethanol, 5 $\mu$L each of proteinase K and RNAase A, and incubated these at 65 &deg;C for 30 minutes. We centrifuged samples at 10,000 g for 3 minutes to pellet cell debris, then added 700 $\mu$L of supernatant to an equal volume of 24:1 chloroform:isoamyl alcohol. We inverted samples to mix and centrifuged again at 12,000 g for 10 minutes. We precipitated DNA by transferring the top layer to 700 $\mu$L ice-cold ethanol, which we gently mixed, and spun over Qiagen DNA columns for 30 s at 15,000 g. We washed columns twice with 70% ethanol, and finally dissolved our DNA by spinning with 50 $\mu$L of sterile TE buffer. As a negative control we processed a sterile distilled water sample alongside each batch, treating it exactly the same as the other tubes; all negative controls did not contain Qubit-detectable levels of DNA.
 	
@@ -135,7 +146,7 @@ We constructed our amplicon library using a two-step PCR [@Meyer2010]. In the fi
 
 ## Bioinformatic processing
 
-Reads were demultiplexing using cutadapt [@Martin2011]. Samples were filtered and trimmed, errors removed, dereplicated, pair end reads merged, and chimeras removed following the default pipeline of DADA2 [@Callahan2017]. <!-- singletons, failed samples removed, remove sequences based on negative controls, adjust for 0's, -->
+Reads were demultiplexing using cutadapt [@Martin2011]. Samples were filtered and trimmed, errors removed, dereplicated, pair end reads merged, and chimeras removed following the default pipeline of DADA2 [@Callahan2017].  <!-- singletons, failed samples removed, remove sequences based on negative controls, adjust for 0's, sequencing depth, -->
 
 We assigned taxonomy for both *rbc*L and 18S ASVs using IDTaxa with threshold set to 50 [@Murali2018]. We made custom reference databases for each to include snow algae GenBank sequences. We made our rbcL database by downloading 30,865 algae rbcL sequences from GenBank with the query “rbcl[gene] AND (algae OR chlorophyta OR trebouxiophyceae) NOT (18s OR ribosomal OR psaB OR atpB) AND 300:2000[slen] NOT plasmid NOT unverified NOT mRNA NOT bacteria NOT mitochondrion”. We removed ambiguous snow algae annotations based on the most recent snow algae phylogeny [@Matsuzaki2019]. Because entries labelled as *Chloromonas cf. brevispina* and *Chloromonas cf. nivalis* are polyphyletic we re-labeled these as “unassigned *Chloromonas*”. To assign 18S reads we initially ran our ASVs against SILVA [@Quast2013], and then re-ran ASVs assigned to Chlorophyta on our custom 18S snow algae database based on the following GenBank query: "(18S OR ribosomal)[gene] AND (chloromonas OR chlainomonas OR sanguina OR raphidonema OR KMY-2018) NOT (rbcL OR psaB OR atpB) AND 300:3500[slen] NOT plasmid NOT unverified NOT mRNA NOT bacteria NOT mitochondrion". This database was edited to reflect the most recent snow algae taxonomy and remove ambiguous annotations [@Matsuzaki2019;@Prochazkova2018c].
 
