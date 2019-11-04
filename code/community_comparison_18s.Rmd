@@ -1,9 +1,9 @@
 ---
-title: "18S Community Comparison"
+title: "Just algae 18S community comparison"
 output: html_notebook
 ---
 
-```{r libs, results="hide"}
+```{r libs, include=F}
 library(tidyverse)
 library(here)
 library(GUniFrac)
@@ -17,29 +17,17 @@ library(ggthemes)
 library(ggdark)
 ```
 
-```{r set}
-theme_set(theme_classic())
-```
 
+```{r, include=F}
+rel_abund <- read_csv(here("data/03_filtered/18s_algae/18s_algae.filtered_cleaned_rel_abund.csv"))
+tree_18s <- read.tree(here("output/tree/algae_18s/algae_18s_seqs.fasta.treefile"))
 
-```{r}
-path_18s_ra <- here("data/clean/only_algae_18s_rel_abund.csv")
-clean_18s_ra <- read_csv(path_18s_ra)
-
-path_tree <- here("intermediate_output/tree/algae_18s/algae_18s_seqs.fasta.treefile")
-tree_18s <- read.tree(path_tree)
-
-path_full_18s_tree <- here("intermediate_output/tree/18s/")
-full_tree_18s <- read.tree(path_full_18s_tree)
 
 path_silva_assigns <- here("data/clean/clean_silva_18s_assignments.csv")
 silva <- read_csv(path_silva_assigns)
 
 path_field <- here("data/clean/field_clean.csv")
 field <- read_csv(path_field)
-
-path_alias <- here("data/sample_aliases.csv")
-alias <- read_csv(path_alias)
 ```
 
 # Unifrac Algae 18s
