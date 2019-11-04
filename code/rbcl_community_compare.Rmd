@@ -68,6 +68,7 @@ unifrac <- unifracs$unifracs[, , "d_1"]
 
 
 # run NMDS ordination on results 
+set.seed(123)
 nmds <- metaMDS(unifrac, autotransform = F)
 ```
 
@@ -91,16 +92,18 @@ uf_plot
 
 
 ```{r setup_rel_abund_barplot, include=F}
-plot_data <- rel_abund %>% 
+otu_rel_abund <- rel_abund %>% 
   left_join(otus, by="asv_id") %>% 
   group_by(sample_id, otu_name) %>% 
   summarise(rel_abund = sum(rel_abund)) %>%   
   left_join(field, by="sample_id") %>%
-  ungroup() %>% 
+  ungroup()
+
+otu_rel_abund_round_to_1_percent <- otu_rel_abund %>% 
   mutate(rel_abund = if_else(rel_abund <0.01, 0.01, rel_abund)) # artificially boost rel abund <1% to 1% so its visible on plot
 
 # check rel abund sums ~= 1 (will be slightly higher, due to rounding)
-plot_data %>%
+otu_rel_abund_round_to_1_percent %>%
   group_by(alias) %>%
   summarise(sum(rel_abund))
 ```
@@ -118,12 +121,12 @@ cust_theme <- theme(legend.position = "none",
                     strip.text.x = element_text(angle = 90, hjust=1.0, vjust = 0.8), # rotate facet labels 90
                     strip.background = element_blank()) # remove grey boxes around facet labs
 
-otu_names %>% distinct(otu_name)
+otus %>% distinct(otu_name)
 
 
 otu_ord <- c("Chlainomonas A","Sanguina B", "Other Chloromonas","Chloromonas krienitzii","Chloromonas muramotoi C","Chloromonas D", "Algae E","Chloromonas F", "Trebouxiophyceae G")
 
-barplot <- ggplot(plot_data, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
+barplot <- ggplot(otu_rel_abund_round_to_1_percent, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
   geom_bar(aes(fill=otu_name %>% fct_relevel(otu_ord)), stat="identity") + # classic stacked relative abundance plot
   coord_flip() +
   facet_grid(~otu_name %>% fct_relevel(otu_ord), switch = "x") +
@@ -138,11 +141,11 @@ combined_fig_3 <- gridExtra::grid.arrange(uf_plot, barplot, nrow=2)
 ```
 
 
-
+Faith's Phylogenetic Diversity, sum of branch lengths in a sample's phylogenetic tree (does not take relative abundance into account)
 ```{r faiths, echo=F}
-re_wide_mat <- ra_wide %>% as.matrix()
+ra_wide_mat <- ra_wide %>% as.matrix()
 
-faiths <- re_wide_mat %>% 
+faiths <- ra_wide_mat %>% 
   picante::pd(rbcl.tree) %>% 
   # attach elevation data
   rownames_to_column("sample_id") %>% 
@@ -157,13 +160,51 @@ faith_date_plot <- ggplot(faiths, aes(y=PD, x=date))+
 faith_date_plot
 ```
 
-```{r}
+```{r, echo=F}
 faith_elev_plot <- ggplot(faiths, aes(y=PD, x=elev_m))+
   geom_point() +
   geom_smooth(method = "lm")+
   geom_text_repel(aes(label=alias))+
   labs(title="Phylogenetic diversity of snow algae rbcL vs elevation",y="Faith's phylogenetic diversity (PD)",x="Elevation (m)")
 faith_elev_plot
+```
+
+Shannon and Simpson diversity indices (these take relative abundance into account, but require OTUs)
+```{r, include=F}
+otu_rel_abund_mat <- otu_rel_abund %>% 
+  select(sample_id, otu_name, rel_abund) %>% 
+  pivot_wider(names_from = otu_name, values_from = rel_abund, values_fill = list(rel_abund=0)) %>% 
+  column_to_rownames("sample_id") %>% 
+  as.matrix()
+
+# use ra_wide_mat for asv based diversity
+shannon <- otu_rel_abund_mat %>% 
+  diversity(index = "shannon") %>% 
+  enframe() %>% 
+  dplyr::rename(sample_id = name, shannon = value)
+simpson <- otu_rel_abund_mat %>% 
+  diversity(index = "simpson") %>% 
+  enframe() %>% 
+  dplyr::rename(sample_id = name, simpson = value)
+otu_diversity <- shannon %>% 
+  left_join(simpson, by="sample_id") %>% 
+  left_join(field, by="sample_id")
+
+# plot diversity of samples
+ggplot(otu_diversity, aes(x=elev_m, y=shannon))+
+  geom_point() +
+  geom_text_repel(aes(label=alias)) +
+  geom_smooth(method = "lm")
+```
+
+
+Chao
+```{r}
+# otu_rel_abund_mat %>% 
+#   mutate
+#   # head(1) %>% 
+#   as.matrix() %>% 
+#   fossil::chao1()
 ```
 
 
@@ -202,7 +243,7 @@ car::vif(lm_out)
 
 
 ```{r output, include=F}
-ggsave(filename = here("manuscript/figs/3_community/combined_fig_3.pdf"), plot=combined_fig_3, height=10, width=7)
+ggsave(filename = here("manuscript/figs/3_community/combined_fig_3.png"), plot=combined_fig_3, height=10, width=7)
 ggsave(filename = here("manuscript/figs/supplementary/diversity.png"), plot = faith_date_plot, height = 5, width = 7)
 ```
 
