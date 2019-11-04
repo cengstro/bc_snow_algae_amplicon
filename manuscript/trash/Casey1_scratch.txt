@@ -1,6 +1,99 @@
+
+Where multiple sequences were present for a single species we generated a consensus sequence to avoid imbalance where some groups have far more representatives than others [@Murali2018] --><!--To  re-labeled GenBank accessions LC012733.1 and LC012735.1 as Chloromonas krienitzii, LC012734.1 as Chloromonas “Cryocystis”-type, and LC012744.1 to Chloromonas miwae, and LC012743 and LC012745 to “Chloromonas Group_B” 6`.
+---------------------
+ in the liquid water surrounding rounded snow granules [@Leya2013]. In this micro-habitat temperature is nearly constant, but snow moisture, pH, nutrients, and light can differ greatly within the snowpack depending on location of snow and time of day and year [@Loranger1988;@Kuhn2001;@Gorton2007;@Ganey2017]. Thus
+  --------------------------
+  
+However, different species of microalgae can look nearly identical, and the same species can look completely depending on the life stage [@Shah2009;@Salome2019]
+-----------------------------
+
+<!-- WHEN/WHY THEY TRANSITION FROM GREEN TO RED<  -->
+<!-- Under what condions do snow algae develop pigment?  -->
+
+to crack the mystery of how and when snow algae divide, and produce pigment, we need to first must define what species we are talking about. 
+we need to know what species are in a bloom before we can figure out the red green problem. 
+No one has observed green snow transitioning to red in the field
+No one has cultured the algae that produce red pigment *Sanguina* and *Chlainomonas*
+  - despite over a century of study [@Kol1968] no one has sucessfully cultured this genus.
+  - microscopy pigment intermediated suggests they develop red pigment
+  - life cycle, related species are green algae that produce pigment in the cyst
+    - C rein
+    - H pluv
+Red and green snow could be the same species, or different species. 
+The few studies to compare red and green snow found that they were caused by different species: Lutz found green snow caused by Microglena, Terashima green snow caused by Chloromonas. 
+Are there blooms that transition from green to red? under what consitions do they develop pigment?
+
+
+
+--------------------------------------
+
+outline
+
+<!-- What we dont know about snow algae species composition:  -->
+- Sanguina newly announced... are there other red snow algae taxa within the old Chlamy nivalis? 
+- microscopy data found elevation differences
+  - microscopy unreliable, are these differences supported by genetic data?
+- does green snow turn red, develop pigments?
+- chlainomonas, how prevalent? mixed in?
+
+  - likely Chlamy nivalis in Lutz, etc papers
+  - widespread
+  - found with some Chloromonas, Raphidonema
+- Chloromonas
+  - perhaps more below treeline
+  - diverse. what species?
+    - HTS says this, but they are limited
+- Chlainomonas?
+  - no relative abundance data
+  - prevalent? mixed in? habitat?
+
+- What other taxa of snow algae are there?
+  - Microglena
+  - Chrysophyceae
+  - 
+
+
+-----------------------
+from abstract
+
+Snow algae community composition is reported to be similar between snow algae blooms in different continents; here, 
+
+Red, green, and orange patches of snow bloom contained a diversity of species, with highly variable alpha diversity from patch to patch, with some samples dominated by a single species, and others containing a mix of species, including several potentially novel clades.
+--------------------------------
+
+Historically, snow algae were identified by cell morphology, however, morphology can be deceptive when identifying microalgae. Different species can look nearly identical; conversely, the same species can look completely different at different life stages [@Shah2009;@Salome2019]. Red snow algae cells are lumped together into the collective taxon *Chlamydomonas cf. nivalis* on the basis of morphology [@Kol1968;@Leya2013], yet no genetic work went into differentiating these species until 2019, when some of these red cells were designated as a novel genus and species *Sanguina nivaloides* [@Prochazkova2019]. Other snow algae nomanclature, e.g. *Chloromonas cf. nivalis* are a holdover from the days of morphology-based taxonomy, and do not reflect genetic phylogeny [@Matsuzaki2019]. 
+
+--------------------------------------
+
+<!-- WHEN/WHY THEY TRANSITION FROM GREEN TO RED<  -->
+<!-- Under what condions do snow algae develop pigment?  -->
+
+to crack the mystery of how and when snow algae divide, and produce pigment, we need to first must define what species we are talking about. 
+we need to know what species are in a bloom before we can figure out the red green problem. 
+No one has observed green snow transitioning to red in the field
+No one has cultured the algae that produce red pigment *Sanguina* and *Chlainomonas*
+  - despite over a century of study [@Kol1968] no one has sucessfully cultured this genus.
+  - microscopy pigment intermediated suggests they develop red pigment
+  - life cycle, related species are green algae that produce pigment in the cyst
+    - C rein
+    - H pluv
+Red and green snow could be the same species, or different species. 
+The few studies to compare red and green snow found that they were caused by different species: Lutz found green snow caused by Microglena, Terashima green snow caused by Chloromonas. 
+Are there blooms that transition from green to red? under what consitions do they develop pigment?
+
+
+
+-------------------------------------
+
+
 Variation in snow algae communities was primarily driven by the presence or absence of *Sanguina nivaloides*, *Chloromonas krienitzii*, *Chlainomonas rubra*, or *Chlainomonas* OTU3 (Fig. 2a). However, most samples contained a mix of species; few samples were relatively "pure". However, sample comparison with weighted UniFrac  found little difference between *Chlainomonas* and *Chloromonas* dominated sites, and the presence or absence of *Sanguina* was the driving factor, which was generally found in higher relative abundance at higher elevation (Fig. 2b).
 
-Although *Chlainomonas* is reported to only grow in slushy snow above alpine tarns [@Novis2008;@Prochazkova2018c], we found *Chlainomonas* was present in low relative abundance at most sites sampled. Only one site high in Chlainomonas was near water (S9), the other Chlainomonas dominated sites were not near water, nor was the snow noticeably mushier than the surrounding snow. This does not rule out the possibility that these sites contained high moisture at some point; further sampling is needed to determine its habitat distribution.
+Classifying the ecosystem is importent in making comparisons, and is necessary for understanding questions of bloom formation. For example, Hoham observed snow algae divide at night, and hypothesized that they swim up from the bottom of the snowpack. This was later incorporated into the snow algae literature as fact, that all snow algae swim up. This hypothesis remains untested, but that is besides the point: different snow algae could lead different life cycles, so classifying whether there are different snow algae commnuities or how they are different is necessary, to define the study system for further work on life cycles.
+
+It is also important when 
+
+
+
 
 # 
 
