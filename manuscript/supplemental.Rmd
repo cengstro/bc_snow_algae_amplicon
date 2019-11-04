@@ -1,23 +1,62 @@
 ---
-title: "Supplemental Figures"
-output: word_document
+title: "Supplementary materials"
+output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r,, include=F}
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Supplemental figures:
- S1) Map of sample locations
- S2) Table of sample site information
- S3) Photos of field sites
- S4) Microphotos of snow algae samples
- S5) Plots of snow algae 18S community composition. A. All 18S, Silva assignments. B. Chlorophyta assignments with custom reference database. 
- S6) Maximum likelihood tree of *rbc*L amplicon
- S7) Plot of base differences between Genbank 18S and *rbc*L segments
- S8) Phylogenetic diversity of snow algae. A. Plot of Faith's phylogenetic diversity in snow algae communities by date and elevation B. Linear model results comparing date and elevation as explanatory variables.
+
+```{r setup, include=FALSE}
+library(here)
+library(tidyverse)
+library(kableExtra)
+```
 
 
-```{r table}
-knitr::kable(mtcars[1:5,, 1:5], caption = "A table caption")
+
+```{r, include=F}
+map <- knitr::include_graphics(here::here("manuscript/figs/map.png"))
+field <- read_csv(here::here("data/02_tidied/tidied_field.csv"))
+field_photos <- knitr::include_graphics(here::here("manuscript/figs/S3_site_field_photos/field_collage.png"))
+
+map_cap <- "S1. Map showing locations of snow algae sampling locations in summer 2018."
+table_cap <- "S2. Table of sample site information of sequenced snow algae samples."
+field_photo_cap <- "S3. Photos of snow algae field sites."
+```
+
+## Figures
+ 1. Map of sample locations
+ 2. Photos of field sites
+ 3. Microphotos of snow algae samples
+ 4. Plots of snow algae 18S community composition. A. All 18S, Silva assignments. B. Chlorophyta assignments with custom reference database.
+ 5. Maximum likelihood tree of *rbc*L amplicon
+ 6. Plot of base differences between Genbank 18S and *rbc*L segments
+ 7. Phylogenetic diversity of snow algae.
+
+## Tables
+ 1. Table of sample site information
+ 2. Software information
+
+
+```{r, fig.cap=map_cap}
+map
+```
+
+```{r, fig.cap=field_photo_cap}
+field_photos
+```
+
+
+
+```{r}
+field %>% 
+   filter(have_seq==T) %>% 
+   mutate(notes = if_else(sample_id %in% c("pan18.ro","bre18.rd"), "collected from rock",NA_character_)) %>% 
+   select(alias, date, elev_m, lat, lon,color_snow, habitat, notes) %>% 
+   arrange(date) %>% 
+   kable(caption = table_cap) %>% 
+   kable_styling(bootstrap_options = "striped")
+   
 ```
