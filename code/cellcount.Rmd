@@ -14,32 +14,49 @@ field <- read_csv(here("data/02_tidied/tidied_field.csv"))
 rel_abund <- read_csv(here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abund.csv"))
 ```
 
-```{r heatmap, echo=F, fig.height=10, fig.width=6}
+```{r heatmap, echo=F, fig.height=5, fig.width=3}
 p <- cellct %>% 
   left_join(field, by="sample_id")
 
-morpho_order <- c("Green cell",
-                  "Sanguina 'citrine'",
-                  "Sanguina nivaloides",
-                  "Sanguina nivaloides 'ruby'",
-                  "Green cell",
-                  "Chlainomonas",
-                  "Chloromonas krienitzii",
-                  "Chloromonas cf. brevispina",
-                  "Chloromonas cf. nivalis",
-                  "Chloromonas 'spiny'",
-                  "Chloromonas 'oval'",
-                  "Chloromonas 'zuke'"
-                  )
+short_names <- p %>% 
+  mutate(short_morpho_name = case_when(morpho_sp=="Chlainomonas"~"Cr",
+                                       morpho_sp=="Chloromonas cf. brevispina"~"Cb",
+                                       morpho_sp=="Chloromonas cf. nivalis"~"Cn",
+                                       morpho_sp=="Chloromonas krienitzii"~"Ck",
+                                       morpho_sp=="Green cell"~"G",
+                                       morpho_sp=="Other"~"O",
+                                       morpho_sp=="Sanguina nivaloides"~"Sn"))
 
-my_theme <- theme(axis.text.x = element_text(hjust=1,angle=45))
 
-ggplot(p, aes(y=alias %>% fct_reorder(elev_m), 
-              x=morpho_sp)) +
+my_theme <- theme(axis.title.y =element_blank(),
+                  axis.text.y=element_blank(),
+                  axis.ticks.y=element_blank(), 
+                  legend.position = "none")
+
+cellct_heatmap <- ggplot(short_names, aes(y=alias %>% fct_reorder(elev_m), 
+              x=short_morpho_name)) +
   geom_tile(aes(alpha = percent_of_sample, fill = morpho_sp)) + # color = "white" %>% fct_reorder(morpho_order)
-  labs(x="Cell morphology", y= "Sample ID", fill = "Cell morphology", alpha="Relative abundance") +
-  guides(fill=F) +
+  labs(x="Cell morphology", y= "Sample ID (in order of elevation)", fill = "Cell morphology", alpha="Relative abundance") +
   scale_alpha(range = c(0.1, 1)) +
+  guides(alpha=FALSE)+
   my_theme
+
+cellct_heatmap
+```
+
+```{r, elevation_bar, echo=F}
+elevation_ranges <- short_names %>% 
+  distinct(elev_m, sample_id) %>% 
+  arrange(elev_m)
+
+ggplot(elevation_ranges, aes(x=sample_id %>% fct_reorder(elev_m), y=elev_m))+
+  geom_bar(stat = "identity")+
+  coord_flip()
+```
+
+
+
+```{r}
+ggsave(filename=here("manuscript/figs/1_field/cellct_heatmap.pdf"), plot=cellct_heatmap, height = 7, width = 2)
 ```
 
