@@ -165,7 +165,7 @@ faith_elev_plot <- ggplot(faiths, aes(y=PD, x=elev_m))+
   geom_point() +
   geom_smooth(method = "lm")+
   geom_text_repel(aes(label=alias))+
-  labs(title="Phylogenetic diversity of snow algae rbcL vs elevation",y="Faith's phylogenetic diversity (PD)",x="Elevation (m)")
+  labs(y="Faith's phylogenetic diversity (PD)",x="Elevation (m)", tag="B")
 faith_elev_plot
 ```
 
@@ -191,11 +191,20 @@ otu_diversity <- shannon %>%
   left_join(field, by="sample_id")
 
 # plot diversity of samples
-ggplot(otu_diversity, aes(x=elev_m, y=shannon))+
+shannon <- ggplot(otu_diversity, aes(x=elev_m, y=shannon))+
   geom_point() +
   geom_text_repel(aes(label=alias)) +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm")+
+  labs(y="Shannon diversity", tag="A")+
+  theme(axis.title.x = element_blank())
+shannon
 ```
+
+```{r diversity_plots, include=F}
+diversity_plots <- gridExtra::grid.arrange(shannon, faith_elev_plot, nrow=2)
+
+```
+
 
 
 Chao
@@ -244,6 +253,6 @@ car::vif(lm_out)
 
 ```{r output, include=F}
 ggsave(filename = here("manuscript/figs/3_community/combined_fig_3.png"), plot=combined_fig_3, height=10, width=7)
-ggsave(filename = here("manuscript/figs/supplementary/diversity.png"), plot = faith_date_plot, height = 5, width = 7)
+ggsave(filename = here("manuscript/figs/diversity.png"), plot = diversity_plots, height = 10, width = 7)
 ```
 
