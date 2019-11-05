@@ -1,0 +1,3 @@
+rbcl[gene] AND (algae OR chlorophyta OR trebouxiophyceae) NOT (18s OR ribosomal OR psaB OR atpB) AND 300:2000[slen] NOT plasmid NOT unverified NOT mRNA NOT bacteria NOT mitochondrion 
+
+# 30865 hits 2019-09-01. "ncbi_rbcl.gb"
