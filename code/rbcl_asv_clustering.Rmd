@@ -154,7 +154,7 @@ tsne_added_names <- tsne_edited_otus %>%
 ```
 
 
-```{r echo=F, fig.width=8, fig.height=6}
+```{r echo=F, fig.width=10, fig.height=10}
 ggplot(tsne_added_names, aes(x=V1, y=V2)) +
   ggforce::geom_mark_ellipse(aes(fill=otu_name, label=otu_name), alpha=0.3, show.legend = FALSE) +
   # plot points not assigned to genus or species
@@ -167,38 +167,51 @@ ggplot(tsne_added_names, aes(x=V1, y=V2)) +
   theme_few() 
 ```
 
-```{r include_rel_abund, echo=F}
+```{r include_rel_abund, echo=F, fig.width=5, fig.height=4}
 total_rel_abund <- rel_abund %>% 
   group_by(asv_id) %>% 
   summarise(global_rel_abund = sum(rel_abund))
 
 tsne_rel_abund <- tsne_added_names %>% 
-  left_join(total_rel_abund, by="asv_id")
+  left_join(total_rel_abund, by="asv_id") %>% 
+  # remove C kri ellipse
+  mutate(otu_name = if_else(otu_name == "Chloromonas krienitzii", "Other Chloromonas", otu_name))
+
 
 final_tsne <- ggplot(tsne_rel_abund, aes(x=V1, y=V2)) +
   ggforce::geom_mark_ellipse(aes(fill=otu_name, label=otu_name), 
                              show.legend = FALSE, 
-                             alpha=0.2, 
-                             linetype="blank", 
+                             alpha=0, 
+                             linetype="dashed", 
+                             label.margin = margin(1,1,1,1,"mm"),
+                             label.buffer = unit(1, "mm"),
+                             label.fontface = "plain",
+                             label.fontsize = 8,
+                             con.type = 0,
                              expand = unit(2, "mm")) +
-  # plot points not assigned to genus or species
-  geom_point(data = filter(tsne_rel_abund, is.na(plot_taxa)), 
-             aes(size = global_rel_abund),
-             color = "grey",alpha = 0.5) +
-  # color points that were assigned to genus or species
-  geom_point(data = filter(tsne_rel_abund, !is.na(plot_taxa)), 
-             aes(color = plot_taxa %>% fct_relevel(taxa.order),
-                 size = global_rel_abund), 
-             alpha = 0.5) +
-  labs(color="ASV taxonomic assignment", tag="A") +
+  geom_point(aes(color = plot_taxa %>% fct_relevel(taxa.order), size = global_rel_abund, alpha=0.5))+
+  labs(color="ASV taxonomic assignment", tag="A", title="t-SNE") +
   ggthemes::theme_few() +
-  scale_size(range = c(1, 6), guide="none") + ################################################# not changing the scale size
-  theme(legend.position = "none")
-final_tsne
+  scale_size(range = c(2, 12), guide="none") 
+
+tsne_no_legend <- final_tsne +
+    theme(legend.position = "none")
+tsne_no_legend
 ```
 
 
-```{r asv_mds, echo=F}
+
+```{r, fig.height=4, fig.width=2.2}
+p <- final_tsne +
+  guides(colour = guide_legend(override.aes = list(alpha = 1, size=3)), alpha="none") 
+legend <- p %>% 
+  get_legend() %>% 
+  as_ggplot()
+legend
+```
+
+
+```{r asv_mds, echo=F, fig.width=5, fig.height=4}
 mds_coords <- dists %>% 
   cmdscale() %>% # ok to use euclidian dist, no null values when comparing relatedness
   as_tibble() %>% 
@@ -215,16 +228,33 @@ mds <- ggplot(mds_asv_plot, aes(V1, V2)) +
                                filter(otu_name != "Trebouxiophyceae J"), # dont plot the ellipse around other treb
                              aes(fill = otu_name, label=otu_name),
                              show.legend = FALSE, 
-                             alpha=0.2, 
-                             linetype="blank",
+                             alpha=0, 
+                             linetype="dashed", 
+                             label.margin = margin(1,1,1,1,"mm"),
+                             label.buffer = unit(1, "mm"),
+                             label.fontface = "plain",
+                             label.fontsize = 8,
+                             con.type = 0,
                              expand = unit(2, "mm")) +
-  geom_point(aes(alpha = 0.7, color = plot_taxa, size = global_rel_abund)) +
-  scale_size(range = c(1, 6), guide="none") +
-  scale_alpha(guide="none")+
-  theme_few() +
-  labs(color="ASV taxonomic assignment", tag="B")
+  geom_point(aes(color = plot_taxa %>% fct_relevel(taxa.order), size = global_rel_abund, alpha=0.5))+
+  labs(color="ASV taxonomic assignment", tag="B",title="MDS") +
+  ggthemes::theme_few() +
+  scale_size(range = c(2, 12), guide="none")+
+  guides(colour = guide_legend(override.aes = list(alpha = 1, size=3)), alpha="none") +
+  theme(legend.position = "none")
+  
+  
+  # geom_point(aes(alpha = 0.7, color = plot_taxa, size = global_rel_abund)) +
+  # scale_size(range = c(1, 6), guide="none") +
+  # scale_alpha(guide="none")+
+  # theme_few() +
+  # labs(color="ASV taxonomic assignment", tag="B")
   # geom_text(aes(label = asv_id)) # too see outliers, asv_id=c("639", "534")
 mds
+```
+
+```{r, fig.width=4, fig.height=6}
+asv_arrange <- grid.arrange(tsne_no_legend, mds, nrow=2)
 ```
 
 
@@ -285,8 +315,8 @@ todo:
 ```{r output}
 write_csv(otus_asv_name, path = here("output/asv_otu_key.csv"))
 
-ggsave(filename = here("manuscript/figs/2_taxonomy/tsne.png"), plot=final_tsne, height = 6, width = 8)
-ggsave(filename = here("manuscript/figs/2_taxonomy/mds.png"), plot=mds,  height = 6, width = 8)
+ggsave(filename = here("manuscript/figs/2_taxonomy/asvs.pdf"), plot=asv_arrange, height = 6, width = 4)
+ggsave(filename = here("manuscript/figs/2_taxonomy/asv_legend.pdf"), plot=legend,  height = 4, width = 2.2)
 
 ggsave(filename = here("manuscript/figs/otu_tree.png"), plot=otu_tree, width=7, height = 10)
 ggsave(filename = here("manuscript/figs/taxonomy_tree.png"), plot=taxonomy_tree, width=7, height = 10) 
