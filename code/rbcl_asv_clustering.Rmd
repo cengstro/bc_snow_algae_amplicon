@@ -148,30 +148,20 @@ otu_names <- tibble(otu = as.character(1:9),
 otus_asv_name <- otus %>% 
   left_join(otu_names, by="otu") %>% 
   select(asv_id, otu_name)
+
+tsne_added_names <- tsne_edited_otus %>% 
+  left_join(otus_asv_name, by="asv_id")
 ```
 
 
 ```{r echo=F, fig.width=8, fig.height=6}
-tsne_edited_otus %>% 
-  select(plot_taxa, otu) %>% 
-  distinct() %>% 
-  arrange(otu)
-
-
-
-
-
-# make a key for downstream use (write to file at end of script)
-asv_otu_key <- tsne_otu_names %>% 
-  select(asv_id, otu, otu_name)
-  
-ggplot(tsne_otu_names, aes(x=V1, y=V2)) +
+ggplot(tsne_added_names, aes(x=V1, y=V2)) +
   ggforce::geom_mark_ellipse(aes(fill=otu_name, label=otu_name), alpha=0.3, show.legend = FALSE) +
   # plot points not assigned to genus or species
-  geom_point(data = filter(tsne_otu_names, is.na(plot_taxa)), 
+  geom_point(data = filter(tsne_added_names, is.na(plot_taxa)), 
              color = "grey",alpha = 0.8, size = 3) +
   # color points that were assigned to genus or species
-  geom_point(data = filter(tsne_otu_names, !is.na(plot_taxa)), 
+  geom_point(data = filter(tsne_added_names, !is.na(plot_taxa)), 
              aes(color = plot_taxa %>% fct_relevel(taxa.order)), alpha = 0.8, size = 3) +
   labs(title = "Points colored by both genus and species", color="ASV taxonomic assignment") +
   theme_few() 
@@ -182,7 +172,7 @@ total_rel_abund <- rel_abund %>%
   group_by(asv_id) %>% 
   summarise(global_rel_abund = sum(rel_abund))
 
-tsne_rel_abund <- tsne_otu_names %>% 
+tsne_rel_abund <- tsne_added_names %>% 
   left_join(total_rel_abund, by="asv_id")
 
 final_tsne <- ggplot(tsne_rel_abund, aes(x=V1, y=V2)) +
@@ -216,7 +206,7 @@ mds_coords <- dists %>%
 
 mds_asv_plot <- mds_coords %>% 
   left_join(taxonomy, by="asv_id") %>% 
-  left_join(asv_otu_key, by="asv_id") %>% 
+  left_join(otus_asv_name, by="asv_id") %>% 
   left_join(total_rel_abund, by="asv_id") %>% 
   filter(!(asv_id %in% c("639", "534", "646"))) # remove Trebouxiophyceae outliers
 
@@ -243,7 +233,7 @@ mds
 
 
 Run IQtree
-```{r tree, fig.width=8, fig.height=20}
+```{r tree, fig.width=7, fig.height=10}
 # root tree with Trebouxiophyceae
 root <- taxonomy %>% 
   filter(class=="Trebouxiophyceae") %>% 
@@ -275,13 +265,14 @@ taxonomy_tree <- rbcl_ggtree %<+% taxonomy +
         legend.key = element_blank()) 
 
 # clades annotated by OTU
-otu_tree <- rbcl_ggtree %<+% asv_otu_key + 
+otu_tree <- rbcl_ggtree %<+% otus_asv_name + 
   geom_tippoint(aes(color=otu_name, alpha=0.7), size=3) + # 
   geom_text2(data=rbcl_ggtree_data, aes(label=paste0(boot,";",bayes)),  vjust= 0.01, hjust = 1, size=3) + # add bootstrap vals
   theme(legend.position = c(0.2,0.7), 
         legend.title = element_blank(), 
         legend.key = element_blank()) 
 
+taxonomy_tree
 otu_tree
 
 ```
@@ -296,7 +287,9 @@ write_csv(otus_asv_name, path = here("output/asv_otu_key.csv"))
 
 ggsave(filename = here("manuscript/figs/2_taxonomy/tsne.png"), plot=final_tsne, height = 6, width = 8)
 ggsave(filename = here("manuscript/figs/2_taxonomy/mds.png"), plot=mds,  height = 6, width = 8)
-ggsave(filename = here("manuscript/figs/tree.png"), plot=otu_tree, width=8, height = 20)
+
+ggsave(filename = here("manuscript/figs/otu_tree.png"), plot=otu_tree, width=7, height = 10)
+ggsave(filename = here("manuscript/figs/taxonomy_tree.png"), plot=taxonomy_tree, width=7, height = 10) 
 ```
 
 
