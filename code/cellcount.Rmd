@@ -6,6 +6,7 @@ output: html_notebook
 ```{r, include=F}
 library(tidyverse)
 library(here)
+library(gridExtra)
 ```
 
 ```{r, include=F}
@@ -18,6 +19,8 @@ rel_abund <- read_csv(here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abun
 p <- cellct %>% 
   left_join(field, by="sample_id")
 
+distinct(cellct, sample_id) %>% nrow()
+
 short_names <- p %>% 
   mutate(short_morpho_name = case_when(morpho_sp=="Chlainomonas"~"Cr",
                                        morpho_sp=="Chloromonas cf. brevispina"~"Cb",
@@ -28,35 +31,55 @@ short_names <- p %>%
                                        morpho_sp=="Sanguina nivaloides"~"Sn"))
 
 
-my_theme <- theme(axis.title.y =element_blank(),
-                  axis.text.y=element_blank(),
+my_theme <- theme(axis.text.y=element_blank(),
                   axis.ticks.y=element_blank(), 
                   legend.position = "none")
 
 cellct_heatmap <- ggplot(short_names, aes(y=alias %>% fct_reorder(elev_m), 
               x=short_morpho_name)) +
   geom_tile(aes(alpha = percent_of_sample, fill = morpho_sp)) + # color = "white" %>% fct_reorder(morpho_order)
-  labs(x="Cell morphology", y= "Sample ID (in order of elevation)", fill = "Cell morphology", alpha="Relative abundance") +
+  labs(x="Cell morphology", y= "Elevation", fill = "Cell morphology", alpha="Relative abundance") +
   scale_alpha(range = c(0.1, 1)) +
-  guides(alpha=FALSE)+
   my_theme
 
 cellct_heatmap
 ```
 
-```{r, elevation_bar, echo=F}
+```{r elevation_bar, echo=F, fig.height=5, fig.width=1}
 elevation_ranges <- short_names %>% 
   distinct(elev_m, sample_id) %>% 
   arrange(elev_m)
 
-ggplot(elevation_ranges, aes(x=sample_id %>% fct_reorder(elev_m), y=elev_m))+
-  geom_bar(stat = "identity")+
-  coord_flip()
+my_theme <- theme(axis.title.x =element_blank(),
+                  axis.text.x=element_blank(),
+                  axis.ticks.x=element_blank(),
+                  axis.title.y =element_blank(),
+                  axis.text.y=element_blank(),
+                  axis.ticks.y=element_blank(),
+                  panel.grid.major = element_blank(),
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_blank(),
+                  legend.position = "none")
+
+elev <- ggplot(elevation_ranges, aes(x=sample_id %>% fct_reorder(elev_m), y=2200-elev_m, fill=elev_m))+
+  geom_bar(width=1, stat = "identity")+
+  scale_fill_gradientn(colors = terrain.colors(8)[1:7]) +
+  coord_flip() +
+  my_theme +
+  # labs(y="Elevation (m)")
+  annotate(geom="text", x=3, y=500, label="800 m",
+              color="black") +
+  annotate(geom="text", x=115, y=500, label="2200 m",
+              color="black")
+  
+elev
 ```
 
 
 
 ```{r}
-ggsave(filename=here("manuscript/figs/1_field/cellct_heatmap.pdf"), plot=cellct_heatmap, height = 7, width = 2)
+dir.create(here("manuscript/figs/supp/cellct"))
+ggsave(filename=here("manuscript/figs/supp/cellct/cellct_heatmap.pdf"), plot=cellct_heatmap, height = 7, width = 3)
+ggsave(here("manuscript/figs/supp/cellct/elevations.pdf"), plot=elev, height=7, width=1)
 ```
 
