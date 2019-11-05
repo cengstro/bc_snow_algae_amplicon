@@ -271,6 +271,6 @@ view_phylum_table("Rotifera")
   
 ```{r output, include=F}
 dir.create(here("manuscript/figs/S5_18s"))
-ggsave(filename = here("manuscript/figs/S5_18s/18s_rel_abund.pdf"), plot=rel_abund_phyla)
+# ggsave(filename = here("manuscript/figs/S5_18s/18s_rel_abund.pdf"), plot=rel_abund_phyla)
 ```
 
