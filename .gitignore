@@ -3,3 +3,10 @@
 .RData
 .Ruserdata
 photos/**
+*.fasta
+*.jpeg
+*.jpg
+*.png
+*.pdf
+*.docx
+*.svg
