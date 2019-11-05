@@ -20,15 +20,90 @@ library(ggdark)
 
 ```{r, include=F}
 rel_abund <- read_csv(here("data/03_filtered/18s_algae/18s_algae.filtered_cleaned_rel_abund.csv"))
+algae_taxonomy <- read_csv(here("output/algae_18s_assignments_snow_algae_genbank.csv"))
+algae_select_taxonomy <- read_csv(here("output/algae_18s_assignments_w_select_snow_algae.csv"))
+
 tree_18s <- read.tree(here("output/tree/algae_18s/algae_18s_seqs.fasta.treefile"))
-
-
-path_silva_assigns <- here("data/clean/clean_silva_18s_assignments.csv")
-silva <- read_csv(path_silva_assigns)
-
-path_field <- here("data/clean/field_clean.csv")
-field <- read_csv(path_field)
+field <- read_csv(here("data/02_tidied/tidied_field.csv"))
 ```
+
+
+
+
+```{r, include=FALSE}
+taxonomy <- algae_taxonomy
+
+algae_percent_rel_abund <- rel_abund %>% 
+  # calculate rel abund as % of Chlorophyta reads
+  group_by(sample_id) %>% 
+  mutate(rel_abund = n_reads/sum(n_reads)) %>% 
+  ungroup()
+
+best_assignment_rel_abund <- algae_percent_rel_abund %>% 
+  # calculate relative abundance per genus
+  left_join(taxonomy, by="asv_id") %>% 
+  group_by(sample_id, best_assignment) %>% 
+  summarise(rel_abund = sum(rel_abund)) %>% 
+  ungroup() %>% 
+  left_join(field, by="sample_id")
+
+
+barplot <- ggplot(best_assignment_rel_abund, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
+  geom_bar(aes(fill=best_assignment), stat="identity") + # classic stacked relative abundance plot
+  coord_flip() +
+  labs(title="Assignment with unedited genbank downloads",
+       fill = "18S taxonomic assigmnent",
+       y="Relative abundance out of Chlorophyta reads",
+       x="Sample ID (in order of increasing elevation)")
+barplot
+
+
+# desired categories: lump C nivalis in Chloromonas, lump 
+
+```
+
+```{r}
+taxonomy <- algae_select_taxonomy
+
+best_assignment_rel_abund <- algae_percent_rel_abund %>% 
+  # calculate relative abundance per genus
+  left_join(taxonomy, by="asv_id") %>% 
+  group_by(sample_id, best_assignment) %>% 
+  summarise(rel_abund = sum(rel_abund)) %>% 
+  ungroup() %>% 
+  left_join(field, by="sample_id")
+
+
+barplot_select <- ggplot(best_assignment_rel_abund, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
+  geom_bar(aes(fill=best_assignment), stat="identity") + # classic stacked relative abundance plot
+  coord_flip() +
+  labs(title="Assignment with select database",
+       fill = "18S taxonomic assigmnent",
+       y="Relative abundance out of Chlorophyta reads",
+       x="Sample ID (in order of increasing elevation)")
+barplot_select
+
+```
+
+Try with consensus sequence for each known snow algae species. 
+
+Takehome: 
+  - X1.1 has high Trebouxiophyceae of some sort, Koliellaceae
+  - W1.1 Chlorogonium (Haematococcaceae), 
+  - similar patterns otherwise as rbcL, except no Chlainomonas
+  
+
+
+```{r}
+algae_percent_rel_abund %>% 
+  filter(sample_id == "sax18.01") %>% 
+  arrange(-rel_abund)
+```
+
+top two ASVs in sax18.01 blast as koliellaceae and chloromonas
+
+
+
 
 # Unifrac Algae 18s
 
@@ -101,4 +176,7 @@ try with all 18s data, not just algae
 
 
 
+```{r}
+ggsave(here("manuscript/figs/18s_algae_rel_abund.png"), plot = barplot)
+```
 
