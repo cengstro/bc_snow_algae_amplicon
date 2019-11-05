@@ -75,6 +75,34 @@ elev <- ggplot(elevation_ranges, aes(x=sample_id %>% fct_reorder(elev_m), y=2200
 elev
 ```
 
+```{r}
+cellct_in_seq <- short_names %>% 
+  filter(have_seq==T)
+
+cust_theme <- theme(legend.position = "none",
+                    panel.grid.major.x = element_blank(), # remove vertical lines in background
+                    panel.grid.minor.x = element_blank(),
+                    axis.line=element_blank(), # remove x axis
+                    axis.title.x=element_blank(), 
+                    axis.text.x=element_blank(),
+                    axis.ticks.x=element_blank(),
+                    panel.spacing = unit(-0.01, "lines"), # remove space between facet panels
+                    # strip.text.x = element_text(angle = 0, hjust=1.0, vjust = 0.8), # rotate facet labels 90
+                    strip.background = element_blank()) # remove grey boxes around facet labs
+
+
+cellct_order <- c("Cr","Sn","Cb","Ck","Cn","G","O")
+
+cellct_in_seq_bar <- ggplot(cellct_in_seq, aes(x=alias %>% fct_reorder(elev_m), y=percent_of_sample)) +
+  geom_bar(aes(fill=short_morpho_name), stat="identity") + # classic stacked relative abundance plot
+  coord_flip() +
+  facet_grid(~short_morpho_name, switch = "x") +
+  labs( x="Sample ID", tag="B") +
+  cust_theme
+
+cellct_in_seq_bar
+```
+
 
 
 ```{r}
