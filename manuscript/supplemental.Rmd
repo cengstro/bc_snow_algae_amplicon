@@ -12,6 +12,8 @@ knitr::opts_chunk$set(echo = FALSE)
 library(here)
 library(tidyverse)
 library(kableExtra)
+library(knitr)
+library(sessioninfo)
 ```
 
 
@@ -20,10 +22,22 @@ library(kableExtra)
 map <- knitr::include_graphics(here::here("manuscript/figs/map.png"))
 field <- read_csv(here::here("data/02_tidied/tidied_field.csv"))
 field_photos <- knitr::include_graphics(here::here("manuscript/figs/S3_site_field_photos/field_collage.png"))
+micro_photos <- knitr::include_graphics(here::here("manuscript/figs/S4_site_micro_photos/micro.png"))
+s18 <- include_graphics(here("manuscript/figs/18s_algae_rel_abund.png"))
+tree <- include_graphics(here("manuscript/figs/otu_tree.png"))
+tree_taxonomy <- include_graphics(here("manuscript/figs/taxonomy_tree.png"))
+diversity <- include_graphics(here("manuscript/figs/diversity.png"))
+cellct <- include_graphics(here("manuscript/figs/supp/cellct/cellct.png"))
 
 map_cap <- "S1. Map showing locations of snow algae sampling locations in summer 2018."
 table_cap <- "S2. Table of sample site information of sequenced snow algae samples."
 field_photo_cap <- "S3. Photos of snow algae field sites."
+micro_cap <- "Microphotos of snow algae samples included in sequencing run."
+s18_cap <- "Relative abundance barplot of 18S amplicon library"
+tree_cap <- "Maximum likelihood tree of rbcL amplicon library. Colors represent OTU assignments."
+tax_tree_cap <- "Maximum likelihood tree of rbcL amplicon library. Colors represent taxonomic assignments."
+diversity_cap <- "A. Shannon diversity of snow algae samples, plotted against sample elevation. Smooth method = linear model. B. Faith's phylogenetic diversity plotted against sample elevation."
+(ref:cellct_cap) "Heatmap showing cell count relative abundance from 117 snow algae samples. Cb = Chlainomonas cf. brevispina, Ck=Chloromonas krienitzii, Cn=Chloromonas cf. nivalis, Cr=Chlainomonas rubra, G=green cells, O=other, Sn=Sanguina nivaloides"
 ```
 
 ## Figures
@@ -41,12 +55,49 @@ field_photo_cap <- "S3. Photos of snow algae field sites."
 
 
 ```{r, fig.cap=map_cap}
+# zoom in
 map
 ```
 
+
 ```{r, fig.cap=field_photo_cap}
+# order by date
+# sizes the same (crop template)
+# arrange in grid
 field_photos
 ```
+
+
+```{r, fig.cap=micro_cap}
+#scale bar
+# # sizes the same (crop template)
+# arrange in grid
+micro_photos
+```
+
+```{r s18_rel_abund, fig.cap=s18_cap}
+s18 # should this go in the main fig next to the rbcl assignments?
+```
+
+
+```{r tree, fig.cap=tree_cap}
+tree
+```
+
+```{r tax_tree, fig.cap=tax_tree_cap}
+tree_taxonomy
+```
+
+
+```{r, fig.cap=diversity_cap}
+diversity
+```
+
+
+```{r, (ref:cellct_cap)}
+cellct
+```
+
 
 
 
@@ -58,5 +109,35 @@ field %>%
    arrange(date) %>% 
    kable(caption = table_cap) %>% 
    kable_styling(bootstrap_options = "striped")
-   
 ```
+
+
+
+```{r}
+my_session_info <- sessioninfo::session_info()
+  
+my_session_info$platform %>% 
+  unlist() %>% 
+  enframe() %>% 
+  kable(caption = "Session information") %>% 
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = F, position = "left")
+```
+
+
+```{r}
+software <- my_session_info$packages %>% 
+  as_tibble() %>% 
+  select(package, loadedversion) %>% 
+  dplyr::rename(version = loadedversion)
+
+# cedar_info <- tibble(package = c(""),
+#                      version = c(""))
+
+# software <- software %>% 
+#   bind_rows(cedar_info)
+
+software %>% 
+  kable(caption=" R software package versions used") %>% 
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = F, position = "left")
+```
+
