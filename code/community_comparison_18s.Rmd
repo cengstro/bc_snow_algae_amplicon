@@ -39,7 +39,26 @@ algae_percent_rel_abund <- rel_abund %>%
   mutate(rel_abund = n_reads/sum(n_reads)) %>% 
   ungroup()
 
-best_assignment_rel_abund <- algae_percent_rel_abund %>% 
+# check whats missing from this compared to rbcl
+
+rbcl_sample_ids <- algae_percent_rel_abund %>% distinct(sample_id) %>% pull()
+s18_sample_ids <- rel_abund_lumped %>% distinct(sample_id) %>% pull()
+setdiff(s18_sample_ids,rbcl_sample_ids)
+
+# add a empty row for gar18.04 (adding it upstream of left joining the field)
+
+## add in empty row for gar18.04
+gar4_NA_tibble <- tibble(sample_id="gar18.04",
+                         protocol=NA_character_, 
+                         asv_id=NA_character_, 
+                         n_reads=NA_character_,
+                         rel_abund=NA_character_ )
+
+rel_abund_w_gar4 <- algae_percent_rel_abund %>% 
+  bind_rows(gar4_NA_tibble)
+  
+
+best_assignment_rel_abund <- rel_abund_w_gar4 %>% 
   # calculate relative abundance per genus
   left_join(taxonomy, by="asv_id") %>% 
   group_by(sample_id, best_assignment) %>% 
@@ -47,6 +66,7 @@ best_assignment_rel_abund <- algae_percent_rel_abund %>%
   ungroup() %>% 
   left_join(field, by="sample_id")
 
+view(best_assignment_rel_abund)
 
 barplot <- ggplot(best_assignment_rel_abund, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
   geom_bar(aes(fill=best_assignment), stat="identity") + # classic stacked relative abundance plot
@@ -56,10 +76,34 @@ barplot <- ggplot(best_assignment_rel_abund, aes(x=alias %>% fct_reorder(elev_m)
        y="Relative abundance out of Chlorophyta reads",
        x="Sample ID (in order of increasing elevation)")
 barplot
+```
 
 
-# desired categories: lump C nivalis in Chloromonas, lump 
+```{r heatmap_18s, include=FALSE}
+# lump categories
+rel_abund_lumped <- best_assignment_rel_abund %>% 
+  mutate(lumped_best_assignment = case_when(best_assignment=="Sanguina_nivaloides"~"Sanguina nivaloides",
+                                     best_assignment %>% str_detect("Chloromonas")~"Chloromonas",
+                                     # best_assignment == "Chlorogonium"~"Chlorogonium",
+                                     best_assignment=="Koliellaceae"~"Trebouxiophyceae",
+                                     TRUE~"Other"))
+view(rel_abund_lumped)
 
+assign_ord <- c("Sanguina nivaloides", "Chloromonas","Trebouxiophyceae","Other")
+
+my_theme <- theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+s18_heatmap <- ggplot(rel_abund_lumped, 
+                       aes(x=lumped_best_assignment %>% fct_relevel(assign_ord), 
+                           y=alias %>% fct_reorder(elev_m))) +
+  geom_tile(aes(alpha=rel_abund, fill=lumped_best_assignment %>% fct_relevel(assign_ord))) +
+  labs(x="18S taxonomy", y= "Elevation") +
+  scale_alpha(range = c(0.01, 1)) +
+  my_theme +
+  guides(alpha="none", fill="none")
+s18_heatmap
+
+# manually remove the Other bar for G1.4
 ```
 
 ```{r}
@@ -82,7 +126,6 @@ barplot_select <- ggplot(best_assignment_rel_abund, aes(x=alias %>% fct_reorder(
        y="Relative abundance out of Chlorophyta reads",
        x="Sample ID (in order of increasing elevation)")
 barplot_select
-
 ```
 
 Try with consensus sequence for each known snow algae species. 
@@ -156,27 +199,28 @@ stress too low to plot... with the few algae asvs, perhaps it all looks too simi
 try with all 18s data, not just algae
 
 
-    ```{r}
-    unifrac_plot_data <- nmds %>%
-      scores() %>%
-      as_tibble(rownames = "sample_id") %>%
-      left_join(field, by="sample_id")
-    
-    # plot unifrac, colored by elevation
-    uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
-      geom_point(aes(color=elev_m), size=4) +
-      scale_color_gradientn(colours = terrain.colors(8)[1:8]) +
-      labs(color="Elevation (m)") #+
-      # geom_text(data = unifrac_plot_data %>%   # add sample ID labels
-                  # left_join(sample_aliases, by="sample_id"),
-                # aes(label = alias), size=3,
-                # position = position_nudge(y = -0.025))  ######### change to alias for final version. edit overlap txt in svg
-    uf_plot
+```{r}
+unifrac_plot_data <- nmds %>%
+  scores() %>%
+  as_tibble(rownames = "sample_id") %>%
+  left_join(field, by="sample_id")
+
+# plot unifrac, colored by elevation
+uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
+  geom_point(aes(color=elev_m), size=4) +
+  scale_color_gradientn(colours = terrain.colors(8)[1:8]) +
+  labs(color="Elevation (m)") #+
+  # geom_text(data = unifrac_plot_data %>%   # add sample ID labels
+              # left_join(sample_aliases, by="sample_id"),
+            # aes(label = alias), size=3,
+            # position = position_nudge(y = -0.025))  ######### change to alias for final version. edit overlap txt in svg
+uf_plot
 ```
 
 
 
 ```{r}
 ggsave(here("manuscript/figs/18s_algae_rel_abund.png"), plot = barplot)
+saveRDS(s18_heatmap, here("output/s18_heatmap.Rda"))
 ```
 
