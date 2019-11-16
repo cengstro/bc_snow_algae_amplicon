@@ -3,7 +3,7 @@
 library(tidyverse)
 library(here)
 
-raw_cellct <- read_csv(here("data/01_raw/cellct_2018.csv"))
+raw_cellct <- read_csv(here::here("data/01_raw/cellct_2018.csv"))
 glimpse(raw_cellct)
 
 
@@ -20,8 +20,8 @@ cellct <- raw_cellct %>%
   drop_na() %>% 
   mutate(morpho_sp = case_when( str_detect(morpho_sp, "green")~"Green cell", # lump all green categories
                                 morpho_sp=="orb"~"Sanguina nivaloides", 
-                                morpho_sp=="ruby"~"Sanguina nivaloides", # assuming Sanguina grows turrets 
-                                morpho_sp=="balloon"~"Chlainomonas",
+                                morpho_sp=="ruby"~"Sanguina nivaloides", # assuming Sanguina grows turrets
+                                morpho_sp=="balloon"~"Chlainomonas rubra",
                                 morpho_sp=="tangerine"~"Chloromonas krienitzii",
                                 morpho_sp=="hedgehog"~"Chloromonas cf. brevispina",
                                 morpho_sp=="lemon"~"Chloromonas cf. nivalis",
@@ -29,6 +29,7 @@ cellct <- raw_cellct %>%
                                 morpho_sp=="oval"~"Other",
                                 morpho_sp=="zuke"~"Other",
                                 morpho_sp=="halo"~"Other",
+                                morpho_sp=="unknown"~"Other",
                                 morpho_sp=="citrine"~"Sanguina nivaloides",
                                 TRUE ~ morpho_sp)) %>% 
   # drop samples with count < thresh
@@ -37,10 +38,21 @@ cellct <- raw_cellct %>%
   filter(count_total > thresh) %>% 
   # calculate percentage
   mutate(percent_of_sample = count / count_total) %>% 
-  ungroup()
+  ungroup() %>% 
+  # lump multiple rows of "Other" to same row
+  group_by(sample_id, morpho_sp) %>%
+  summarise(percent_of_sample=sum(percent_of_sample))
 
 head(cellct)
 
 
+# add in NA for wed2, sey7, and bre10
+# nas <- tibble(sample_id = c("wed18.02","sey18.07","bre18.10"),
+#               morpho_sp = NA_character_, 
+#               count=NA_character_, 
+#               count_total=NA_character_)
+# 
+# cellct_w_NAs <- cellct %>% 
+#   bind_rows(nas)
 
-write_csv(cellct, here("data/02_tidied/tidied.cell_count.csv"))
+write_csv(cellct, here::here("data/02_tidied/tidied.cell_count.csv"))
