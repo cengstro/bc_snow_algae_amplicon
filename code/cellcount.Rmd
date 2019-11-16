@@ -7,7 +7,6 @@ output: html_notebook
 library(tidyverse)
 library(here)
 library(gridExtra)
-test
 ```
 
 ```{r, include=F}
@@ -16,34 +15,63 @@ field <- read_csv(here("data/02_tidied/tidied_field.csv"))
 rel_abund <- read_csv(here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abund.csv"))
 ```
 
-```{r heatmap, echo=F, fig.height=5, fig.width=3}
-p <- cellct %>% 
+```{r heatmap, echo=F, fig.height=5, fig.width=6}
+cellct_tbl <- cellct %>% 
   left_join(field, by="sample_id")
 
-distinct(cellct, sample_id) %>% nrow()
+distinct(cellct_tbl, sample_id) %>% nrow()
+```
 
-short_names <- p %>% 
-  mutate(short_morpho_name = case_when(morpho_sp=="Chlainomonas"~"Cr",
-                                       morpho_sp=="Chloromonas cf. brevispina"~"Cb",
-                                       morpho_sp=="Chloromonas cf. nivalis"~"Cn",
-                                       morpho_sp=="Chloromonas krienitzii"~"Ck",
-                                       morpho_sp=="Green cell"~"G",
-                                       morpho_sp=="Other"~"O",
-                                       morpho_sp=="Sanguina nivaloides"~"Sn"))
+Heatmap for figure 4
+```{r, echo=F, fig.height=5, fig.width=6}
+
+cellct_tbl_w_seq <- cellct_tbl %>% 
+  filter(sample_id %in% samples_w_seq)
+
+samples_w_seq ## not sure where this comes from
+samples_with_cellcounts <- cellct_tbl_w_seq %>% distinct(sample_id) %>% pull(sample_id)
+setdiff(samples_w_seq, samples_with_cellcounts) # missing these
 
 
-my_theme <- theme(axis.text.y=element_blank(),
-                  axis.ticks.y=element_blank(), 
-                  legend.position = "none")
+cellct_tbl_w_seq %>% distinct(sample_id)
+cellct_tbl_w_seq %>% distinct(morpho_sp)
 
-cellct_heatmap <- ggplot(short_names, aes(y=alias %>% fct_reorder(elev_m), 
-              x=short_morpho_name)) +
-  geom_tile(aes(alpha = percent_of_sample, fill = morpho_sp)) + # color = "white" %>% fct_reorder(morpho_order)
-  labs(x="Cell morphology", y= "Elevation", fill = "Cell morphology", alpha="Relative abundance") +
+my_theme <- theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+cellct_ord <- c("Chlainomonas rubra","Sanguina nivaloides","Chloromonas krienitzii","Chloromonas cf. brevispina","Chloromonas cf. nivalis", "Green cell","Other")
+
+cellct_tbl_w_seq %>% distinct(sample_id) %>% nrow()
+
+cellct_heatmap <- ggplot(cellct_tbl_w_seq, 
+                         aes(y=alias %>% fct_reorder(elev_m), 
+                             x=morpho_sp %>% fct_relevel(cellct_ord))) +
+  geom_tile(aes(alpha = percent_of_sample, fill = morpho_sp %>% fct_relevel(cellct_ord))) +
+  labs(x="Cell morphology", y= "Elevation") +
   scale_alpha(range = c(0.1, 1)) +
-  my_theme
+  my_theme +
+  guides(alpha="none",fill="none")
 
 cellct_heatmap
+```
+
+
+```{r, echo=F, fig.height=5, fig.width=6}
+
+my_theme <- theme(axis.text.y=element_blank(),
+                  axis.ticks.y=element_blank())
+
+
+p2 <- p %>% 
+ filter(!(morpho_sp %in% c("Other","Green cell")))
+cellct_scatter <- ggplot(p2, aes(x=date, y=elev_m)) +
+  geom_jitter(aes(color=morpho_sp, size=percent_of_sample), alpha=0.5, width = 10, height=10) +
+  scale_size(range=c(0.5, 10)) +
+  labs(color="Morphospecies",size="Relative abundance",y="Elevation (m)",x="Date") +
+  guides(colour = guide_legend(override.aes = list(alpha = 1, size=3))) +
+  ggthemes::theme_few()
+cellct_scatter
+
+# pie charts?
 ```
 
 ```{r elevation_bar, echo=F, fig.height=5, fig.width=1}
@@ -107,8 +135,11 @@ cellct_in_seq_bar
 
 
 ```{r}
-dir.create(here("manuscript/figs/supp/cellct"))
-ggsave(filename=here("manuscript/figs/supp/cellct/cellct_heatmap.pdf"), plot=cellct_heatmap, height = 7, width = 3)
+# dir.create(here("manuscript/figs/supp/cellct"))
+ggsave(filename=here("manuscript/figs/supp/cellct/cellct_dotplot.pdf"), plot=cellct_scatter, height = 5, width = 6)
 ggsave(here("manuscript/figs/supp/cellct/elevations.pdf"), plot=elev, height=7, width=1)
+
+
+saveRDS(cellct_heatmap, here("output/cellct_w_seq_heatmap.Rda"))
 ```
 
