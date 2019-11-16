@@ -1,0 +1,66 @@
+---
+title: "18S ASV clustering"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(DECIPHER)
+
+```
+
+```{r}
+aligns <- readDNAStringSet(here("data/asv_seq_data/algae_18s_quality_aligns.fasta"))
+
+# taxonomy w genbank (multiple copies of each designation, no editing)
+algae_taxonomy <- read_csv(here("output/algae_18s_assignments_snow_algae_genbank.csv"))
+```
+
+```{r}
+BrowseSeqs(aligns, highlight = T)
+
+dists <-  aligns %>% 
+  DECIPHER::DistanceMatrix(type="matrix", correction = "JC")
+```
+
+```{r mds}
+set.seed(123)
+mds_coords <- dists %>% 
+  cmdscale() %>% # ok to use euclidian dist, no null values when comparing relatedness
+  as_tibble() %>% 
+  add_column(asv_id = colnames(dists), .before=1)
+
+mds_coords_w_taxonomy <- mds_coords %>% 
+  left_join(algae_taxonomy, by="asv_id")
+
+ggplot(mds_coords_w_taxonomy, aes(x=V1, y=V2))+
+  geom_point(aes(color=best_assignment), size=4)
+```
+
+
+```{r}
+perplexity <- 30
+
+set.seed(123)
+tsne_full_output <- dists %>% 
+  Rtsne(pca=F, perplexity = perplexity)
+
+tsne_pts <- tsne_full_output$Y %>% 
+  as_tibble()
+
+tsne_pts_taxonomy <- tsne_pts %>% 
+  add_column(asv_id = colnames(dists)) %>% # label each point by it's ASV ID
+  left_join(taxonomy, by="asv_id")
+
+taxa.order <- c("Chloromonas","Chloromonas_muramotoi","Chloromonas_hohamii","Chloromonas_krienitzii","Chloromonas_Group_B","Raphidonema_nivale","Stichococcus","other Trebouxiophyceae","Chlainomonas", "Chlainomonas_rubra","Sanguina","Sanguina_aurantia","Sanguina_nivaloides" )
+
+ggplot(tsne_pts_taxonomy, aes(x=V1, y=V2)) +
+  # plot points not assigned to genus or species
+  geom_point(data = filter(tsne_pts_taxonomy, is.na(plot_taxa)), 
+             color = "grey", alpha = 0.8) +
+  # color points that were assigned to genus or species
+  geom_point(data = filter(tsne_pts_taxonomy, !is.na(plot_taxa)), 
+             aes(color = plot_taxa %>% fct_relevel(taxa.order)), 
+             alpha = 0.8)
+```
+
