@@ -1,4 +1,6 @@
 .Rproj.user
+.RData
+.RHistory
 *.html
 *.png
 *.jpg
@@ -9,3 +11,4 @@
 *.Rda
 *.pdf
 *.jpeg
+*.csv
