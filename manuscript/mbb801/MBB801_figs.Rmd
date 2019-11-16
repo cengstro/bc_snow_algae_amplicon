@@ -1,0 +1,60 @@
+---
+title: "MBB801 figure assignment"
+author: "Casey Engstrom"
+date: "12/11/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Fig. 1: Field site and microphotos
+
+- consistent sized scale bars
+- evenly spaced layout
+- intuitive layout ("gestalt"--Wong 2010)
+  - high elevation sites on top and vice versa
+  - microphoto corresponds with the field photo on it's left
+
+
+
+## Fig. 2: Cell morphologies by elevation
+
+- intuitive layout 
+  - elevation in y axis
+  - time on x-axis
+  - abundance is proportional to size
+  - different categories of cell are different colors
+
+
+## Fig. 3: *rbc*L ASV clustering
+
+- intuitive layout
+  - MDS ("traditional" clustering) on top, "newer" t-SNE clustering on bottom
+  - seperate genera on legend with space
+  - NA is grey
+  - size proportional to relative abundance
+- contrasting colors
+  - each point color distinguishable in t-SNE
+
+## Fig. 4: Heatmap of *rbc*L, 18S, and cell count relative abundance
+
+- intuitive layout
+  - elevation y axis
+  - intuitive colors: 
+    - "terrain" colors for elevation
+    - actual color of the sampled snow 
+    - consistant taxonomy colors; e.g. *Sanguina* is the same color in rbcL, 18S, and cell count
+- because amplicon data is semi-quantative, using alpha (opacity) to represent relative abundance is appropriate and intuitive
+- different colors allow for fast comparison between data sets for particular taxa
+- although it makes heavy use of red and green, this is color blind friendly because only the intensity of the color matters within each column, and each column is labelled, thus alleviating the need for a color legend
+- although Gehlenborg and Wong (2012) reccommend clustering by similarity, this would not be approproate for this presentation, because we want a fixed y axis factored by elevation, and the taxonomy columns should maintain the same order from rbcL, 18S and cell count. Furthermore, Figure 5 uses a more sophisticated method of clustering that is more appropriate to this data type than naive heirarchical clustering
+- brewer palettes (Wong 2012)
+
+
+## Fig. 5: *rbc*L uniFrac NMDS
+
+- intuitive layout
+  - same color scheme for elevation as in Fig. 4
+  - unobtrusive font, staggered to avoid overplotting
