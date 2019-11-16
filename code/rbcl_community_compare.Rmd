@@ -32,6 +32,11 @@ asv_seqs <- read_csv(here("data/asv_seq_data/rbcl_asv_sequence_key.csv"))
 otus <- read_csv(here("output/asv_otu_key.csv"))
 
 rbcl.tree <- read.tree(here("output/tree/rbcl/all_asvs/rbcl_aligns_all.fasta.treefile")) ### this tree should only contain the asvs we found in the "main" sites, not looking at controls, etc
+
+
+# the cell counts and 18S rel abund data
+cellct_heatmap <- readRDS(here("output/cellct_w_seq_heatmap.Rda"))
+s18_heatmap <- readRDS(here("output/s18_heatmap.Rda"))
 ```
 
 ```{r unifrac, include=F}
@@ -73,7 +78,7 @@ nmds <- metaMDS(unifrac, autotransform = F)
 ```
 
 
-```{r unifrac_plot, echo=F}
+```{r unifrac_plot, echo=F, fig.width=5, fig.height=4}
 # plot
 unifrac_plot_data <- nmds %>% 
   scores() %>% 
@@ -85,7 +90,8 @@ uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
   geom_point(aes(color=elev_m), size=4) +
   scale_color_gradientn(colours = terrain.colors(8)[1:7]) +
   labs(color="Elevation (m)", tag="A") +
-  geom_text_repel(aes(label=alias))
+  geom_text_repel(aes(label=alias), size=3, segment.size = 0.3) +
+  theme_classic()
 uf_plot
 ```
 
@@ -99,46 +105,113 @@ otu_rel_abund <- rel_abund %>%
   left_join(field, by="sample_id") %>%
   ungroup()
 
-otu_rel_abund_round_to_1_percent <- otu_rel_abund %>% 
-  mutate(rel_abund = if_else(rel_abund <0.01, 0.01, rel_abund)) # artificially boost rel abund <1% to 1% so its visible on plot
-
-# check rel abund sums ~= 1 (will be slightly higher, due to rounding)
-otu_rel_abund_round_to_1_percent %>%
-  group_by(alias) %>%
-  summarise(sum(rel_abund))
+# otu_rel_abund_round_to_1_percent <- otu_rel_abund %>% 
+#   mutate(rel_abund = if_else(rel_abund <0.01, 0.01, rel_abund)) # artificially boost rel abund <1% to 1% so its visible on plot
+# 
+# # check rel abund sums ~= 1 (will be slightly higher, due to rounding)
+# otu_rel_abund_round_to_1_percent %>%
+#   group_by(alias) %>%
+#   summarise(sum(rel_abund))
 ```
 
 
-```{r plot_barplot, echo=F}
-cust_theme <- theme(legend.position = "none",
-                    panel.grid.major.x = element_blank(), # remove vertical lines in background
-                    panel.grid.minor.x = element_blank(),
-                    axis.line=element_blank(), # remove x axis
-                    axis.title.x=element_blank(), 
-                    axis.text.x=element_blank(),
-                    axis.ticks.x=element_blank(),
-                    panel.spacing = unit(-0.01, "lines"), # remove space between facet panels
-                    strip.text.x = element_text(angle = 90, hjust=1.0, vjust = 0.8), # rotate facet labels 90
-                    strip.background = element_blank()) # remove grey boxes around facet labs
+```{r plot_barplot, echo=F, fig.width=2.9, fig.height=5}
+otu_ord <- c("Chlainomonas A","Sanguina B", "Other Chloromonas","Chloromonas krienitzii","Chloromonas muramotoi C","Chloromonas D", "Unknown E","Chloromonas F", "Trebouxiophyceae G")
 
-otus %>% distinct(otu_name)
+my_theme <- theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+otu_rel_abund %>% distinct(sample_id) %>% nrow()
+
+rbcl_heatmap <- ggplot(otu_rel_abund, aes(x=otu_name %>% fct_relevel(otu_ord), y=alias %>% fct_reorder(elev_m))) +
+  geom_tile(aes(alpha=rel_abund, fill=otu_name %>% fct_relevel(otu_ord))) +
+  labs(x="rbcL OTU", y= "Elevation", fill = "rbcL OTU", alpha="Relative abundance") +
+  scale_alpha(range = c(0.01, 1)) +
+  my_theme +
+  guides(alpha="none", fill="none")
+rbcl_heatmap
+```
 
 
-otu_ord <- c("Chlainomonas A","Sanguina B", "Other Chloromonas","Chloromonas krienitzii","Chloromonas muramotoi C","Chloromonas D", "Algae E","Chloromonas F", "Trebouxiophyceae G")
+```{r colors, include=F}
+# get colors, so they match across plots
+g <- ggplot_build(rbcl_heatmap)
 
-barplot <- ggplot(otu_rel_abund_round_to_1_percent, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
-  geom_bar(aes(fill=otu_name %>% fct_relevel(otu_ord)), stat="identity") + # classic stacked relative abundance plot
-  coord_flip() +
-  facet_grid(~otu_name %>% fct_relevel(otu_ord), switch = "x") +
-  labs( x="Sample ID", tag="B") +
-  cust_theme
-barplot
+colors <- tibble(otu_name = otu_rel_abund$otu_name,
+                 color = g$data[[1]]$fill) %>% 
+  distinct(otu_name, color) %>% 
+  deframe()
+
+length(colors)
+colors
 
 ```
 
-```{r combine, fig.width=7, fig.height=10}
-combined_fig_3 <- gridExtra::grid.arrange(uf_plot, barplot, nrow=2)
+Now add in the 18s and cellcount data side by side the rbcL OTU relative abundance data
+- set colors same
+- add in missing cellcount data
+- plot left to right (entire width of page): rbcl, cellct, 18s, with rbcl taking up most width
+- 
+```{r 18s_rel_abund, fig.width=1.7, fig.height=5}
+s18_heat <- s18_heatmap +
+  scale_fill_manual(values=c("#D39200", "#93AA00", "#FF61C3","#808080"))
+s18_heat
 ```
+
+```{r cellct, fig.width=2.6, fig.height=5}
+cellct_heat <- cellct_heatmap +
+  scale_fill_manual(values = c("#F8766D","#D39200","#00BA38","#93AA00","#93AA00","#808080","#808080","#808080"))
+cellct_heat
+```
+
+```{r elev_strip, fig.width=1.5, fig.height=5}
+my_theme <- theme_classic() +
+  theme(axis.line=element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+  
+elev_strip_tbl <- otu_rel_abund %>% 
+  distinct(alias, elev_m) %>% 
+  arrange(-elev_m) %>% 
+  add_column(x="column_1") %>% 
+  mutate(elev_m = elev_m %>% round(digits=-1))
+nrow(elev_strip_tbl)
+
+elev_strip <- ggplot(elev_strip_tbl, aes(x=x, y=alias %>% fct_reorder(elev_m))) +
+  geom_tile(aes(fill=elev_m)) +
+  scale_fill_gradientn(colours = terrain.colors(8)[1:7]) +
+  labs(x="Elevation (m)") +
+  my_theme 
+elev_strip
+```
+
+
+```{r elev_strip2, fig.width=0.5, fig.height=5}
+elev_strip2 <- elev_strip +
+  guides(fill="none") +
+  geom_text(aes(label=elev_m), size=3)
+elev_strip2
+```
+
+```{r snow_color_strip, fig.width=0.5, fig.height=5}
+color_strip_tbl <- otu_rel_abund %>% 
+  arrange(-elev_m) %>% 
+  distinct(alias, color_snow, elev_m) %>% 
+  add_column(x="column_1")
+
+color_strip_tbl %>% distinct(color_snow)
+
+color_strip <- ggplot(color_strip_tbl, aes(x=x, y=alias %>% fct_reorder(elev_m))) +
+  geom_tile(aes(fill=color_snow)) +
+  my_theme +
+  guides(fill="none") +
+  scale_fill_manual(values=c(pink="red",other="grey",green="green",orange="orange",rusty="purple"))
+color_strip
+```
+
 
 
 Faith's Phylogenetic Diversity, sum of branch lengths in a sample's phylogenetic tree (does not take relative abundance into account)
@@ -252,7 +325,16 @@ car::vif(lm_out)
 
 
 ```{r output, include=F}
-ggsave(filename = here("manuscript/figs/3_community/combined_fig_3.png"), plot=combined_fig_3, height=10, width=7)
+
+ggsave(here("manuscript/figs/main/community/rbcl.pdf"),plot=rbcl_heatmap, width = 2.9, height = 5)
+ggsave(here("manuscript/figs/main/community/18s.pdf"),plot=s18_heat, width = 1.7, height = 5)
+ggsave(here("manuscript/figs/main/community/cellct.pdf"),plot=cellct_heat, width = 2.6, height = 5)
+ggsave(here("manuscript/figs/main/community/elev.pdf"),plot=elev_strip, width = 1.5, height = 5)
+ggsave(here("manuscript/figs/main/community/elev2.pdf"),plot=elev_strip2, width = 0.5, height = 5)
+ggsave(here("manuscript/figs/main/community/snow_color.pdf"),plot=color_strip, width = 0.5, height = 5)
+
+
+ggsave(filename = here("manuscript/figs/main/uf_plot.png"), plot=uf_plot, width=5, height = 4)
 ggsave(filename = here("manuscript/figs/diversity.png"), plot = diversity_plots, height = 10, width = 7)
 ```
 
