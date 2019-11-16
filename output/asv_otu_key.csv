@@ -10,7 +10,7 @@ asv_id,otu_name
 009,Sanguina B
 010,Chloromonas F
 011,Chlainomonas A
-012,Algae E
+012,Unknown E
 013,Sanguina B
 014,Sanguina B
 015,Chloromonas krienitzii
@@ -27,7 +27,7 @@ asv_id,otu_name
 026,Other Chloromonas
 027,Sanguina B
 028,Other Chloromonas
-029,Algae E
+029,Unknown E
 030,Chlainomonas A
 031,Chlainomonas A
 032,Sanguina B
@@ -38,7 +38,7 @@ asv_id,otu_name
 037,Chlainomonas A
 038,Other Chloromonas
 039,Other Chloromonas
-040,Algae E
+040,Unknown E
 041,Chloromonas D
 042,Sanguina B
 043,Trebouxiophyceae G
@@ -53,10 +53,10 @@ asv_id,otu_name
 052,Chlainomonas A
 053,Chlainomonas A
 054,Other Chloromonas
-055,Algae E
+055,Unknown E
 056,Chlainomonas A
 057,Chlainomonas A
-058,Algae E
+058,Unknown E
 059,Chloromonas F
 060,Other Chloromonas
 061,Other Chloromonas
@@ -90,7 +90,7 @@ asv_id,otu_name
 089,Chloromonas muramotoi C
 090,Other Chloromonas
 091,Chloromonas muramotoi C
-092,Algae E
+092,Unknown E
 093,Sanguina B
 094,Chlainomonas A
 095,Chloromonas D
@@ -119,25 +119,25 @@ asv_id,otu_name
 118,Chloromonas F
 119,Sanguina B
 120,Chloromonas D
-121,Algae E
+121,Unknown E
 122,Other Chloromonas
 123,Trebouxiophyceae G
 124,Other Chloromonas
 125,Chloromonas muramotoi C
 126,Chloromonas F
-127,Algae E
+127,Unknown E
 128,Other Chloromonas
 129,Other Chloromonas
 130,Chloromonas D
 131,Sanguina B
-132,Algae E
+132,Unknown E
 133,Chlainomonas A
 134,Chloromonas D
 135,Chloromonas F
 136,Chloromonas F
 138,Chloromonas D
 139,Trebouxiophyceae G
-140,Algae E
+140,Unknown E
 141,Chloromonas muramotoi C
 142,Other Chloromonas
 143,Chlainomonas A
@@ -188,7 +188,7 @@ asv_id,otu_name
 188,Other Chloromonas
 189,Chloromonas D
 190,Chlainomonas A
-191,Algae E
+191,Unknown E
 192,Other Chloromonas
 193,Chloromonas muramotoi C
 194,Other Chloromonas
@@ -197,7 +197,7 @@ asv_id,otu_name
 197,Chloromonas muramotoi C
 198,Other Chloromonas
 199,Other Chloromonas
-200,Algae E
+200,Unknown E
 201,Other Chloromonas
 202,Chlainomonas A
 203,Other Chloromonas
@@ -205,16 +205,16 @@ asv_id,otu_name
 205,Other Chloromonas
 206,Chloromonas D
 207,Chlainomonas A
-208,Algae E
+208,Unknown E
 209,Other Chloromonas
 210,Other Chloromonas
 211,Chloromonas F
 212,Other Chloromonas
-213,Algae E
+213,Unknown E
 214,Other Chloromonas
 215,Sanguina B
 216,Chloromonas krienitzii
-217,Algae E
+217,Unknown E
 218,Other Chloromonas
 219,Sanguina B
 220,Other Chloromonas
@@ -223,9 +223,9 @@ asv_id,otu_name
 223,Sanguina B
 224,Chlainomonas A
 225,Chloromonas krienitzii
-226,Algae E
+226,Unknown E
 227,Other Chloromonas
-228,Algae E
+228,Unknown E
 229,Chloromonas D
 230,Chlainomonas A
 231,Sanguina B
@@ -274,7 +274,7 @@ asv_id,otu_name
 274,Other Chloromonas
 275,Other Chloromonas
 276,Other Chloromonas
-277,Algae E
+277,Unknown E
 278,Trebouxiophyceae G
 279,Chloromonas muramotoi C
 280,Chlainomonas A
@@ -283,11 +283,11 @@ asv_id,otu_name
 283,Other Chloromonas
 284,Trebouxiophyceae G
 285,Other Chloromonas
-286,Algae E
+286,Unknown E
 287,Other Chloromonas
 288,Other Chloromonas
 289,Chlainomonas A
-290,Algae E
+290,Unknown E
 291,Trebouxiophyceae G
 292,Chloromonas D
 293,Other Chloromonas
@@ -308,8 +308,8 @@ asv_id,otu_name
 308,Other Chloromonas
 309,Other Chloromonas
 310,Chloromonas F
-311,Algae E
-312,Algae E
+311,Unknown E
+312,Unknown E
 313,Chloromonas D
 314,Other Chloromonas
 315,Other Chloromonas
@@ -323,7 +323,7 @@ asv_id,otu_name
 323,Sanguina B
 324,Other Chloromonas
 325,Other Chloromonas
-326,Algae E
+326,Unknown E
 327,Other Chloromonas
 328,Chlainomonas A
 329,Other Chloromonas
@@ -358,7 +358,7 @@ asv_id,otu_name
 359,Other Chloromonas
 360,Chloromonas F
 361,Trebouxiophyceae G
-362,Algae E
+362,Unknown E
 363,Other Chloromonas
 364,Chloromonas F
 366,Trebouxiophyceae G
@@ -422,8 +422,8 @@ asv_id,otu_name
 433,Chlainomonas A
 435,Other Chloromonas
 436,Chlainomonas A
-437,Algae E
-438,Algae E
+437,Unknown E
+438,Unknown E
 439,Sanguina B
 440,Other Chloromonas
 441,Chlainomonas A
@@ -438,7 +438,7 @@ asv_id,otu_name
 452,Other Chloromonas
 453,Sanguina B
 455,Chlainomonas A
-456,Algae E
+456,Unknown E
 457,Other Chloromonas
 458,Chloromonas muramotoi C
 459,Other Chloromonas
@@ -459,7 +459,7 @@ asv_id,otu_name
 476,Chloromonas D
 477,Other Chloromonas
 478,Chloromonas D
-479,Algae E
+479,Unknown E
 480,Chloromonas D
 481,Other Chloromonas
 482,Other Chloromonas
@@ -477,7 +477,7 @@ asv_id,otu_name
 496,Chlainomonas A
 497,Other Chloromonas
 498,Other Chloromonas
-499,Algae E
+499,Unknown E
 500,Other Chloromonas
 502,Chloromonas muramotoi C
 503,Sanguina B
@@ -507,7 +507,7 @@ asv_id,otu_name
 533,Sanguina B
 534,Trebouxiophyceae G
 536,Trebouxiophyceae G
-537,Algae E
+537,Unknown E
 538,Other Chloromonas
 539,Chloromonas F
 540,Other Chloromonas
@@ -516,10 +516,10 @@ asv_id,otu_name
 543,Sanguina B
 544,Sanguina B
 546,Other Chloromonas
-547,Algae E
+547,Unknown E
 549,Chloromonas D
 551,Chlainomonas A
-552,Algae E
+552,Unknown E
 553,Trebouxiophyceae G
 555,Chlainomonas A
 556,Trebouxiophyceae G
@@ -545,7 +545,7 @@ asv_id,otu_name
 577,Other Chloromonas
 578,Chloromonas F
 580,Chloromonas krienitzii
-581,Algae E
+581,Unknown E
 582,Other Chloromonas
 583,Other Chloromonas
 584,Other Chloromonas
@@ -555,7 +555,7 @@ asv_id,otu_name
 588,Other Chloromonas
 589,Trebouxiophyceae G
 590,Chloromonas muramotoi C
-591,Algae E
+591,Unknown E
 592,Other Chloromonas
 593,Trebouxiophyceae G
 594,Chloromonas D
@@ -587,8 +587,8 @@ asv_id,otu_name
 627,Other Chloromonas
 628,Other Chloromonas
 629,Other Chloromonas
-630,Algae E
-631,Algae E
+630,Unknown E
+631,Unknown E
 632,Other Chloromonas
 633,Trebouxiophyceae G
 634,Other Chloromonas
@@ -600,13 +600,13 @@ asv_id,otu_name
 640,Trebouxiophyceae G
 641,Trebouxiophyceae G
 642,Chloromonas krienitzii
-643,Algae E
+643,Unknown E
 644,Trebouxiophyceae G
 645,Chlainomonas A
 646,Trebouxiophyceae G
 647,Chloromonas D
-648,Algae E
-649,Algae E
+648,Unknown E
+649,Unknown E
 650,Other Chloromonas
 651,Trebouxiophyceae G
 652,Other Chloromonas
