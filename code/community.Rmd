@@ -1,0 +1,290 @@
+---
+title: "Community comparison"
+output: html_notebook
+---
+
+```{r libs, include=F}
+library(tidyverse)
+library(here)
+
+library(GUniFrac)
+library(vegan)
+
+library(scatterpie)
+library(ggrepel)
+library(gridExtra)
+library(ggthemes)
+library(ggdark)
+```
+
+```{r globals, include=F}
+# define theme for all heatmaps
+my_heat_theme <- theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title.x=element_blank())
+```
+
+
+```{r input, include=F}
+rbcl_rel_abund <- read_csv(here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abund.csv")) # not looking at the depth samples, controls..
+rbcl_tax <- read_csv(here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
+rbcl_asv_seqs <- read_csv(here("data/asv_seq_data/rbcl_asv_sequence_key.csv"))
+rbcl_otus <- read_csv(here("output/asv_otu_key.csv"))
+otu_colors <- read_csv(here("output/etc/otu_colors.csv"))
+
+s18_rel_abund <- read_csv(here("data/03_filtered/18s_algae/18s_algae.filtered_cleaned_rel_abund.csv"))
+s18_algae_taxonomy <- read_csv(here("output/algae_18s_assignments_snow_algae_genbank.csv"))
+# s18_algae_select_taxonomy <- read_csv(here("output/algae_18s_assignments_w_select_snow_algae.csv")) #### this didnt work very well, need to make consensus for each species
+
+field <- read_csv(here("data/02_tidied/tidied_field.csv"))
+cellct <- read_csv(here("data/02_tidied/tidied.cell_count.csv"))
+
+rbcl_tree <- read.tree(here("output/tree/rbcl/all_asvs/rbcl_aligns_all.fasta.treefile")) ### this tree should only contain the asvs we found in the "main" sites, not looking at controls, etc
+s18_tree <- read.tree(here("output/tree/algae_18s/algae_18s_seqs.fasta.treefile"))
+```
+
+
+```{r cellct_scatter, echo=F}
+cellct_scatter_tbl <- cellct %>% 
+  left_join(field, by="sample_id") %>% 
+  # not showing all cells in cell count, only Sanguina, Chlainomonas, Chloro b and n
+  filter(!(morpho_sp %in% c("Other","Green cell")))
+
+
+cellct_scatter <- ggplot(cellct_scatter_tbl, aes(x=date, y=elev_m)) +
+  geom_jitter(aes(color=morpho_sp, size=percent_of_sample), alpha=0.5, width = 10, height=10) +
+  scale_size(range=c(0.5, 10)) +
+  labs(color="Morphospecies",size="Relative abundance",y="Elevation (m)",x="Date") +
+  guides(colour = guide_legend(override.aes = list(alpha = 1, size=3))) +
+  ggthemes::theme_few()
+cellct_scatter
+```
+
+```{r cellct_scatterpie, echo=F}
+cellct_wide <- cellct %>%
+  pivot_wider(names_from = morpho_sp, values_from = percent_of_sample, values_fill = list(percent_of_sample=0)) %>% 
+  left_join(field, by="sample_id") %>% 
+  select(date, elev_m, `Chloromonas krienitzii`:Other) %>% 
+  mutate(date=lubridate::yday(date)) %>% # convert to julian date
+  rownames_to_column("rowname") %>% 
+  as.data.frame()
+
+celltypes <- cellct %>% filter(!is.na(morpho_sp)) %>% distinct(morpho_sp) %>% pull()
+
+base_plot <- ggplot(field, aes(x=date, y=elev_m))
+  
+
+min_date <- min(cellct_wide$date)
+max_date <- max(cellct_wide$date)
+date_diff <- max_date - min_date
+min_elev <- min(cellct_wide$elev_m)
+max_elev <- max(cellct_wide$elev_m)
+elev_diff <- max_elev - min_elev
+
+cellct_converted <- cellct_wide %>% 
+  mutate(elev_m = (elev_m - min_elev)/elev_diff, # express as fraction
+         date = (date - min_date)/date_diff) # " "
+
+scatterpie <- ggplot() +
+  geom_scatterpie(aes(x=date, y=elev_m, group=elev_m, r=0.04), data=cellct_converted, cols=celltypes, color=NA, alpha=0.6)
+scatterpie
+  
+```
+
+```{r cellct_heat, echo=F}
+# only plot the samples we want to compare
+cellct_tbl_w_seq <- cellct %>% 
+  filter(sample_id %in% rbcl_rel_abund$sample_id)
+
+# sanity check
+samples_with_cellcounts <- cellct_tbl_w_seq %>% distinct(sample_id) %>% pull(sample_id)
+setdiff(rbcl_rel_abund$sample_id, samples_with_cellcounts) # samples we are missing cellcts for
+
+# specify plotting order
+cellct_ord <- c("Chlainomonas rubra","Sanguina nivaloides","Chloromonas krienitzii","Chloromonas cf. brevispina","Chloromonas cf. nivalis", "Green cell","Other")
+
+# add metadata
+cellct_field <- cellct_tbl_w_seq %>% 
+  left_join(field, by="sample_id") 
+
+# set colors 
+cellct_colors <- c("Chlainomonas rubra"="#bebada",
+                   "Sanguina nivaloides"="#FCA69C",
+                   "Chloromonas krienitzii"="#8dd3c7",
+                   "Chloromonas cf. brevispina"="#8dd3c7",
+                   "Chloromonas cf. nivalis"="#8dd3c7",
+                   "Green cell"="grey70",
+                   "Other"="grey70")
+
+# plot
+cellct_heatmap <- ggplot(cellct_field, 
+                         aes(x=alias %>% fct_reorder(elev_m), 
+                             y=morpho_sp %>% fct_relevel(cellct_ord))) +
+  geom_tile(aes(alpha = percent_of_sample, fill = morpho_sp %>% fct_relevel(cellct_ord))) +
+  labs(y="Cell morphology") +
+  scale_alpha(range = c(0.01, 1)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title.x=element_blank()) +
+  guides(alpha="none",fill="none") +
+  my_heat_theme +
+  scale_fill_manual(values = cellct_colors)
+cellct_heatmap
+```
+
+
+```{r s18_heat_setup, include=F}
+# calculate rel abund as % of Chlorophyta reads
+s18_algae_rel_abund <- s18_rel_abund %>% 
+  group_by(sample_id) %>% 
+  mutate(rel_abund = n_reads/sum(n_reads)) %>% 
+  ungroup()
+
+# check whats missing from this compared to rbcl
+s18_sample_ids <- s18_algae_rel_abund %>% distinct(sample_id) %>% pull()
+rbcl_sample_ids <- rbcl_rel_abund %>% distinct(sample_id) %>% pull()
+setdiff(rbcl_sample_ids, s18_sample_ids)
+
+# calculate relative abundance per genus
+best_assignment_rel_abund <- s18_algae_rel_abund %>% 
+  left_join(s18_algae_taxonomy, by="asv_id") %>% 
+  group_by(sample_id, best_assignment) %>% 
+  summarise(rel_abund = sum(rel_abund)) %>% 
+  ungroup()
+
+s18_rel_abund_lumped <- best_assignment_rel_abund %>% 
+  mutate(lumped_best_assignment = case_when(best_assignment=="Sanguina_nivaloides"~"Sanguina nivaloides",
+                                     best_assignment %>% str_detect("Chloromonas")~"Chloromonas",
+                                     # best_assignment == "Chlorogonium"~"Chlorogonium",
+                                     best_assignment=="Koliellaceae"~"Trebouxiophyceae",
+                                     TRUE~"Other")) %>% 
+  select(-best_assignment)
+
+s18_rel_abund_lumped
+```
+
+
+```{r s18_heat_plot, include=F}
+# specify plot order
+assign_ord <- c("Sanguina nivaloides", "Chloromonas","Trebouxiophyceae","Other")
+
+# add field data
+rel_abund_field <- s18_rel_abund_lumped %>% 
+  left_join(field, by="sample_id")
+
+# set colors: sanguina, chloromonas
+s18_heat_colors <- c("Sanguina nivaloides"="#FCA69C",
+                     "Chloromonas" = "#8dd3c7",
+                     "Trebouxiophyceae"="#80b1d3",
+                     "Other" = "grey70")
+
+# plot
+s18_heatmap <- ggplot(rel_abund_field, 
+                       aes(y=lumped_best_assignment %>% fct_relevel(assign_ord), 
+                           x=alias %>% fct_reorder(elev_m))) +
+  geom_tile(aes(alpha=rel_abund, fill=lumped_best_assignment %>% fct_relevel(assign_ord))) +
+  labs(y="18S taxonomy") +
+  scale_alpha(range = c(0.01, 1)) +
+  guides(alpha="none", fill="none") +
+  my_heat_theme +
+  scale_fill_manual(values = s18_heat_colors)
+s18_heatmap
+```
+
+
+
+```{r rbcl_heat, include=F}
+# group by OTU
+rbcl_rel_abund <- rbcl_rel_abund %>% 
+  left_join(rbcl_otus, by="asv_id") %>% 
+  group_by(sample_id, otu_name) %>% 
+  summarise(rel_abund = sum(rel_abund)) %>%   
+  ungroup()
+
+# add grouping metadata
+rbcl_rel_abund_field <- rbcl_rel_abund %>% 
+  left_join(field, by="sample_id")
+ 
+# specify colors
+rbcl_otu_colors <- c("Chlainomonas A"="#bebada",
+                     "Sanguina B"="#FCA69C",
+                     "Other Chloromonas"="#8dd3c7",
+                     "Chloromonas krienitzii"="#8dd3c7",
+                     "Chloromonas muramotoi C"="#8dd3c7", 
+                     "Chloromonas D"="#8dd3c7", 
+                     "Chloromonas F"="#8dd3c7", 
+                     "Trebouxiophyceae G"="#80b1d3", 
+                     "Unknown E"="grey70")
+
+# specify factor order
+otu_ord <- c("Chlainomonas A","Sanguina B", "Other Chloromonas","Chloromonas krienitzii","Chloromonas muramotoi C","Chloromonas D","Chloromonas F", "Trebouxiophyceae G","Unknown E")
+
+rbcl_heatmap <- ggplot(rbcl_rel_abund_field, aes(y=otu_name %>% fct_relevel(otu_ord), x=alias %>% fct_reorder(elev_m))) +
+  geom_tile(aes(alpha=rel_abund, fill=otu_name %>% fct_relevel(otu_ord))) +
+  labs(y="rbcL OTU") +
+  scale_alpha(range = c(0.01, 1)) +
+  my_heat_theme +
+  guides(alpha="none", fill="none") +
+  scale_fill_manual(values= rbcl_otu_colors)
+rbcl_heatmap
+```
+
+
+```{r combined_heatmap_setup, echo=F, fig.width=7,fig.height=4}
+# adjust tbls so they can be combined
+cellct_combine <- cellct_tbl_w_seq %>% 
+  mutate(marker = "Cell morphology") %>% 
+  dplyr::rename(species=morpho_sp, rel_abund=percent_of_sample) %>% 
+  select(sample_id, marker, species, rel_abund)
+  
+s18_combine <- s18_rel_abund_lumped %>% 
+  mutate(marker = "18S") %>% 
+  dplyr::rename(species=lumped_best_assignment) %>% 
+  select(sample_id, marker, species, rel_abund)
+
+rbcl_combine <- rbcl_rel_abund %>%
+  mutate(marker="rbcL") %>% 
+  dplyr::rename(species = otu_name) %>% 
+  select(sample_id, marker, species, rel_abund)
+
+# combine the tbls into one
+combined <- bind_rows(cellct_combine, s18_combine, rbcl_combine) %>% 
+  left_join(field, by="sample_id")
+
+# specify factor order
+species_ord <- c("Chlainomonas A","Chlainomonas rubra", 
+                "Sanguina B", "Sanguina nivaloides",
+                "Chloromonas krienitzii","Chloromonas muramotoi C", "Chloromonas D", "Chloromonas cf. brevispina", "Chloromonas cf. nivalis","Chloromonas F",
+                "Other Chloromonas", "Chloromonas",
+                "Trebouxiophyceae G", "Trebouxiophyceae",
+                "Unknown E", "Green cell", "Other")
+ 
+# specify colors
+plot_colors <- c(rbcl_otu_colors,s18_heat_colors, cellct_colors)
+
+
+# plot
+community_heatmap <- ggplot(combined, aes(x=alias %>% fct_reorder(elev_m), 
+                                          y = species %>% fct_relevel(species_ord))) + 
+  geom_tile(aes(alpha=rel_abund, 
+                fill=species %>% fct_relevel(species_ord) )) + 
+  facet_grid(rows = vars(marker %>% fct_relevel(c("Cell morphology","18S","rbcL"))), 
+             scales="free_y", space="free_y") +
+  scale_alpha(range = c(0.01, 1)) +
+  guides(alpha="none", fill="none") +
+  scale_fill_manual(values = plot_colors) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=0.5),
+        axis.title.y=element_blank()) +
+  labs(x="Sample ID") 
+  
+community_heatmap
+```
+
+
+
+
+```{r output, echo=F}
+ggsave(here::here("manuscript/figs/cellct_scatterpie.pdf"), plot=scatterpie, width=7, height=5)
+ggsave(here::here("manuscript/figs/cellct_axis.pdf"), plot=base_plot, width=5, height=5)
+
+ggsave(here("manuscript/figs/main/community/community_ggplot.pdf"), plot=community_heatmap, width=7, height=4)
+```
+
