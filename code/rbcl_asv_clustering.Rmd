@@ -313,7 +313,7 @@ mds
 ```
 
 ```{r, fig.width=4, fig.height=6}
-asv_arranged <- gridExtra::grid.arrange(mds, tsne_no_legend, nrow=2)
+asv_arranged <- gridExtra::grid.arrange(mds, tsne_no_legend_nice_colors, nrow=2)
 ```
 
 
