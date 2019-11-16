@@ -69,6 +69,6 @@ silva_3 <- key %>%
 
 silva_3
 
-write_csv(key, here("output/asv_seq_key_18s.csv"))
-writeXStringSet(seqs_to_fasta, here("output/all_18s.fasta"))
+write_csv(key, here("data/asv_seq_data/asv_seq_key_18s.csv"))
+writeXStringSet(seqs_to_fasta, here("data/asv_seq_data/all_18s.fasta"))
 write_csv(silva_3, here("data/02_tidied/tidied_silva_18s_assignments.csv"))
