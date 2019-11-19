@@ -14,3 +14,8 @@
 *.csv
 *.JPG
 *.JPEG
+*.ascii
+*.ps
+*.log
+*.gz
+*.txt
