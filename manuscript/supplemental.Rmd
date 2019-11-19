@@ -19,12 +19,15 @@ library(sessioninfo)
 
 
 ```{r, include=F}
-map <- knitr::include_graphics(here::here("manuscript/figs/map.png")) # crop zoom, city font white, each site gets one point with box specifying elev range, n samples, dates, 
+map <- knitr::include_graphics(here::here("manuscript/figs/supp/map.png")) # crop zoom, city font white, each site gets one point with box specifying elev range, n samples, dates, 
 field_tbl <- read_csv(here::here("data/02_tidied/tidied_field.csv")) #
 field_photos <- knitr::include_graphics(here::here("manuscript/figs/supp/field_photos/field_collage.png"))
-micro_photos <- knitr::include_graphics(here::here("manuscript/figs/S4_site_micro_photos/micro.png"))
-cellct <- include_graphics(here("manuscript/figs/supp/cellct_scatterpie/cellct_scatterpie.png")) # make pies circles circular! they're shightly squished lengthwise
-tree_otu <- include_graphics(here("manuscript/supp/figs/otu_tree.png"))
+micro_photos1 <- knitr::include_graphics(here::here("manuscript/figs/supp/micro_photos/micro1.png"))
+micro_photos2 <- knitr::include_graphics(here::here("manuscript/figs/supp/micro_photos/micro2.png"))
+micro_photos3 <- knitr::include_graphics(here::here("manuscript/figs/supp/micro_photos/micro3.png"))
+
+cellct <- include_graphics(here("manuscript/figs/supp/cellct_scatterpie/cellct_scatterpie.png")) # try stacked barplots
+tree_otu <- include_graphics(here("manuscript/figs/supp/otu_tree.png"))
 tree_taxonomy <- include_graphics(here("manuscript/figs/supp/taxonomy_tree.png"))
 diversity <- include_graphics(here("manuscript/figs/supp/diversity.png"))
 depth <- include_graphics(here("manuscript/figs/supp/depth/depth_polished.png")) ###
@@ -33,7 +36,7 @@ depth <- include_graphics(here("manuscript/figs/supp/depth/depth_polished.png"))
 map_cap <- "Map showing locations of snow algae sampling locations in summer 2018."
 table_cap <- "Table of sample site information of sequenced snow algae samples."
 field_photo_cap <- "Photos of snow algae field sites, arranged from high to low elevation from top to bottom. Alphanumeric code in upper left indicates sample ID."
-micro_photo_cap <- "Microphotos of snow algae samples included in sequencing run."
+micro_cap <- "Microphotos of snow algae samples included in sequencing run. All scale bars are approximately 20um."
 cellct_cap <- "Proportional abundance of snow algae cell morphologies, plotted against date and elevation."
 tree_cap <- "Maximum likelihood tree of rbcL amplicon library. Colors represent OTU assignments."
 tax_tree_cap <- "Maximum likelihood tree of rbcL amplicon library. Colors represent taxonomic assignments."
@@ -45,11 +48,12 @@ depth_cap <- "A. Representative field photo of snow runnel, with orange on surfa
  1. Map of sample locations
  2. Photos of field sites
  3. Microphotos of snow algae samples
- 4. Plots of snow algae 18S community composition. A. All 18S, Silva assignments. B. Chlorophyta assignments with custom reference database.
- 5. Maximum likelihood tree of *rbc*L amplicon
- 6. Plot of base differences between Genbank 18S and *rbc*L segments
- 7. Phylogenetic diversity of snow algae.
-
+ 4. Piecharts of cell count relative abundance, plotted by sample elevation and date
+ 5. Maximum likelihood tree of *rbc*L amplicon, colored by taxonomic assignment
+ 6. ML tree of *rbc*L, colored by OTU
+ 7. Snow algae diversity over time and elevation.
+ 8. Photos of *Chloromonas krienitzii* above and below the surface, with relative abundance plots at surface and depth.
+ 
 ## Tables
  1. Table of sample site information
  2. Software information
@@ -70,19 +74,25 @@ field_photos
 
 
 ```{r, fig.cap=micro_cap}
-#scale bar
-# # sizes the same (crop template)
-# arrange in grid
-micro_photos
+micro_photos1
 ```
 
-```{r s18_rel_abund, fig.cap=s18_cap}
-s18 # should this go in the main fig next to the rbcl assignments?
+
+```{r}
+micro_photos2
 ```
 
+
+```{r}
+micro_photos3
+```
+
+```{r, (ref:cellct_cap)}
+cellct
+```
 
 ```{r tree, fig.cap=tree_cap}
-tree
+tree_otu
 ```
 
 ```{r tax_tree, fig.cap=tax_tree_cap}
@@ -95,15 +105,16 @@ diversity
 ```
 
 
-```{r, (ref:cellct_cap)}
-cellct
+```{r, fig.cap=depth_cap}
+depth
 ```
 
 
 
 
+
 ```{r}
-field %>% 
+field_tbl %>% 
    filter(have_seq==T) %>% 
    mutate(notes = if_else(sample_id %in% c("pan18.ro","bre18.rd"), "collected from rock",NA_character_)) %>% 
    select(alias, date, elev_m, lat, lon,color_snow, habitat, notes) %>% 
