@@ -3,10 +3,22 @@ title: "Map of 2018 snow algae sample locations"
 output: html_notebook
 ---
 
+<style>
+table {
+  background-color: white !important;
+  color: black !important;
+}
+</style>
+<!-- format the table black and white -->
+
 ```{r libs, include=F}
 library(tidyverse)
 library(lubridate)
 library(ggmap)
+library(ggrepel)
+library(kableExtra)
+library(magick)
+library(formattable)
 
 library(ggdark)
 ```
@@ -17,12 +29,35 @@ cities <- read_csv(here::here("output/map/city_coords.csv"))
 
 load(here::here("output/map/raw_google_map.rda")) # loads .rda called "algae_map"... not sure how avoid using.rda format, maybe png?
 ```
+```{r}
+cities <- cities %>% 
+  filter(name == "Vancouver")
+```
+
+```{r}
+field_summary <-
+  field %>%
+  group_by(mountain) %>% 
+  drop_na(lat, lon) %>% 
+  arrange(date) %>% 
+  summarise(n=n(), 
+            mean_elev = mean(elev_m), 
+            first_visit=min(date) %>% format("%b %d"), 
+            last_visit= max(date) %>% format("%b %d"), 
+            n_visits= length(unique(date)),
+            lat=mean(lat),
+            lon=mean(lon),
+            date=min(date)) %>% 
+  arrange(date) %>% 
+  select(-date)
+
+# paste(field$date %>% month(label=TRUE), field$date %>%day())
+```
 
 
 ```{r all_samples_map, echo=F}
 # one point per mountain, with moutain code, colored by mean elevation
 # site tbl: each mtn, total samples, visits, n sequenced samples
-
 
 full_map <- ggmap(algae_map, extent = "device") +
   # jitter points to make it easier to read
@@ -36,6 +71,67 @@ full_map <- ggmap(algae_map, extent = "device") +
   labs(title = "Snow algae sample sites, summer 2018", color="Elevation (m)") 
 
 full_map
+
+full_map_2 <-
+  ggmap(algae_map, extent = "device") +
+  geom_point(data = field_summary, aes(x=lon, y=lat),
+              size = 1, alpha=1, 
+              color = "red") +
+  geom_point(data = cities, shape = 15, color="white") +
+  geom_text(data = cities, aes(label = name), hjust = 1.1, color="white") #+
+  # geom_text_repel(data=field_summary,
+  #                 aes(x=lon, y=lat, label=mountain),
+  #                 size=3, vjust=-2, hjust=1) +
+  # plot transparent boxes for layers
+  # geom_label_repel(data=field_summary,
+  #            aes(label=mountain),
+  #            label.size = NA,
+  #            alpha=0.5, 
+  #             label.padding=.1, 
+  #             na.rm=TRUE,
+  #            seed=123) #+
+  #   # plot a second layer exactly the same, the labels for boxes
+  # geom_label_repel(data=field_summary,
+  #        aes(x=lon, y=lat, label=mountain), 
+  #        alpha=1, 
+  #        size=3,
+  #        segment.color="black",
+  #        segment.size = 1, 
+  #        seed=123)
+ # xlim = c(1, 20)
+full_map_2
+
+#missing enchantments point, not on map
+```
+
+
+```{r}
+# field_summary_kable <- 
+  field_summary %>% 
+  mutate(mean_elev = round(mean_elev,0),
+         last_visit = if_else(last_visit==first_visit,"",last_visit),
+         date_range= if_else(last_visit!="",paste(first_visit, last_visit, sep=" - "), first_visit)) %>% 
+  select(mountain, date_range,  mean_elev, n_visits,n) %>% 
+  dplyr::rename_all(str_to_title) %>%
+  dplyr::rename("Date"=Date_range,"Elevation"=Mean_elev, "N. visits"=N_visits, "Total samples"=N) %>% 
+  kable(booktabs=T, format = "html") %>%
+  kable_styling("striped",full_width = F) %>%
+  row_spec(0:14,color ="white",background ="black") %>% 
+  column_spec(1:5, width = "5em")
+
+
+# generated final via screenshot
+
+  # couldnt get to work
+  # tried 
+  # https://haozhu233.github.io/kableExtra/save_kable_and_as_image.html
+  # https://stackoverflow.com/questions/48834749/error-using-magick-r-to-import-pdf
+  # got image_read_pdf to work, still not authorized error for image_read
+  # https://stackoverflow.com/questions/42928765/convertnot-authorized-aaaa-error-constitute-c-readimage-453
+  # as_image()
+  # save_kable(file=paste0(getwd(),"/presentation/omics/field_tbl.pdf"))
+  # kable_as_image(filename=paste0(getwd(),"/presentation/omics/field_tbl.pdf"))
+field_summary_kable
 ```
 
 ```{r plot_function}
@@ -78,7 +174,8 @@ save_map("July",3)
 save_map("August",4)
 save_map("September",5)
 
-
+# save output for omics presentation
+ggsave(filename = here::here("presentation/omics/map.png"))
 
 
 ```
