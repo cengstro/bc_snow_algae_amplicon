@@ -67,12 +67,32 @@ field_sample_uid <- field_visit_num %>%
   mutate(alias = paste0(alias_1, ".", uid))
 field_sample_uid %>% distinct(sample_id, alias, date) %>% arrange(date) %>% view()
 
+# add column for mountain
+view(field_sample_uid)
+field_mountain_added <- field_sample_uid %>% 
+  mutate(mountain = case_when(mountain_letter=="A"~"Enchantments",
+                              mountain_letter=="B"~"Mt. Brew",
+                              mountain_letter=="F"~"Mt. Fromme",
+                              mountain_letter=="G"~"Opal Cone",
+                              mountain_letter=="H"~"Hollyburn",
+                              mountain_letter=="K"~"Sky Pilot",
+                              mountain_letter=="L"~"Washington Pass",
+                              mountain_letter=="M"~"St. Marks Summit",
+                              mountain_letter=="N"~"Mt. Rexford",
+                              mountain_letter=="P"~"Panorama Ridge",
+                              mountain_letter=="S"~"Mt. Seymour",
+                              mountain_letter=="T"~"Tricouni Pk.",
+                              mountain_letter=="W"~"Wedge Mtn.",
+                              mountain_letter=="X"~"Saxifrage Mtn."))
+
 # remove some of the unused columns
-field_removed_extra_cols <- field_sample_uid %>% 
-  select(sample_id, alias, date, lat, lon, elev_m, color_snow, habitat, substrate, depth_cm, dom_morph, have_seq)
+field_removed_extra_cols <- field_mountain_added %>% 
+  select(sample_id, alias, date, lat, lon, elev_m, color_snow, habitat, substrate, depth_cm, dom_morph, have_seq, mountain)
+
+view(field_removed_extra_cols)
 
 
 
 
 # write output ------------
-write_csv(field_removed_extra_cols, here("data/02_tidied/tidied_field.csv"))
+write_csv(field_removed_extra_cols, here::here("data/02_tidied/tidied_field.csv"))
