@@ -18,34 +18,23 @@ knitr::opts_chunk$set(echo = TRUE)
   - microphoto corresponds with the field photo on it's left
 
 
-
-## Fig. 2: Cell morphologies by elevation
-
-- intuitive layout 
-  - elevation in y axis
-  - time on x-axis
-  - abundance is proportional to size
-  - different categories of cell are different colors
-
-
-## Fig. 3: *rbc*L ASV clustering
+## Fig. 2: *rbc*L ASV clustering
 
 - intuitive layout
-  - MDS ("traditional" clustering) on top, "newer" t-SNE clustering on bottom
+  - MDS ("traditional" clustering) on top, "sophisticated" t-SNE clustering on bottom
   - seperate genera on legend with space
   - NA is grey
   - size proportional to relative abundance
 - contrasting colors
   - each point color distinguishable in t-SNE
+  - modified brewer palettes (Wong 2012)
 
-## Fig. 4: Heatmap of *rbc*L, 18S, and cell count relative abundance
+## Fig. 3: Heatmap of *rbc*L, 18S, and cell count relative abundance
 
 - intuitive layout
-  - elevation y axis
   - intuitive colors: 
-    - "terrain" colors for elevation
-    - actual color of the sampled snow 
     - consistant taxonomy colors; e.g. *Sanguina* is the same color in rbcL, 18S, and cell count
+- although I had initially wanted elevation to be on the y axis because it is intuitive, it makes sense to put taxonomy on y axis for readibility. The sample IDs are less important, and would be only referenced if someone wanted to cross reference this figure with another (e.g. fig 4, or in supp data), but the taxonomy is more important within this fig
 - because amplicon data is semi-quantative, using alpha (opacity) to represent relative abundance is appropriate and intuitive
 - different colors allow for fast comparison between data sets for particular taxa
 - although it makes heavy use of red and green, this is color blind friendly because only the intensity of the color matters within each column, and each column is labelled, thus alleviating the need for a color legend
@@ -53,7 +42,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - brewer palettes (Wong 2012)
 
 
-## Fig. 5: *rbc*L uniFrac NMDS
+## Fig. 4: *rbc*L uniFrac NMDS
 
 - intuitive layout
   - same color scheme for elevation as in Fig. 4
