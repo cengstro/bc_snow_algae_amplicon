@@ -22,9 +22,15 @@ library(ggpubr)
 library(ggthemes)
 library(ggdark)
 
-conflicted::conflict_scout()
-conflicted::conflict_prefer("filter","dplyr")
+# conflicted::conflict_scout()
+# conflicted::conflict_prefer("filter","dplyr")
 ```
+
+```{r}
+# theme_set(dark_theme_classic())
+theme_set(dark_theme_light())
+```
+
 
 ```{r read, include=F}
 rel_abund <- read_csv(here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abund.csv"))
@@ -161,7 +167,7 @@ final_tsne <- ggplot(tsne_rel_abund, aes(x=V1, y=V2)) +
                              expand = unit(2, "mm")) + # expansion of ellipse around points
   geom_point(aes(color = plot_taxa %>% fct_relevel(taxa.order), size = global_rel_abund, alpha=0.5))+
   labs(color="ASV taxonomic assignment", tag="B", title="t-SNE") +
-  ggthemes::theme_few() +
+  # ggthemes::theme_few() +
   scale_size(range = c(2, 12), guide="none") 
 
 tsne_no_legend <- final_tsne +
@@ -303,7 +309,7 @@ mds <- ggplot(mds_asv_plot, aes(V1, V2)) +
                              expand = unit(2, "mm")) +
   geom_point(aes(color = plot_taxa %>% fct_relevel(taxa.order), size = global_rel_abund, alpha=0.5))+
   labs(color="ASV taxonomic assignment", tag="A",title="MDS") +
-  ggthemes::theme_few() +
+  # ggthemes::theme_few() +
   scale_size(range = c(2, 12), guide="none")+
   guides(colour = guide_legend(override.aes = list(alpha = 1, size=3)), alpha="none") +
   theme(legend.position = "none") +
@@ -316,6 +322,9 @@ mds
 asv_arranged <- gridExtra::grid.arrange(mds, tsne_no_legend_nice_colors, nrow=2)
 ```
 
+```{r, fig.width=7, fig.height=3.5}
+present_version <- gridExtra::grid.arrange(mds, tsne_no_legend_nice_colors, ncol=2)
+```
 
 
 # Phylogenetic tree
@@ -418,6 +427,11 @@ write_csv(otus_asv_name, path = here("output/asv_otu_key.csv"))
 ggsave(filename = here("manuscript/figs/main/taxonomy/asvs.pdf"), plot=asv_arranged, height = 6, width = 4)
 ggsave(filename = here("manuscript/figs/main/taxonomy/asv_legend.pdf"), plot=legend,  height = 4, width = 2.2)
 
+# write black formatted versions for presentation
+ggsave(filename = here("presentation/omics/asvs.pdf"), plot=present_version, width = 7, height = 3.5)
+ggsave(filename = here("presentation/omics/asv_legend.pdf"), plot=legend,  height = 4, width = 2.2)
+
+
 # write out the trees
 ggsave(filename = here("manuscript/figs/otu_tree.png"), plot=otu_tree, width=7, height = 10)
 ggsave(filename = here("manuscript/figs/taxonomy_tree.png"), plot=taxonomy_tree, width=7, height = 10) 
@@ -435,6 +449,9 @@ writeXStringSet(sang_taxa_seqs, here("output/taxa_filtered_fastas/sanguina_idtax
 # chlainomonas fasta for jordan
 writeXStringSet(chlain_seqs, here("output/taxa_filtered_fastas/chlainomonas_otu.fasta"))
 writeXStringSet(chlain_taxa_seqs, here("output/taxa_filtered_fastas/chlainomonas_idtaxa.fasta"))
+
+
+
 ```
 
 
