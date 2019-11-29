@@ -21,6 +21,7 @@ library(ggdark)
 # define theme for all heatmaps
 my_heat_theme <- theme(axis.text.x = element_text(angle = 45, hjust = 1),
         axis.title.x=element_blank())
+theme_set(dark_theme_light())
 ```
 
 
@@ -285,6 +286,7 @@ community_heatmap
 ggsave(here::here("manuscript/figs/cellct_scatterpie.pdf"), plot=scatterpie, width=7, height=5)
 ggsave(here::here("manuscript/figs/cellct_axis.pdf"), plot=base_plot, width=5, height=5)
 
-ggsave(here("manuscript/figs/main/community/community_ggplot.pdf"), plot=community_heatmap, width=7, height=4)
+# presentation output
+ggsave(here("presentation/omics/community_ggplot.pdf"), plot=community_heatmap, width=7, height=4)
 ```
 
