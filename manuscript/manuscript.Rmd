@@ -1,9 +1,12 @@
 ---
-title: "Contrasting snow algae communities along an elevational gradient"
-# distinct yet overlapping categories of snow algae community 
-# Classification of snow algae communities along an elevational gradient
-# Elevation influences snow algae community composition
-# 
+title: "Contrasting alpine and subalpine snow algae communities in British Columbia, Canada"
+# who grows in the snow? multi-hued snow algae communities
+# different coloured alpine and subalpine snows harbour constrasting snow algae communities
+# contrasting snow algae communities in di
+# not just dirty snow; alpine snow algae communities have different assemblages
+# green, orange, or red snow caused by distinct
+# snow algae communities causing colored snow in alpine and subalpine summer snow 
+# distinct snow algae communities across an elevational gradient
 author:
   - name: Casey B. Engstrom
     institute: SFU
@@ -27,7 +30,7 @@ output:
 csl: templates/nature-communications.csl
 bibliography: casey1.bib
 abstract: |
-  *Abstract*: Snow algae grow in melting summer snowfields throughout polar and alpine regions, forming extensive blooms that can alter snow surface albedo and increase melt rate. The factors that determine when and where a snow algae bloom will form are poorly understood; fundamentally, we need to know what algae species are present in this poorly understood microbiome. We used a novel *rbc*L and 18S amplicon high-throughput sequencing (HTS) approach to assess community composition in 33 snow algae samples from the Coast Range of British Columbia, Canada. We found distinct communities at different elevations, with *Chloromonas* prevalent at lower elevations and *Sanguina* above treeline, while *Chlainomonas* was abundant across all elevations. Alpha diversity was variable; surprisingly, samples from highest elevations contained the highest diversity. We observed the snow algae *Chloromonas krienitzii* transition from green to orange over the course of the summer, and our observations suggest that different life stages of this species occupy distinct habitats above and below the snow surface. The snow algae microbiome is more diverse than previously thought, and future work must take into account variable community composition in snow algae blooms. 
+  Snow algae grow in melting summer snowfields throughout polar and alpine regions, forming extensive blooms that reduce albedo and increase snow melt. Green, orange, and red patches of snow algae can harbour morphologically diverse communities, but despite their global ubiquity the community composition of snow algae blooms are poorly understood. We Illumina sequenced 18S and *rbcL* amplicons from 33 snow algae samples collected from a range of alpine and subalpine habitats in the Coast Range of British Columbia, Canada. Communities were dominated by algae closely related to *Sanguina* and *Chloromonas*, the latter including genetically distinct sub-groups including clusters matching *Chlainomonas* and several sub-groups that could represent potentially novel clades. Above treeline snow algae communities were dominated by *Sanguina*, while *Chloromonas krienitzii* was found in snow runnels near treeline, which transitioned from green to orange throughout the season. *Chlainomonas* was abundant in samples across all elevations. Our results suggest that while snow algae diversity at the genus level is relatively low much remains to be explored at the species level, and that communities of snow algae can differ greatly from patch to patch of snow. 
 ---
 
 ```{r include=FALSE}
@@ -35,7 +38,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-### *Keywords*: snow algae rbcL 18S amplicon microbiome alpine community
+### *Keywords*: snow algae community microbiome amplicon rbcL 18S alpine
 
 ### *Run title*: Contrasting snow algae communities
 
