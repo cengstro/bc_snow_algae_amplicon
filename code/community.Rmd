@@ -297,7 +297,7 @@ scales::show_col("#4aaf53")
 ```{r rotated-stacked-bar, echo=F, fig.width=7, fig.height=5}
 
 # specify factor order, so Chlainomonas always on same side, etc
-species_colors <- c("Chlainomonas A"="#984ea3","Chlainomonas rubra"="#984ea3", #purple
+species_colors <- c("Chlainomonas A"="#ac71b5","Chlainomonas rubra"="#ac71b5", #purple
                 "Sanguina B"="#ff534a", "Sanguina nivaloides"="#ff534a", #red
                 # Chloromonas: pastel greens / blues / yellows
                 "Chloromonas krienitzii"="#ffa54c","Chloromonas muramotoi C"="#87b1d4", "Chloromonas D"="#94cf92", "Chloromonas F"="#fdfd96", 
@@ -330,6 +330,7 @@ stacked_bar +
 #18s: check
 # cellct: _
 # rbcl: _
+# red green colorblind similatur
 ```
 
 stacked bar legend
