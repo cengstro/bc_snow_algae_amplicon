@@ -261,6 +261,7 @@ names(otu_colors) <- c("Chlainomonas A","Sanguina B","Other Chloromonas","Chloro
 scales::show_col(otu_colors)
 ```
 
+
 Change colors in plot
 ```{r}
 tsne_no_legend_nice_colors <- tsne_no_legend +
