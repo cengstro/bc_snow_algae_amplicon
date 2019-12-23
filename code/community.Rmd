@@ -279,14 +279,39 @@ community_heatmap <- ggplot(combined, aes(x=alias %>% fct_reorder(elev_m),
 community_heatmap
 ```
 
-```{r rotated-stacked-bar, echo=F}
+```{r, fig.width=2, fig.height=2}
+chloromonas_color <- "#4daf4a" # green
+krienitzii_color <- "#ff7f00" # orange
+muramotoi_color <- "#d7d42e" # yellow
+# pick shades using https://www.color-hex.com/
+hohamii_and_D_color <- "#265725" # dark green
+group_B_and_F_color <- "#b25800" # brown
+chloromonas_colors <- c(chloromonas_color, krienitzii_color, muramotoi_color, hohamii_and_D_color,group_B_and_F_color)
+scales::show_col(chloromonas_colors)
+scales::show_col("#4aaf53")
+
+```
+
+
+
+```{r rotated-stacked-bar, echo=F, fig.width=7, fig.height=5}
+
 # specify factor order, so Chlainomonas always on same side, etc
 species_colors <- c("Chlainomonas A"="#984ea3","Chlainomonas rubra"="#984ea3", #purple
                 "Sanguina B"="#ff534a", "Sanguina nivaloides"="#ff534a", #red
-                "Chloromonas krienitzii"="#ff7f00","Chloromonas muramotoi C"="#173416", "Chloromonas D"="#265725", "Chloromonas cf. brevispina"="forestgreen", "Chloromonas cf. nivalis"="lightgreen","Chloromonas F"="#b25800", #greens
-                "Other Chloromonas"="#4daf4a", "Chloromonas"="#4daf4a", #light greens
-                "Trebouxiophyceae G"="#377eb8", "Trebouxiophyceae"="#377eb8", # blue
-                "Unknown E"="grey40", "Green cell"="#b2d8b2", "Other"="grey70") #greys
+                # Chloromonas: pastel greens / blues / yellows
+                "Chloromonas krienitzii"="#ff7f00","Chloromonas muramotoi C"="#87b1d4", "Chloromonas D"="#94cf92", "Chloromonas F"="#fdfd96", 
+                #    orange green                                      pale blu,                   blue green      yellow--only high elev
+                "Chloromonas cf. brevispina"="#80c786", "Chloromonas cf. nivalis"="#4aaf86", 
+                #                 lt green                            teal
+                "Other Chloromonas"="#4aaf53", "Chloromonas"="#4aaf53", 
+                # greyish light green
+                "Trebouxiophyceae G"="#173416", "Trebouxiophyceae"="#173416", # dark green, stand out
+                "Unknown E"="grey60", "Green cell"="#4aaf53", "Other"="grey30") #greys
+
+# teal #69c095
+# medium blue #6994c0
+
 # backwards
 species_colors <- species_colors %>% rev()
 
@@ -302,6 +327,9 @@ stacked_bar <- ggplot(combined, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund
 
 stacked_bar +
   theme(legend.position="none")
+#18s: check
+# cellct: _
+# rbcl: _
 ```
 
 stacked bar legend
