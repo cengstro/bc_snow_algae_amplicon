@@ -51,21 +51,43 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction {-}
 
-Snow algae are cold-adapted microalgae that bloom on melting summer snow throughout alpine and polar regions. Snow algae darken the snow surface and decrease albedo[@lutz_biogeography_2016;onuma_temporal_2019]---by one estimate, enough to substantially increase snow melt[@ganey_role_2017]. Estimates of global coverage are lacking, but snow algae blooms can cover many square kilometers of glacier summer snow[@ganey_role_2017], are present on snow overlying sea ice[@gradinger_snow_1996], and are reported from every continent[@segawa_bipolar_2018;@duval_snow_1999;@marchant_snow_1982;@yoshimura_community_1997;@vimercati_nieves_2019]. 
+Snow algae are cold-adapted microalgae that bloom on melting summer snow throughout alpine and polar regions. Snow algae darken the snow surface and decrease albedo[@lutz_biogeography_2016;onuma_temporal_2019]---by one estimate, enough to substantially increase snow melt[@ganey_role_2017]. Estimates of global coverage are lacking, but snow algae blooms can cover many square kilometers of glacier summer snow[@ganey_role_2017], are present on snow overlying sea ice[@gradinger_snow_1996], and are reported from every continent[@segawa_bipolar_2018;@duval_snow_1999;@marchant_snow_1982;@yoshimura_community_1997;@vimercati_nieves_2019], yet their impact on biogeochemical cycles and food webs has not been explored. Snow algae has been observed throughout history from the ancient Romans[plinius_naturalis_1096] to Charles Darwin[@darwin_voyage_1959], yet despite nearly a century of microscopic study[@leya_snow_2013] we still lack the most basic understanding of snow algae blooms. How do algae colonise the surface of white snow in spring? How do cells propagate in this harsh environment? Are snow algae obligate symbionts of bacteria, like many other microalgae?[@seymour_zooming_2017] How do snow algae aquire nutrients? Central to answering these questions, we first need to define what species of algae cause snow algae blooms. 
 
-Sanger seq isolates
+<!-- Sanger seq isolates -->
+<!-- Sanger seq field samples -->
+<!-- 18S HTS -->
 
-Sanger seq field samples
+<!-- rationale -->
+<!-- significance -->
+<!-- hypothesis -->
+<!-- methods -->
+<!-- expected results -->
+<!-- how this addresses the question -->
 
-18S HTS
+ 
+<!-- 1. are there distinct communities of snow algae? -->
+<!-- rationale: lit suggests chlaino, chloro, sanguina dominant, is there much overlap between the communities? Differences between high and low elevation in microscopy, are there genetic differences? This is an important first step before we measure habitat variables, will allow us to choose which variables to measure... -->
+<!-- significance. different community, different ecology and or life history. and the snow algae are the primary producers of the community. define the study system.  -->
+<!-- hypothesis: there are distinct communities of snow algae-->
+<!-- methods: cell count, 18s, and rbcL amplicon sequencing -->
+<!-- results: there is much overlap between communities, but many with dominant species. Some chloromonas, raphi only found with sanguina. Chlainomonas widespread. overall, no, there are not sharply delineated communities. -->
+<!-- new questions raised: what habitat differences are found with different communities? is bass becking applicable here? what ecological differences, life history differences characterise the different communities?  -->
 
-<!-- re work this to follow the flow of my presentation -->
+
+Our knowledge of snow algae has deepened since the early days of morphology-based classification, yet still snow algae community composition at the species level remains unknown. Morphology can be misleading when identifying microalgae: the same species can look completely different at different life stages; conversely, different species can look nearly identical. 
+
+The first efforts to use genetic sequencing to identify snow algae relied on Sanger sequencing of isolates. This approach has been fruitful *Chloromonas*[@matsuzaki_taxonomic_2019] 
+
+
+
+
+
 Microscopy reveals a diversity of algae in patches of green, orange, or pink snow (Fig. 1). Amplicon high-throughput sequencing (HTS) shows that most snow algae are typically Chlamydomonadales, although other orders are occasionally reported[@remias_two_2019;@lutz_integrated_2015;@soto_microbial_2020]. Three genera are frequently found in colored snow. *Sanguina* are red or orange cells found across the Arctic, which was recently re-assigned to its own genus based on Sanger sequencing of field samples[@prochazkova_sanguina_2019].  *Chloromonas* currently has 35 species listed on GenBank, 13 of which are snow algae[@matsuzaki_taxonomic_2019]. Microscopy suggests *Chloromonas* is prevalent in forested sites[@hoham_distribution_1979,@nedbalova_ecology_2008], but recent 18S metabarcoding found *Chloromonas* was also widespread in Arctic red snow in low relative abundance[@lutz_biogeography_2016]. The third genus *Chlainomonas* looks completely different from *Chloromonas*, but *rbcL* phylogeny suggests the two are closely related[@novis_two_2008]. Both *Chlainomonas* and *Sanguina* are colored red by astaxanthin, but *Chlainomonas* cells are typically twice the diameter, with four flagella and a distinct cell wall[@remias_ecophysiology_2016] (Fig 2x). *Chlainomonas* and *Sanguina* remain uncultured[@prochazkova_ecophysiological_2018;@novis_two_2008].
 
 Microscopic identification is complicated by the multiple life stages typical of microalgae: the same species can look completely different between life stages; conversely, the same species can look nearly identical. The freshwater algae *Haematococcus pluvialis* undergoes mitosis as green cells, but stressors such as high light and nutrient starvation triggers formation of a dormant cyst with thick cell walls and astaxanthin pigment[@ota_carotenoid_2018;@kobayashi_light-independent_1997]. Attempts to induce cyst development in snow algae remain unsuccessful; the bright pigments and ornamented cell walls of *Chloromonas* observed in the field bear little resemblance to the green cells in culture[@leya_response_2009]. Amplicon studies have found that green snow is caused by different species than red snow[@lutz_integrated_2015;@terashima_microbial_2017;@soto_microbial_2020], so it remains unknown whether red snow species undergo a green life phase at all. 
 
 
-Snow algae are the primary producer in a little-studied microbiome that includes protists, fungi, bacteria, and viruses[@naff_phylogeny_2013;@lutz_biogeography_2016;@hamilton_primary_2017;@terashima_microbial_2017;@hisakawa_metagenomic_2015]. Despite nearly a century of microscopic study of red snow[@leya_snow_2013], how snow algae blooms develop remains a mystery. How do cells propagate in this harsh environment? What limits the extent of snow algae blooms? Critically, we lack basic understanding of snow algae diversity and life history.
+Snow algae are the primary producer in a little-studied microbiome that includes protists, fungi, bacteria, and viruses[@naff_phylogeny_2013;@lutz_biogeography_2016;@hamilton_primary_2017;@terashima_microbial_2017;@hisakawa_metagenomic_2015]. 
 
 
 <!-- this from draft 1 of casey1, above is from MBB806 -->
