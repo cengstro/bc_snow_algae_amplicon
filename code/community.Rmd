@@ -300,14 +300,14 @@ scales::show_col("#4aaf53")
 species_colors <- c("Chlainomonas A"="#984ea3","Chlainomonas rubra"="#984ea3", #purple
                 "Sanguina B"="#ff534a", "Sanguina nivaloides"="#ff534a", #red
                 # Chloromonas: pastel greens / blues / yellows
-                "Chloromonas krienitzii"="#ff7f00","Chloromonas muramotoi C"="#87b1d4", "Chloromonas D"="#94cf92", "Chloromonas F"="#fdfd96", 
+                "Chloromonas krienitzii"="#ffa54c","Chloromonas muramotoi C"="#87b1d4", "Chloromonas D"="#94cf92", "Chloromonas F"="#fdfd96", 
                 #    orange green                                      pale blu,                   blue green      yellow--only high elev
                 "Chloromonas cf. brevispina"="#80c786", "Chloromonas cf. nivalis"="#4aaf86", 
                 #                 lt green                            teal
                 "Other Chloromonas"="#4aaf53", "Chloromonas"="#4aaf53", 
                 # greyish light green
-                "Trebouxiophyceae G"="#173416", "Trebouxiophyceae"="#173416", # dark green, stand out
-                "Unknown E"="grey60", "Green cell"="#4aaf53", "Other"="grey30") #greys
+                "Trebouxiophyceae G"="#6a2d2f", "Trebouxiophyceae"="#6a2d2f", # maroon, standout
+                "Unknown E"="grey60", "Green cell"="#4aaf53", "Other"="grey60") #greys
 
 # teal #69c095
 # medium blue #6994c0
