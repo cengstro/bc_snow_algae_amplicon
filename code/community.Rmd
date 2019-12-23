@@ -12,7 +12,9 @@ library(vegan)
 
 library(scatterpie)
 library(ggrepel)
-library(gridExtra)
+library(grid)
+library(egg)
+ library(gridExtra)
 library(ggthemes)
 library(ggdark)
 ```
@@ -251,27 +253,25 @@ combined <- bind_rows(cellct_combine, s18_combine, rbcl_combine) %>%
   left_join(field, by="sample_id")
 
 # specify factor order
-species_ord <- c("Chlainomonas A","Chlainomonas rubra", 
-                "Sanguina B", "Sanguina nivaloides",
-                "Chloromonas krienitzii","Chloromonas muramotoi C", "Chloromonas D", "Chloromonas cf. brevispina", "Chloromonas cf. nivalis","Chloromonas F",
-                "Other Chloromonas", "Chloromonas",
-                "Trebouxiophyceae G", "Trebouxiophyceae",
-                "Unknown E", "Green cell", "Other")
+species_ord <- c("Chlainomonas A"="#984ea3","Chlainomonas rubra"="#984ea3", #purple
+                "Sanguina B"="#ff534a", "Sanguina nivaloides"="#ff534a", #red
+                "Chloromonas krienitzii"="#ff7f00","Chloromonas muramotoi C"="#173416", "Chloromonas D"="#265725", "Chloromonas cf.  brevispina"="grey10", "Chloromonas cf. nivalis"="grey10","Chloromonas F"="#b25800", #greens
+                "Other Chloromonas"="#4daf4a", "Chloromonas"="#4daf4a", #light greens
+                "Trebouxiophyceae G"="#377eb8", "Trebouxiophyceae"="#377eb8", # blue
+                "Unknown E"="grey10", "Green cell"="grey10", "Other"="grey70") #greys
  
-# specify colors
-plot_colors <- c(rbcl_otu_colors,s18_heat_colors, cellct_colors)
 
 
 # plot
 community_heatmap <- ggplot(combined, aes(x=alias %>% fct_reorder(elev_m), 
-                                          y = species %>% fct_relevel(species_ord))) + 
+                                          y = species %>% fct_relevel(names(species_ord)))) + 
   geom_tile(aes(alpha=rel_abund, 
-                fill=species %>% fct_relevel(species_ord) )) + 
+                fill=species %>% fct_relevel(names(species_ord) ))) + 
   facet_grid(rows = vars(marker %>% fct_relevel(c("Cell morphology","18S","rbcL"))), 
              scales="free_y", space="free_y") +
   scale_alpha(range = c(0.01, 1)) +
   guides(alpha="none", fill="none") +
-  scale_fill_manual(values = plot_colors) +
+  scale_fill_manual(values = species_ord) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=0.5),
         axis.title.y=element_blank()) +
   labs(x="Sample ID") 
@@ -279,6 +279,47 @@ community_heatmap <- ggplot(combined, aes(x=alias %>% fct_reorder(elev_m),
 community_heatmap
 ```
 
+```{r rotated-stacked-bar, echo=F}
+# specify factor order, so Chlainomonas always on same side, etc
+species_colors <- c("Chlainomonas A"="#984ea3","Chlainomonas rubra"="#984ea3", #purple
+                "Sanguina B"="#ff534a", "Sanguina nivaloides"="#ff534a", #red
+                "Chloromonas krienitzii"="#ff7f00","Chloromonas muramotoi C"="#173416", "Chloromonas D"="#265725", "Chloromonas cf. brevispina"="forestgreen", "Chloromonas cf. nivalis"="lightgreen","Chloromonas F"="#b25800", #greens
+                "Other Chloromonas"="#4daf4a", "Chloromonas"="#4daf4a", #light greens
+                "Trebouxiophyceae G"="#377eb8", "Trebouxiophyceae"="#377eb8", # blue
+                "Unknown E"="grey40", "Green cell"="#b2d8b2", "Other"="grey70") #greys
+# backwards
+species_colors <- species_colors %>% rev()
+
+# plot
+stacked_bar <- ggplot(combined, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
+  geom_bar(aes(fill=species %>% fct_relevel(names(species_colors))), position="stack", stat="identity") +
+  coord_flip() +
+  facet_grid(cols = vars(marker %>% fct_relevel(c("Cell morphology","18S","rbcL"))), 
+             scales="free_y", space="free_y") +
+  theme_classic() +
+  labs(x="Sample ID", y="Relative abundance")+
+  scale_fill_manual(values = species_colors)
+
+stacked_bar +
+  theme(legend.position="none")
+```
+
+stacked bar legend
+```{r}
+legend <- stacked_bar %>% cowplot::get_legend()
+grid.newpage()
+grid.draw(legend)
+```
+
+
+dosent work in rmarkdown
+```{r, echo=F}
+gt <- ggplot_gtable(ggplot_build(stacked_bar))
+gtable_show_layout(gt)
+
+gt$widths[9] = 4*gt$widths[9]
+grid::grid.draw(gt)
+```
 
 
 
