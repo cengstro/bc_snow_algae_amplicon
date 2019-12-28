@@ -325,7 +325,7 @@ stacked_bar <- ggplot(combined, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund
   labs(x="Sample ID", y="Relative abundance")+
   scale_fill_manual(values = species_colors)
 
-stacked_bar +
+stack_no_legend <- stacked_bar +
   theme(legend.position="none")
 #18s: check
 # cellct: _
@@ -335,9 +335,10 @@ stacked_bar +
 
 stacked bar legend
 ```{r}
-legend <- stacked_bar %>% cowplot::get_legend()
-grid.newpage()
-grid.draw(legend)
+legend <- stacked_bar %>% 
+  cowplot::get_legend() %>% 
+  ggpubr::as_ggplot()
+legend
 ```
 
 
@@ -355,6 +356,11 @@ grid::grid.draw(gt)
 ```{r output, echo=F}
 ggsave(here::here("manuscript/figs/cellct_scatterpie.pdf"), plot=scatterpie, width=7, height=5)
 ggsave(here::here("manuscript/figs/cellct_axis.pdf"), plot=base_plot, width=5, height=5)
+
+
+ggsave(here::here("manuscript/figs/stack.pdf"), plot=stack_no_legend, width=7, height=5)
+ggsave(here::here("manuscript/figs/stack_legend.pdf"), plot=legend, width=7, height=5)
+
 
 # presentation output
 ggsave(here("presentation/omics/community_ggplot.pdf"), plot=community_heatmap, width=7, height=4)
