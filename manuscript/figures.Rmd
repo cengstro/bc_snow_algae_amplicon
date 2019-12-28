@@ -17,7 +17,7 @@ opts_chunk$set(fig.align= "center", echo=FALSE, warning=FALSE, message=FALSE)
 ```{r input, include=F}
 
 asv_similarity <- include_graphics(here("manuscript/figs/main/taxonomy/asvs2.png"))
-communities <- include_graphics(here("manuscript/figs/main/community/community_ggplot_polished_2.png"))
+communities <- include_graphics(here("manuscript/figs/stacked_barplot.png"))
 unifrac <- include_graphics(here("manuscript/figs/main/uf_plot.png"))
 # depth <- include_graphics(here("manuscript/figs/depth_comparison/depth_fig.png"))
 
@@ -25,7 +25,7 @@ field_cap <- "Representative photographs of snow algae. A. Red snow bloom above 
 
 asv_cap <- "A. MDS clustering of \\emph{rbc}L ASVs. Color represents taxonomy, size proportional to relative abundance. Dotted ellipses show OTU clusters. Stress = 0.13. B. t-SNE clustering of snow algae \\emph{rbc}L ASVs. Perplexity = 30."
 
-heatmap_cap <- "Relative abundance heatmap of snow algae community composition using cell morphology, 18S, and \\emph{rbc}L. Samples on the x-axis are arranged from low to high elevation. Taxonomic designations for \\emph{rbc}L are based on \\emph{de novo} OTU clustering, while taxonomic assignments for 18S are reference-based. Samples lacking data for a particular dataset are shown as blank (e.g. G1.4 18S)."
+heatmap_cap <- "Stacked barplot showing relative abundance community composition using cell morphology, 18S, and \\emph{rbc}L. Taxonomic designations for \\emph{rbcL} are based on \\emph{de novo} OTU clustering, while taxonomic assignments for 18S are reference-based. Samples on the y-axis are arranged in order of elevation."
 
 unifrac_cap <- "\\emph{rbc}L UniFrac similarity between snow algae samples. Points colored by elevation."
 ```
@@ -40,7 +40,7 @@ include_graphics(here("manuscript/figs/main/field/field.png"))
 asv_similarity
 ```
 
-```{r rel_abund, fig.cap = heatmap_cap}
+```{r rel_abund, fig.cap = heatmap_cap, fig.width=6, fig.height=5}
 communities
 ```
 
