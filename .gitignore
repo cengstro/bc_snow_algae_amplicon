@@ -1,23 +1,40 @@
 .Rproj.user
 .RData
 .Rhistory
-*.html
+
+# image
 *.png
 *.jpg
-*.docx
-*.svg
-*.fasta
-*.bib
-*.Rda
-*.pdf
 *.jpeg
-*.csv
 *.JPG
 *.JPEG
+*.svg
+
+# text
+*.docx
+*.txt
+
+# bio
+*.fasta
+*.fastq
+
+# ref
+*.bib
+
+# data
+*.Rda
+*.csv
+
+# other
+*.sh
+
+*.pdf
+*.html
 *.ascii
 *.ps
 *.log
 *.gz
-*.txt
-*.csv
 *.xcf 
+*.mp4
+*.odt
+*.odp
