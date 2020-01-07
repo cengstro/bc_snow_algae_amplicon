@@ -1,5 +1,5 @@
 ---
-title: "Overlapping snow algae communities in the alpine and subalpine zones of British Columbia"
+title: "Snow algae in the alpine and subalpine zones of British Columbia"
 # who grows in the snow? multi-hued snow algae communities
 # different coloured alpine and subalpine snows harbour constrasting snow algae communities
 # contrasting snow algae communities in di
@@ -30,7 +30,7 @@ output:
 csl: templates/nature-communications.csl
 bibliography: refs.bib
 abstract: |
-  Snow algae grow in melting summer snowfields throughout polar and alpine regions, forming extensive blooms that reduce albedo and increase snow melt. Green, orange, and red patches of snow algae can harbor morphologically diverse communities, but despite their global ubiquity the community composition of snow algae blooms are poorly understood. We Illumina sequenced 18S and *rbcL* amplicons from 33 snow algae samples collected from a range of alpine and subalpine habitats in the Coast Range of British Columbia, Canada. Communities were dominated by algae closely related to *Sanguina*, *Chloromonas*, and *Chlainomonas*, as well as potentially novel taxa. Above treeline communities were dominated by *Sanguina*, and below tree line by *Chloromonas*. *Chlainomonas* was abundant in samples across all elevations. We also observed blooms of *Chloromonas krienitzii* transition from green to orange throughout the season. We found snow algae community composition was highly variable from patch to patch, even on the same mountain. Although relatively few genera dominated snow algae communities, we found high diversity at the species level. 
+  Snow algae grow in melting summer snowfields throughout polar and alpine regions, forming extensive blooms that reduce albedo and increase snow melt. Green, orange, and red patches of snow algae can harbor morphologically diverse algae, but despite their global ubiquity the algal species composition of blooms is largely unknown. We Illumina sequenced 18S and *rbcL* amplicons from 33 snow algae samples collected from a range of alpine and subalpine habitats in the Coast Range of British Columbia, Canada. Predominant species were in, or closely related to, the genera *Sanguina*, *Chloromonas*, and *Chlainomonas*. The most common genus above treeline were *Sanguina*, while *Chloromonas* were dominant below treeline, and *Chlainomonas* were abundant in samples across all elevations. We found species composition was highly variable from patch to patch, even on the same mountain. Although snow algae in the Coast Range are represented by the same relatively few genera that dominate most reports of snow algal blooms around the globe, we found high diversity at the species level. 
 ---
 
 ```{r include=FALSE}
@@ -38,9 +38,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-### *Keywords*: snow algae community microbiome amplicon rbcL 18S alpine
+### *Keywords*: snow algae, microbiome, amplicon, *rbcL*, 18S, alpine, Illumina, British Columbia
 
-### *Run title*: Overlapping snow algae communities
+### *Run title*: Alpine snow algae
 
 
 
@@ -51,7 +51,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction {-}
 <!-- audience, problem -->
-Reduction in cryospheric albedo has become the focus of attention in recent years as an important feedback loop of global warming. Microbial growth on snow surface can reduce albedo, notably when snow algae form extensive blooms on melting summer snow[@ganey_role_2017;@lutz_biogeography_2016;@onuma_temporal_2019]. Red snow algae blooms are found on every continent, and on snow overlying sea ice[@segawa_bipolar_2018;@duval_snow_1999;@marchant_snow_1982;@yoshimura_community_1997;@vimercati_nieves_2019;@gradinger_snow_1996]. Despite their global ubiquity, the  we are only beginning to identify the various types of algae communities that cause snow algae blooms. 
+Each summer in polar and alpine snowfields worldwide, vast areas of snow surface are colored red by snow algae blooms. These extremophilic single-celled algae photosynthesize in near-freezing temperatures under high solar irradiance, and are the primary producers in a poorly-understood microbiome that includes bacteria, fungi, ciliates, and rotifers[@gorton_ultraviolet_2003;@lutz_biogeography_2016]. Snow algae blooms occur on every continent and Arctic sea ice[@segawa_bipolar_2018;@duval_snow_1999;@marchant_snow_1982;@yoshimura_community_1997;@vimercati_nieves_2019;@gradinger_snow_1996]; in Alaska, snow algae spectral signatures were detected in one third of a 2,000 km^2^ icefield[@ganey_role_2017]. In recent years snow algae have recieved attention for their impact on snow surface albedo: initial estimates suggests snow algae could increase snow melt rate by as much as 17%, potentially regulating spring snow melt and impacting global albedo[@ganey_role_2017]. Despite their global ubiquity, we are only beginning to identify the algae that are the primary producers in these complex microbiomes.
+
+<!-- Reduction in cryospheric albedo has become the focus of attention in recent years as an important feedback loop of global warming. Microbial growth on snow surface can reduce albedo, notably when snow algae form extensive blooms on melting summer snow[@ganey_role_2017;@lutz_biogeography_2016;@onuma_temporal_2019]. . Despite their global ubiquity, the  we are only beginning to identify the various types of algae communities that cause snow algae blooms.  -->
 <!-- why do we care if there are different communities as a climate scientist? maybe this should be a paper for snow phycologists? -->
 <!-- different communities could have different ecology and life history -->
 <!-- we need to define the community types to understand ecology of different blooms.  -->
@@ -59,7 +61,20 @@ Reduction in cryospheric albedo has become the focus of attention in recent year
 <!-- understanding of the species that cause snow algae blooms is limited to  -->
 
 <!-- snow algae taxonomy -->
-Most snow algae are green algae of class Chlorophyceae, although recent studies suggest that other classes of algae can also cause snow algae blooms[@lutz_integrated_2015;@soto_microbial_2020;@remias_two_2019]. Within the Chlorophyceae *Sanguina nivaloides* is prevalent in red snow worldwide, but many red snow sequences fall into clades which have yet to be named[@prochazkova_sanguina_2019]. Other Chlorophyceae include *Chloromonas* and the closely-related but morphologically distinct *Chlainomonas*. Currently just two species are described for *Sanguina*, while *Chloromonas* contains fourteen, and *Chlainomonas* also contains two[@matsuzaki_taxonomic_2019;@novis_two_2008]. Of the three, only *Chloromonas* has been successfully cultivated in the lab. 
+
+<!-- need to introduce the idea of patchiness, and idea of different colored snow -->
+Snow algae blooms can contain a mix of species, many of whose taxonomic identity is not well established. Green algae (Chlorophyceae) are often prevalent: *Sanguina nivaloides* is found in red snow samples worldwide[@prochazkova_sanguina_2019]. Currently just two species are described for *Sanguina*---the other, *S. aurantia* is known from three orange snow samples from Svalbard.
+
+
+Snow algae form colored patches in otherwise white snowfields, growing in suncups
+
+Different patches of colored snow can contain different algae communities
+
+. Currently just two species are described for *Sanguina*, many genetic sequences retrieved from red snow have not been taxonomically assigned[@prochazkova_sanguina_2019]. Other Chlorophyceae include *Chloromonas* (fourteen species identified to date) and the closely-related but morphologically distinct *Chlainomonas* (two species)[@matsuzaki_taxonomic_2019;@novis_two_2008]. All species of *Chloromonas* have been cultivated in the lab, but *Sanguina* and *Chlainomonas* remain uncultured@matsuzaki_taxonomic_2019].
+
+The distribution of snow algae species are not understood, 
+
+although two studies found snow algae blooms dominated by class Chrysophyceae[@soto_microbial_2020;@remias_two_2019], and one study found a green snow algae bloom dominated by Trebouxiophyceae in Greenland[@lutz_integrated_2015].
 
 <!-- microscopy suggests distinct communities -->
 Microscopy suggests that snow algae blooms are in many cases are dominated by single species. In the mountains of southwestern USA and Czech Republic red snow was prevalent above treeline, dominated by cells similar in appearance to *S. nivaloides*, while below treeline green or orange snow were prevalent dominated by cells similar to *Chloromonas*[@hoham_distribution_1979;@nedbalova_ecology_2008]. Red snow dominated by *Chlainomonas* type cells were reported from slushy snow overlying alpine lakes[@novis_two_2008;@remias_ecophysiology_2016]. However, microscopic identification of snow algae is complicated by the fact that the same species can look completely different at different life stages. Isolates of *Chloromonas krienitzii* are green, bean-shaped biflagellates, but genetically identical isolated single-cells from field samples appear as orange spheres with thick cell walls, short spines, and no flagella[@matsuzaki_revisiting_2015]. Conversely, different species can look nearly identical: recent phylogenetic work shows that four similar looking cells previously referred to as *Chloromonas cf. nivalis* actually contain multiple genetically distinct clades[@matsuzaki_taxonomic_2019].
@@ -167,3 +182,9 @@ The authors declare that the research was conducted in the absence of any commer
 
 # References {-}
 <div id="refs"></div> 
+
+
+##### pagebreak
+
+# Figure legends {-}
+
