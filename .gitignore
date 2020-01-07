@@ -17,6 +17,7 @@ presentation*
 
 # text
 *.docx
+*.docx#
 *.txt
 
 # bio
