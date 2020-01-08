@@ -1,0 +1,26 @@
+red green problem
+
+Snow algae are extremophilic single-celled algae that photosynthesize in near-freezing temperatures under high solar irradiance[@gorton_ultraviolet_2003].
+They are primary producers in a poorly-understood microbiome that includes bacteria, fungi, ciliates, and rotifers[@lutz_biogeography_2016].
+
+
+The phenomenon of red snow has been observed throughout history, from the ancient Romans[plinius_naturalis_1906] to Charles Darwin[@darwin_voyage_1959], yet despite nearly a century of microscopic study[@leya_snow_2013] we are only beginning to understand the distinctions between different types of snow algae blooms.
+
+Microscopy reveals a diversity of snow algae cell morphologies (Fig. 1). Identification is complicated: 
+
+different species can look nearly identical; conversely, 
+
+the same species of snow algae can look completely different at different life stages. Isolates of the snow algae *Chloromonas muramotoi* are green biflagellates, but genetically identical cells from field samples have thick cell walls with ridges and no flagella[@matsuzaki_taxonomy_2019]. Chlorophytes typically undergo morphologically distinct life stages: for example, the green bigflagellates of the freshwater algae *Haematococcus pluvialis* respond to high light and nutrient starvation by shedding their flagella, forming a thick cell wall, and producing the red secondary pigment astaxanthin[@shah_astaxanthin_2016]. Astaxanthin is also responsible for the red colouration of some snow algae, including *Chlainomonas* and *Sanguina*, but proof that these red snow algae undergo a green life phase is lacking: no one has sucessfully cultured these genera, and 
+
+and 18S amplicon surveys comparing red and green snow suggest they are caused by different species[@lutz_omics_2016;@soto_microbial_2020,@terashima_microbial_2017].
+
+
+
+
+<!-- same species, look different -->
+Identification of snow algae is complicated by the fact that the same species can look completely different at different life stages; conversely, genetically distinct species can look nearly identical. Isolates of the snow algae *Chloromonas krienitzii* are green, bean-shaped biflagellates, but in the field appear as orange spheres with thick cell walls, short spines, and no flagella[@matsuzaki_revisiting_2015]. Distinct life stages are typical of Chlorophytes, with green motile vegetatively-dividing cells that can be triggered by stressful conditions to produce thick walls and secondary pigments[@shah_astaxanthin_2016]. Genetically different species can look nearly identical also: four strains of what was identified as *Chloromonas cf. nivalis* were shown to be genetically distinct species[@matsuzaki_taxonomy_2019].
+
+
+snow algae are the primary producer for consumers including protists, fungi, bacteria[@naff_phylogeny_2013;@lutz_biogeography_2016;@hamilton_primary_2017;@terashima_microbial_2017].
+
+

@@ -1,0 +1,27 @@
+pre casey1:
+1. chlainomonas over alpine lakes, monoculture
+2. chloromonas krienitzii habitat not known, two life stages
+  - is it ever the dominant species in a bloom?
+3. mix of species
+4. alpine and subalpine different morphologies
+  - only 3 alpine snow algae communities metabarcoded
+
+
+
+
+
+post casey1
+1. chlainomonas everywhere in alpine, mixed in as well as monoculture
+2. chloromonas krienitzii prevalent in well-lit runnels, green below orange
+  - it can be the dominant species in a bloom
+3. mix, or some relatively pure
+4. alpine and subalpine different genetics
+  - 33 alpine and subalpine communities
+
+agreement: 
+- sanguina often found with several species of chloromonas
+- sanguina prevalent above treeline
+- no green snow sanguina
+- 
+
+gap: while we know many of the species that form snow algae blooms, accurate species level identification is lacking, only one paper attempted to characterise 4 alpine snow algae communities using BLAST annotated 18s OTUs, 
