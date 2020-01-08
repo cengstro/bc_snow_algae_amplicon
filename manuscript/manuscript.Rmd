@@ -23,7 +23,7 @@ output:
 csl: frontiers.csl
 bibliography: refs.bib
 abstract: |
-  Snow algae blooms cover vast areas of summer snowfields worldwide, and can reduce albedo and increase snow melt. Despite their global prevalence, little is known about the species that comprise snow algae blooms. We used 18S and *rbcL* high-throughput amplicon sequencing (metabarcoding) to survey 33 snow algae samples from alpine and subalpine habitats in the Coast Range of British Columbia, Canada. Species composition varied from bloom to bloom: *Sanguina* predominated above treeline, while *Chloromonas* were prevalent at lower elevations. *Chlainomonas* were abundant in samples across all elevations. The highest diversity was contained within the genus *Chloromonas*, which included operational taxonomic units (OTUs) that likely represent novel species of snow algae. ???
+  Snow algae blooms cover vast areas of summer snowfields worldwide, and can reduce albedo and increase snow melt. Despite their global prevalence, little is known about the species that comprise snow algae blooms. We used 18S and *rbcL* high-throughput amplicon sequencing (metabarcoding) to survey 33 snow algae samples from alpine and subalpine habitats in the Coast Range of British Columbia, Canada. Species composition varied from bloom to bloom: *Sanguina* predominated above treeline, while *Chloromonas* were prevalent at lower elevations. *Chlainomonas* were abundant in samples across all elevations. The highest diversity was contained within the genus *Chloromonas*, which included operational taxonomic units (OTUs) that likely represent novel species of snow algae. 
 
 ---
 
@@ -45,7 +45,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction {-}
 <!-- global, vast blooms. albedo->snowmelt. what species? -->
-Each summer in polar and alpine snowfields worldwide, vast areas of snow surface are colored red by snow algae blooms. Such blooms are reported from every continent [@segawa_bipolar_2018;@duval_snow_1999;@marchant_snow_1982;@yoshimura_community_1997;@vimercati_nieves_2019] and Arctic sea ice [@gradinger_snow_1996]. They can be extensive: in Alaska, snow algae spectral signatures were detected in one third of a 1,900 km^2^ icefield [@ganey_role_2017]. In recent years snow algae have received attention for their role in reducing snow surface albedo, which could substantially impact snow melt rates [@lutz_biogeography_2016;@ganey_role_2017]. Thus, snow algae could impact the timing of spring melt and runoff, reducing water supplies in mountain snowpacks and glacier mass balance. Despite their global ubiquity, we are only beginning to identify the species that cause snow algae blooms.
+Each summer in polar and alpine snowfields worldwide, vast areas of snow surface are colored red by snow algae blooms. Such blooms are reported from every continent [@segawa_bipolar_2018;@duval_snow_1999;@marchant_snow_1982;@yoshimura_community_1997;@vimercati_nieves_2019] and Arctic sea ice [@gradinger_snow_1996]. They can be extensive: in Alaska, snow algae spectral signatures were detected in one third of a 1,900 km^2^ icefield [@ganey_role_2017]. In recent years snow algae have received attention for their role in reducing snow surface albedo, which could substantially impact snow melt rates [@lutz_biogeography_2016;@ganey_role_2017]. Thus, snow algae could impact the timing of spring melt and runoff, depleting summer water supplies held in mountain snowpacks and reducing glacier mass balance. Despite their global ubiquity, we are only beginning to identify the species that cause snow algae blooms.
 
 <!-- why microscopy not reliable -->
 Much of the previous work on snow algae relied on cell morphology for identification, but microscopic identification of snow algae can be unreliable. The same species can look completely different with different environmental conditions of life stages. For example, cultured *Chloromonas krienitzii* cells are small green biflagellates, but field samples cells of this species are larger orange spheres with thick walls and short spines [@matsuzaki_revisiting_2015]. In the freshwater green algae *Haematococcus pluvialis* red pigment is produced in response to stress conditions [@shah_astaxanthin_2016], and @muller_persistant_2001 hypothesized that red Arctic snowfields develops from green snow, but thus far genetic studies have failed to support this hypothesis [@terashima_microbial_2017;@lutz_integrated_2015]. Different species of snow algae can look nearly identical: recent phylogenetic work found that four distinct field samples dominated by similar-looking cells previously referred to as *Chloromonas cf. nivalis* are actually genetically distinct clades [@matsuzaki_taxonomic_2019].
@@ -140,7 +140,7 @@ The authors declare that the research was conducted in the absence of any commer
 
 
 
-l
+
 
 ##### pagebreak
 
@@ -152,12 +152,12 @@ l
 
 # Figure legends {-}
 
-<!-- formatting indentation? -->
+<!-- formatting indentation??? -->
 
 **Figure 1.** Representative photographs of snow algae. A. Red snow bloom above treeline at sample site G1.1. B. Microphotograph of red snow containing *Sanguina nivaloides* (Sn) and *Chlainomonas rubra* (Cr) cell morphologies. All scale bars 30 $\mu$m, all microphotos taken using 63x objectives with DIC. C. Snow runnels in a forest clearing containing snow algae (inset). D. Microphotograph of orange snow from the surface of runnel containing *Chloromonas krienitzii* (Ck) and *Chloromonas cf. nivalis* (Cn). E. Bronze coloured snow algae blooms below conifer canopy. F. Microphotograph of bronze snow containing Chloromonas cf. brevispina* (Cb) and *Chloromonas cf. nivalis* (Cn).
 
 
-**Figure 2.** Ordination plots of *rbcL* amplicon sequence variant (ASV) similarity. A. Multidimensional scaling (MDS) plot. Taxonomy (assigned by IDTaxa) indicated by color, and size of point is proportional to cumulative relative abundance. Dotted ellipses show OTU clusters. Stress = 0.13. B. t-Distributed Stochastic Neighbor Embedding (t-SNE) dimensionality reduction plot of snow algae *rbcL* ASVs. Perplexity = 30.
+**Figure 2.** Ordination plots of *rbcL* amplicon sequence variant (ASV) similarity. A. Multidimensional scaling (MDS) plot. Taxonomy (assigned by IDTaxa) indicated by color, and size of point is proportional to cumulative relative abundance. Dotted ellipses show OTU clusters. Stress = 0.13. B. t-Distributed Stochastic Neighbor Embedding (t-SNE) dimensionality reduction plot of snow algae *rbcL* ASVs. Perplexity = 30.l
 
 **Figure 3.** Stacked bar plots of snow algae relative abundance. Each sample is arranged on the y axis in order of elevation, with each compositional bar plot representing the (left to right) cell morphology, 18S, and *rbcL* snow algae assemblages of the same sample. Colors below each bar plot indicate taxonomic categories. Morphospecies were identified by light microscopy, using similarity to published photographs as a guide. 18S operational taxonomic units (OTUs) are reference-based, while *rbcL* OTUs were clustered *de novo*, and named using GenBank reference data.
 
