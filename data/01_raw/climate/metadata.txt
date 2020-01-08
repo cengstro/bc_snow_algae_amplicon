@@ -1,0 +1,58 @@
+https://data.pacificclimate.org/portal/pcds/map/
+
+grouse: 
+
+
+Attribute 	Station:908
+Network Name 	EC
+Native ID 	1105658
+Station Name 	N VANC GROUSE MTN RESORT
+Longitude 	-123.0806
+Latitude 	49.36806
+Elevation (m) 	1127.800
+Record Start 	1-Oct-1971
+Record End 	10-Nov-2019
+Frequency 	daily
+
+
+strachan 1420
+
+Attribute 	Station:2658
+Network Name 	MoTIe
+Native ID 	11122
+Station Name 	Mt. Strachan
+Longitude 	-123.19636
+Latitude 	49.41003
+Elevation (m) 	1420
+Record Start 	1-Jan-1984
+Record End 	16-Nov-2019
+Frequency 	1-hourly 
+
+strachan 1220
+
+Attribute 	Station:2657
+Network Name 	MoTIe
+Native ID 	11121
+Station Name 	Mt. Strachan Precip
+Longitude 	-123.19144
+Latitude 	49.40431
+Elevation (m) 	1220
+Record Start 	22-Dec-1993
+Record End 	16-Nov-2019
+Frequency 	1-hourly 
+
+
+whistler 1835
+
+Attribute 	Station:952
+Network Name 	EC
+Native ID 	1108906
+Station Name 	WHISTLER ROUNDHOUSE
+Longitude 	-122.95
+Latitude 	50.066667
+Elevation (m) 	1835
+Record Start 	22-Nov-1972
+Record End 	13-Oct-2019
+Frequency 	daily 
+
+
