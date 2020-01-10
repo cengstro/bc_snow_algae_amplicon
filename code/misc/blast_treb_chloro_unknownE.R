@@ -75,6 +75,39 @@ rbcl_otus %>%
   DNAStringSet() %>% 
   writeXStringSet(filepath = here("data/asv_seq_data/etc/unknown_E.fasta"))
 
+# ----------------------
+# check out Chloromonas D
+
+rbcl_otus %>% 
+  filter(otu_name == "Chloromonas D") %>% 
+  left_join(rbcl_key) %>% 
+  select(-otu_name) %>% 
+  deframe() %>% 
+  DNAStringSet() %>% 
+  writeXStringSet(filepath = here("data/asv_seq_data/etc/chloro_d.fasta"))
+
+# ----------------------
+# check out Chloromonas C
+
+rbcl_otus %>% 
+  filter(otu_name == "Chloromonas muramotoi C") %>% 
+  left_join(rbcl_key) %>% 
+  select(-otu_name) %>% 
+  deframe() %>% 
+  DNAStringSet() %>% 
+  writeXStringSet(filepath = here("data/asv_seq_data/etc/chloro_c.fasta"))
+
+# ----------------------
+# check out Chloromonas F
+
+rbcl_otus %>% 
+  filter(otu_name == "Chloromonas F") %>% 
+  left_join(rbcl_key) %>% 
+  select(-otu_name) %>% 
+  deframe() %>% 
+  DNAStringSet() %>% 
+  writeXStringSet(filepath = here("data/asv_seq_data/etc/chloro_f.fasta"))
+
 
 
 # check how many 18s asvs are algae
