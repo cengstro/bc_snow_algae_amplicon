@@ -1,0 +1,30 @@
+---
+title: "Primers"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=F}
+library(tidyverse)
+library(kableExtra)
+```
+
+
+```{r, include=F}
+# seq 5->3'
+tbl <- tibble(name=c("rbcL369F","rbcL870R", "Euk1181 (Wang et al. 2014)","Euk1624  (Wang et al. 2014)"),
+              seq=c("GAACGTGACAAATTAAACAAA","ACCWGAYADACGWAGAGCTT","TTAATTTGACTCAACRCGGG","CGGGCGGTGTGTACAAAGG"))
+```
+
+```{r, echo=F}
+tbl %>% 
+  rename(Name=name, `Sequence (5'-3')`=seq) %>% 
+  kable(booktabs=T, linesep="") %>% 
+  kable_styling()
+```
+
+References:
+Wang Y, Tian RM, Gao ZM, Bougouffa S, Qian P-Y. Optimal Eukaryotic 18S and Universal 16S/18S Ribosomal RNA Primers and Their Application in a Study of Symbiosis. PLOS ONE 2014; 9: e90053. 

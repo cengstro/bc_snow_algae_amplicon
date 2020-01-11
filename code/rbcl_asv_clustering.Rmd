@@ -22,25 +22,19 @@ library(ggpubr)
 library(ggthemes)
 library(ggdark)
 
-# conflicted::conflict_scout()
+# conflicted::conflict_scout() # these packages cause rstudio to crash for me
 # conflicted::conflict_prefer("filter","dplyr")
 ```
 
-```{r}
-# theme_set(dark_theme_classic())
-theme_set(dark_theme_light())
-```
-
-
 ```{r read, include=F}
-rel_abund <- read_csv(here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abund.csv"))
-taxonomy <- read_csv(here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
+rel_abund <- read_csv(here::here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abund.csv"))
+taxonomy <- read_csv(here::here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
 
-aligns <- readDNAStringSet(here("output/alignments/rbcl_aligns_in_main.fasta"))
-tree <- read.tree(file=here("output/tree/rbcl/asv613.fasta.treefile")) # this is the tree with only the ASVs that appear in the filtered rel abund dataset (not including protocol stuff, etc)
+aligns <- readDNAStringSet(here::here("output/alignments/rbcl_aligns_in_main.fasta"))
+tree <- read.tree(file=here::here("output/tree/rbcl/asv613.fasta.treefile")) # this is the tree with only the ASVs that appear in the filtered rel abund dataset (not including protocol stuff, etc)
 
 # actual seq data
-key <- read_csv(here("data/asv_seq_data/rbcl_asv_sequence_key.csv"))
+key <- read_csv(here::here("data/asv_seq_data/rbcl_asv_sequence_key.csv"))
 ```
 
 ```{r asv_distance_matrix, include=F}
@@ -422,34 +416,34 @@ chlain_taxa_seqs <- taxonomy %>%
 
 
 ```{r output}
-write_csv(otus_asv_name, path = here("output/asv_otu_key.csv"))
+write_csv(otus_asv_name, path = here::here("output/asv_otu_key.csv"))
 
 # write the main ASV fig, w legend seperate
-ggsave(filename = here("manuscript/figs/main/taxonomy/asvs.pdf"), plot=asv_arranged, height = 6, width = 4)
-ggsave(filename = here("manuscript/figs/main/taxonomy/asv_legend.pdf"), plot=legend,  height = 4, width = 2.2)
+ggsave(filename = here::here("manuscript/figs/main/taxonomy/asvs.pdf"), plot=asv_arranged, height = 6, width = 4)
+ggsave(filename = here::here("manuscript/figs/main/taxonomy/asv_legend.pdf"), plot=legend,  height = 4, width = 2.2)
 
 # write black formatted versions for presentation
-ggsave(filename = here("presentation/omics/asvs.pdf"), plot=present_version, width = 7, height = 3.5)
-ggsave(filename = here("presentation/omics/asv_legend.pdf"), plot=legend,  height = 4, width = 2.2)
+ggsave(filename = here::here("presentation/omics/asvs.pdf"), plot=present_version, width = 7, height = 3.5)
+ggsave(filename = here::here("presentation/omics/asv_legend.pdf"), plot=legend,  height = 4, width = 2.2)
 
 
 # write out the trees
-ggsave(filename = here("manuscript/figs/otu_tree.png"), plot=otu_tree, width=7, height = 10)
-ggsave(filename = here("manuscript/figs/taxonomy_tree.png"), plot=taxonomy_tree, width=7, height = 10) 
+ggsave(filename = here::here("manuscript/figs/otu_tree.png"), plot=otu_tree, width=7, height = 10)
+ggsave(filename = here::here("manuscript/figs/taxonomy_tree.png"), plot=taxonomy_tree, width=7, height = 10) 
 
 # write out otu colors
 otu_colors %>% 
   enframe() %>% 
-  write_csv(here("output/etc/otu_colors.csv"))
+  write_csv(here::here("output/etc/otu_colors.csv"))
 
 # sanguina fasta for breanna
-writeXStringSet(sang_seqs, here("output/taxa_filtered_fastas/sanguina_otu.fasta"))
-writeXStringSet(sang_taxa_seqs, here("output/taxa_filtered_fastas/sanguina_idtaxa.fasta"))
+writeXStringSet(sang_seqs, here::here("output/taxa_filtered_fastas/sanguina_otu.fasta"))
+writeXStringSet(sang_taxa_seqs, here::here("output/taxa_filtered_fastas/sanguina_idtaxa.fasta"))
 
 
 # chlainomonas fasta for jordan
-writeXStringSet(chlain_seqs, here("output/taxa_filtered_fastas/chlainomonas_otu.fasta"))
-writeXStringSet(chlain_taxa_seqs, here("output/taxa_filtered_fastas/chlainomonas_idtaxa.fasta"))
+writeXStringSet(chlain_seqs, here::here("output/taxa_filtered_fastas/chlainomonas_otu.fasta"))
+writeXStringSet(chlain_taxa_seqs, here::here("output/taxa_filtered_fastas/chlainomonas_idtaxa.fasta"))
 
 
 

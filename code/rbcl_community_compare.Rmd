@@ -334,7 +334,7 @@ ggsave(here("manuscript/figs/main/community/elev2.pdf"),plot=elev_strip2, width 
 ggsave(here("manuscript/figs/main/community/snow_color.pdf"),plot=color_strip, width = 0.5, height = 5)
 
 
-ggsave(filename = here("manuscript/figs/main/uf_plot.png"), plot=uf_plot, width=5, height = 4)
+ggsave(filename = here("manuscript/figs/4/figure_4.tiff"), plot=uf_plot, width=85, height = 68, units="mm") # make 1 column wide, 5/4 aspect ratio
 ggsave(filename = here("manuscript/figs/diversity.png"), plot = diversity_plots, height = 10, width = 7)
 ```
 

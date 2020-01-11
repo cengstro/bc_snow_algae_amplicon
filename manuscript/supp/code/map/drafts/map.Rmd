@@ -1,10 +1,10 @@
 ---
 title: "Snow algae 2018 map"
-
 ---
 
 ```{r libs}
 library(tidyverse)
+library(here)
 library(lubridate)
 library(ggmap)
 library(ggdark) # ggplot themes
@@ -13,13 +13,12 @@ library(ggsn) # add symbols to plot
 ```
 
 ```{r data_in}
-field <- read_csv(here("data","clean","field_clean.csv"))
+field <- read_csv(here::here("data/02_tidied/tidied_field.csv"))
 ```
 
 ```{r settings}
 key="AIzaSyBJsmyAKTkTg9LT-HdGCCdZdbE2Hjwm-L8"
-register_google(key = key) 
-theme_set(dark_theme_classic())
+register_google(key = key)
 ```
 
 
@@ -61,9 +60,6 @@ full_map <- ggmap(algae_map, extent = "device") +
   labs(title = "Snow algae sample sites, summer 2018", color="Elevation (m)") 
 
 full_map
-
-ggsave(filename = here::here("figs","map",paste0("full_map.png")),
-       plot = full_map, height = 15, width = 20, units = "cm")
 ```
 
 ```{r plot_function}
@@ -103,7 +99,8 @@ save_map("July",3)
 save_map("August",4)
 save_map("September",5)
 
-
+ggsave(filename = here::here("figs","map",paste0("full_map.png")),
+       plot = full_map, height = 15, width = 20, units = "cm")
 
 
 ```

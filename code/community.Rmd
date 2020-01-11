@@ -294,7 +294,7 @@ scales::show_col("#4aaf53")
 
 
 
-```{r rotated-stacked-bar, echo=F, fig.width=7, fig.height=5}
+```{r rotated-stacked-bar, echo=F}
 
 # specify factor order, so Chlainomonas always on same side, etc
 species_colors <- c("Chlainomonas A"="#ac71b5","Chlainomonas rubra"="#ac71b5", #purple
@@ -306,24 +306,22 @@ species_colors <- c("Chlainomonas A"="#ac71b5","Chlainomonas rubra"="#ac71b5", #
                 #                 lt green                            teal
                 "Other Chloromonas"="#4aaf53", "Chloromonas"="#4aaf53", 
                 # greyish light green
-                "Trebouxiophyceae G"="#6a2d2f", "Trebouxiophyceae"="#6a2d2f", # maroon, standout
+                "Trebouxiophyceae G"="#975c5c", "Trebouxiophyceae"="#975c5c", # brown
                 "Unknown E"="grey60", "Green cell"="#4aaf53", "Other"="grey60") #greys
 
-# teal #69c095
-# medium blue #6994c0
 
 # backwards
 species_colors <- species_colors %>% rev()
 
-# plot
+# plot  facet_grid(rows = vars(marker %>% fct_relevel(c("Cell morphology","18S","rbcL"))), scales="free_x", space="free_x") +
 stacked_bar <- ggplot(combined, aes(x=alias %>% fct_reorder(elev_m), y=rel_abund)) +
   geom_bar(aes(fill=species %>% fct_relevel(names(species_colors))), position="stack", stat="identity") +
-  coord_flip() +
-  facet_grid(cols = vars(marker %>% fct_relevel(c("Cell morphology","18S","rbcL"))), 
-             scales="free_y", space="free_y") +
+  # coord_flip() +
+  facet_grid(rows = vars(marker %>% fct_relevel(c("rbcL","18S", "Cell morphology")))) +
   theme_classic() +
-  labs(x="Sample ID", y="Relative abundance")+
-  scale_fill_manual(values = species_colors)
+  labs(x="Sample ID", y="Relative abundance", fill="Taxa")+
+  scale_fill_manual(values = species_colors) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 stack_no_legend <- stacked_bar +
   theme(legend.position="none")
@@ -358,9 +356,9 @@ ggsave(here::here("manuscript/figs/cellct_scatterpie.pdf"), plot=scatterpie, wid
 ggsave(here::here("manuscript/figs/cellct_axis.pdf"), plot=base_plot, width=5, height=5)
 
 
-ggsave(here::here("manuscript/figs/stack.pdf"), plot=stack_no_legend, width=7, height=5)
-ggsave(here::here("manuscript/figs/stack_legend.pdf"), plot=legend, width=7, height=5)
-
+ggsave(here::here("manuscript/figs/main/community/stack2.pdf"), plot=stack_no_legend, width=7, height=5)
+ggsave(here::here("manuscript/figs/main/community/stack2_legend.pdf"), plot=legend, width=7, height=5)
+ggsave(here::here("manuscript/figs/main/community/stack_full.pdf"), plot=stacked_bar, width=180, height=180, units = "mm", dpi=300)
 
 # presentation output
 ggsave(here("presentation/omics/community_ggplot.pdf"), plot=community_heatmap, width=7, height=4)

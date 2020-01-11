@@ -3,14 +3,6 @@ title: "Map of 2018 snow algae sample locations"
 output: html_notebook
 ---
 
-<style>
-table {
-  background-color: white !important;
-  color: black !important;
-}
-</style>
-<!-- format the table black and white -->
-
 ```{r libs, include=F}
 library(tidyverse)
 library(lubridate)
@@ -23,20 +15,22 @@ library(formattable)
 library(ggdark)
 ```
 
+
+* loads rda from the saved google map so I dont have to re-load it again and again... this could be tidier
+* Specify here::here to avoid conflict with lubridate::here
 ```{r include=F}
 field <- read_csv(here::here("data/02_tidied/tidied_field.csv"))
 cities <- read_csv(here::here("output/map/city_coords.csv"))
-
 load(here::here("output/map/raw_google_map.rda")) # loads .rda called "algae_map"... not sure how avoid using.rda format, maybe png?
 ```
+
 ```{r}
 cities <- cities %>% 
   filter(name == "Vancouver")
 ```
 
 ```{r}
-field_summary <-
-  field %>%
+field_summary <- field %>%
   group_by(mountain) %>% 
   drop_na(lat, lon) %>% 
   arrange(date) %>% 
@@ -50,8 +44,6 @@ field_summary <-
             date=min(date)) %>% 
   arrange(date) %>% 
   select(-date)
-
-# paste(field$date %>% month(label=TRUE), field$date %>%day())
 ```
 
 
@@ -158,21 +150,21 @@ plot_map("May")
 
 ```{r save_maps, include=F}
 
-ggsave(filename = here::here("manuscript/figs/map.png"), plot=full_map)
+ggsave(filename = here::here("manuscript/figs/map.tiff"), plot=full_map)
 
 # for the month by month maps
-save_map <- function(my_month, num){
-  map <- plot_map(my_month)
-  
-  ggsave(filename = here::here("figs","map",paste0("map_",num,"_", my_month,".png")),
-       plot = map, height = 15, width = 20, units = "cm")
-}
-
-save_map("May",1)
-save_map("June",2)
-save_map("July",3)
-save_map("August",4)
-save_map("September",5)
+# save_map <- function(my_month, num){
+#   map <- plot_map(my_month)
+#   
+#   ggsave(filename = here::here("figs","map",paste0("map_",num,"_", my_month,".png")),
+#        plot = map, height = 15, width = 20, units = "cm")
+# }
+# 
+# save_map("May",1)
+# save_map("June",2)
+# save_map("July",3)
+# save_map("August",4)
+# save_map("September",5)
 
 # save output for omics presentation
 ggsave(filename = here::here("presentation/omics/map.png"))
