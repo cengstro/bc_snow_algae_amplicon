@@ -11,11 +11,11 @@ library(ggtree)
 ```
 
 ```{r, include=F}
-aligns <- readDNAStringSet(here::here("data/asv_seq_data/algae_18s_quality_aligns.fasta"))
+aligns <- readDNAStringSet(here::here("data/fastas/asv_seq_data/algae_18s_quality_aligns.fasta"))
 # taxonomy w genbank (multiple copies of each designation, no editing)
-taxonomy <- read_csv(here::here("output/algae_18s_assignments_snow_algae_genbank.csv"))
-tree <- ape::read.tree(here::here("output/tree/algae_18s/algae_18s_seqs.fasta.treefile"))
-rel_abund <- read_csv(here::here("data/03_filtered/18s_algae/18s_algae.filtered_cleaned_rel_abund.csv"))
+taxonomy <- read_csv(here::here("data/taxonomy/algae_18s_assignments_snow_algae_genbank.csv"))
+tree <- ape::read.tree(here::here("data/tree/algae_18s/algae_18s_seqs.fasta.treefile"))
+rel_abund <- read_csv(here::here("data/rel_abund/3_filter/18s_algae/18s_algae_rel_abund.csv")) 
 
 # get total rel abund
 total_rel_abund <- rel_abund %>% 
@@ -69,6 +69,8 @@ mds <- ggplot(mds_coords_w_taxonomy, aes(x=V1, y=V2))+
 mds
 ```
 
+
+
 # t-SNE
 ```{r, echo=F,message=F, warning=F}
 perplexity <- 20
@@ -100,6 +102,8 @@ tsne <- ggplot(tsne_pts_taxonomy, aes(x=V1, y=V2)) +
 tsne
   
 ```
+
+Perplexity = 20. 
 
 
 \pagebreak
