@@ -1,0 +1,144 @@
+---
+title: "Diversity"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=F}
+library(tidyverse)
+library(here)
+library(vegan)
+library(picante)
+library(gridExtra)
+library(ape)
+library(ggrepel)
+library(corrr)
+library(lubridate)
+```
+
+
+```{r, include=F}
+rel_abund <- read_csv(here::here("data/rel_abund/3_filter/rbcl/rbcl_rel_abund.csv")) # not looking at the depth samples, controls, etc
+tax <- read_csv(here::here("data/taxonomy/tidied.rbcl_taxonomy.csv"))
+field <- read_csv(here::here("data/field/tidy_field.csv"))
+asv_seqs <- read_csv(here::here("data/fastas/asv_seq_data/rbcl_asv_sequence_key.csv"))
+otus <- read_csv(here::here("data/otus/otu_rbcl_asvs.csv"))
+rbcl.tree <- read.tree(here::here("data/tree/rbcl/asv613.fasta.treefile")) ### this tree should only contain the asvs we found in the "main" sites, not looking at controls, etc
+```
+
+```{r, include=F}
+# get relative abundance of each otu, in wide format, 
+otu_rel_abund <- rel_abund %>% 
+  left_join(otus, by="asv_id") %>% 
+  group_by(sample_id, otu_name) %>% 
+  summarise(rel_abund = sum(rel_abund)) %>%   
+  ungroup() %>% 
+  pivot_wider(names_from = otu_name, values_from = rel_abund, values_fill = list(rel_abund=0)) %>% 
+  column_to_rownames("sample_id") # vegan::diversity() wants sample identifiers as rownames
+
+# calculate shannon and simpson
+shannon <- otu_rel_abund %>% 
+  diversity(index = "shannon") %>% 
+  enframe() %>% 
+  dplyr::rename(sample_id = name, diversity = value) %>% 
+  mutate(type="shannon")
+# simpson <- otu_rel_abund %>% 
+#   diversity(index = "simpson") %>% 
+#   enframe() %>% 
+#   dplyr::rename(sample_id = name, simpson = value)
+# otu_diversity <- shannon %>% 
+#   left_join(simpson, by="sample_id") %>% 
+#   left_join(field, by="sample_id")
+
+# plot diversity of samples
+shannon_plot <- ggplot(shannon %>% left_join(field), aes(x=date, y=diversity))+
+  geom_point(aes(color=elev_m), size=3) +
+  scale_color_gradientn(colours = terrain.colors(8)[1:7]) +
+  geom_text_repel(aes(label=alias)) +
+  labs(y="Shannon diversity")+
+  theme(axis.title.x = element_blank())
+shannon_plot
+```
+
+
+
+```{r, include=F}
+# format
+ra_wide <- rel_abund %>% 
+  select(sample_id, asv_id, rel_abund) %>% 
+  arrange(asv_id) %>% 
+  pivot_wider(names_from = asv_id, values_from = rel_abund, values_fill = list(rel_abund = 0)) %>% 
+  column_to_rownames("sample_id")
+
+ra_wide_mat <- ra_wide %>% as.matrix()
+
+# root tree with Trebouxiophyceae
+root <- tax %>% 
+  filter(class=="Trebouxiophyceae") %>% 
+  head(1) %>% 
+  pull(asv_id)
+
+rbcl.tree <- rbcl.tree %>% ape::root(outgroup = root, resolve.root=T)
+
+faiths <- ra_wide_mat %>% 
+  picante::pd(rbcl.tree) %>% 
+  # attach elevation data
+  rownames_to_column("sample_id") %>% 
+  rename(diversity=PD) %>% 
+  mutate(type="faiths") %>% 
+  select(-SR)
+
+faith_plot <- ggplot(faiths %>% left_join(field), aes(y=diversity, x=date))+
+  geom_point(aes(color=elev_m), size=3) +
+  scale_color_gradientn(colours = terrain.colors(8)[1:7]) +
+  geom_text_repel(aes(label=alias))+
+  labs(y="Faith's phylogenetic diversity (PD)",x="Date", color="Elevation (m)")
+
+faith_plot
+```
+
+
+```{r diversity_plots, echo=F}
+combined <- shannon %>% 
+  bind_rows(faiths) %>%
+  left_join(field, by="sample_id") %>% 
+  mutate(type=str_to_title(type))
+  
+
+ggplot(combined, aes(x=date, y=diversity)) +
+  geom_point(aes(color=elev_m), size=3) +
+  scale_color_gradientn(colours = terrain.colors(8)[1:7]) +
+  geom_text_repel(aes(label=alias), size=2) +
+  facet_grid(rows = "type", scales="free_y") +
+  labs(y="Diversity", x="Date", color="Elevation (m)")
+```
+
+```{r, include=F}
+date <- field %>% 
+  select(sample_id, date) %>% 
+  mutate(date = date %>% lubridate::yday())
+
+cor_df <- faiths %>% 
+  rename(faiths = diversity) %>% 
+  select(-type) %>% 
+  left_join(shannon) %>% 
+  rename(shannon = diversity) %>% 
+  select(-type) %>% 
+  left_join(date)
+
+cor.test(cor_df$faiths, cor_df$date) 
+
+cor.test(cor_df$shannon, cor_df$date)
+
+
+```
+
+
+**Supplementary figure S6.** Faiths phylogenetic diversity (upper) and Shannon diversity (lower) of snow algae *rbcL* ASVs, plotted against date of sample collection. Samples colored by elevation, and labelled by sample ID. Faith's Pearson's *r*=0.36, p=0.04, Shannon's Pearson's *r*=0.17, p=0.35.
+
+
+
+
