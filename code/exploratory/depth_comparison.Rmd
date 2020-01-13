@@ -9,7 +9,7 @@ library(here)
 ```
 
 ```{r include=F}
-rbcl_rel_abund <- read_csv(here("data/03_filtered/rbcl/depth_rbcl_rel_abund.csv"))
+rbcl_rel_abund <- read_csv(here("data/"))
 s18_all_rel_abund <- read_csv(here("data/03_filtered/18s/depth_18s_rel_abund.csv"))
 
 rbcl_tax <- read_csv(here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
@@ -80,6 +80,6 @@ More fungi on surface, one sample with more rotifers on surface, more ciliates o
 
 
 ```{r output, include=FALSE}
-ggsave(filename = here("manuscript/figs/4_depth_comparison/rbcl.pdf"), plot=depth)
+#ggsave(filename = here("manuscript/figs/4_depth_comparison/rbcl.pdf"), plot=depth)
 ```
 

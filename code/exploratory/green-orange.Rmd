@@ -1,0 +1,80 @@
+---
+title: "Depth comparison Seymour + Hollyburn green -> orange runnels"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(here)
+```
+
+```{r include=F}
+rbcl_ra_depth <- read_csv(here::here("data/rel_abund/3_filter/rbcl/depth_rbcl_rel_abund.csv")) # only the "depth samples", see code/wrangle/filter_rbcl_rel_abund.R for selection criteria
+rbcl_ra_main <- read_csv(here:::here("data/rel_abund/3_filter/rbcl/rbcl_rel_abund.csv"))
+s18_all_rel_abund <- read_csv(here::here("data/rel_abund/3_filter/18s/depth_18s_rel_abund.csv"))
+# rbcl_tax <- read_csv(here::here("data/taxonomy/tidied.rbcl_taxonomy.csv"))
+s18_tax <- read_csv(here::here("data/taxonomy/tidied_silva_18s_assignments.csv"))
+rbcl_otus <- read_csv(here::here("data/otus/otu_rbcl_asvs.csv"))
+field <- read_csv(here::here("data/field/tidy_field.csv"))
+```
+
+ 
+```{r rbcl_wrangle, include=F}
+rbcl <- rbcl_ra_depth %>%
+  bind_rows(rbcl_ra_main) %>%
+  left_join(field, by="sample_id") %>%  
+  left_join(rbcl_otus, by="asv_id") %>% 
+  filter(alias %in% c("S9.2", "S9.1", "S6.7", "S2.2","H2.10","H3.4")) %>% # choose just six samples
+  # excluded H4.3, H4.4 because dominated by Chlainomonas, I want to focus on Chloro krienitzii samples
+  mutate(depth = case_when(alias == "S9.2"~"surface", # add new category, whether its surface or subsurface
+                           alias == "S9.1"~"depth",
+                           alias == "S6.7"~"surface",
+                           alias == "S2.2"~"depth",
+                           alias == "H2.10"~"surface",
+                           alias == "H3.4"~"depth"))
+
+# rbcl %>% distinct(alias, depth, depth_cm)
+
+# select variables of interest, group by otus
+rbcl_1 <- rbcl %>% 
+  group_by(alias, otu_name, depth) %>% 
+  summarise(rel_abund= sum(rel_abund)) %>% 
+  ungroup() %>% 
+  select(alias, depth, otu_name, rel_abund)
+
+
+```
+
+```{r}
+
+otu_ord <- c("Chlainomonas A","Sanguina B", "Other Chloromonas","Chloromonas krienitzii","Chloromonas muramotoi C","Chloromonas D", "Algae E","Chloromonas F", "Trebouxiophyceae G")
+
+depth <- ggplot(rbcl_1, aes(x=top_sample, y=rel_abund, fill = otu_name %>% fct_relevel(otu_ord)))+
+  geom_bar(stat="identity") +
+  facet_grid(rows = vars(depth_chr %>% fct_relevel("surface","sub-surface"))) +
+  labs(x="Sample ID", y="Relative abundance", fill="OTU", tag="D")
+depth
+```
+
+```{r 18s_wrangle, include=F}
+s18 <- s18_all_rel_abund %>% 
+  left_join(s18_tax, by="asv_id") %>% 
+  left_join(field, by="sample_id") %>% 
+  left_join(depth_sample_info, by="sample_id") %>% 
+  select(top_sample, depth_chr, phylum:genus, rel_abund)
+
+glimpse(s18)
+```
+
+```{r}
+ggplot(s18, aes(x=top_sample, y=rel_abund, fill = phylum))+
+  geom_bar(stat="identity") +
+  facet_grid(rows = vars(depth_chr %>% fct_relevel("surface","sub-surface"))) +
+  labs(x="Sample ID", y="Relative abundance", fill="OTU")
+```
+More fungi on surface, one sample with more rotifers on surface, more ciliates on surface also
+
+
+```{r output, include=FALSE}
+#ggsave(filename = here("manuscript/figs/4_depth_comparison/rbcl.pdf"), plot=depth)
+```
+

@@ -34,4 +34,4 @@ cellct_plot <- ggplot(cellct, aes(x=alias %>% fct_reorder(elev_m),
           axis.text.x = element_text(angle = 90, hjust = 1, vjust=0.5))  
 cellct_plot
 
-# ggsave(filename = here::here("manuscript/supp/final/fig_S4_cellct.tiff"), width = 300, height = 100, units="mm", dpi=300)
+# ggsave(filename = here::here("manuscript/supp/final/fig_S4_cellct.pdf"), width = 300, height = 100, units="mm")
