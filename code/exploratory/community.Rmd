@@ -21,28 +21,27 @@ library(ggdark)
 
 ```{r globals, include=F}
 # define theme for all heatmaps
-my_heat_theme <- theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        axis.title.x=element_blank())
-theme_set(dark_theme_light())
+# my_heat_theme <- theme(axis.text.x = element_text(angle = 45, hjust = 1),
+#         axis.title.x=element_blank())
+# theme_set(dark_theme_light())
 ```
 
 
 ```{r input, include=F}
-rbcl_rel_abund <- read_csv(here("data/03_filtered/rbcl/filtered_cleaned_rbcl_rel_abund.csv")) # not looking at the depth samples, controls..
-rbcl_tax <- read_csv(here("data/02_tidied/tidied.rbcl_taxonomy.csv"))
-rbcl_asv_seqs <- read_csv(here("data/asv_seq_data/rbcl_asv_sequence_key.csv"))
-rbcl_otus <- read_csv(here("output/asv_otu_key.csv"))
-otu_colors <- read_csv(here("output/etc/otu_colors.csv"))
+rbcl_rel_abund <- read_csv(here::here("data/rel_abund/3_filter/rbcl/rbcl_rel_abund.csv")) # not looking at the depth samples, controls..
+rbcl_tax <- read_csv(here::here("data/taxonomy/tidied.rbcl_taxonomy.csv"))
+rbcl_asv_seqs <- read_csv(here::here("data/fastas/asv_seq_data/rbcl_asv_sequence_key.csv"))
+rbcl_otus <- read_csv(here::here("data/otus/otu_rbcl_asvs.csv"))
 
-s18_rel_abund <- read_csv(here("data/03_filtered/18s_algae/18s_algae.filtered_cleaned_rel_abund.csv"))
-s18_algae_taxonomy <- read_csv(here("output/algae_18s_assignments_snow_algae_genbank.csv"))
+s18_rel_abund <- read_csv(here::here("data/rel_abund/3_filter/18s_algae/18s_algae_rel_abund.csv"))
+s18_algae_taxonomy <- read_csv(here::here("data/taxonomy/algae_18s_assignments_snow_algae_genbank.csv"))
 # s18_algae_select_taxonomy <- read_csv(here("output/algae_18s_assignments_w_select_snow_algae.csv")) #### this didnt work very well, need to make consensus for each species
 
-field <- read_csv(here("data/02_tidied/tidied_field.csv"))
-cellct <- read_csv(here("data/02_tidied/tidied.cell_count.csv"))
+field <- read_csv(here::here("data/field/tidy_field.csv"))
+cellct <- read_csv(here::here("data/cellct/tidied_cellct.csv"))
 
-rbcl_tree <- read.tree(here("output/tree/rbcl/all_asvs/rbcl_aligns_all.fasta.treefile")) ### this tree should only contain the asvs we found in the "main" sites, not looking at controls, etc
-s18_tree <- read.tree(here("output/tree/algae_18s/algae_18s_seqs.fasta.treefile"))
+rbcl_tree <- read.tree(here::here("data/tree/rbcl/all_asvs/rbcl_aligns_all.fasta.treefile")) ### this tree should only contain the asvs we found in the "main" sites, not looking at controls, etc
+s18_tree <- read.tree(here::here("data/tree/algae_18s/algae_18s_seqs.fasta.treefile"))
 ```
 
 
