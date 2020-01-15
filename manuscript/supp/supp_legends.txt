@@ -1,22 +1,23 @@
-Supplemental data descriptions
+Supplementary file titles and captions
+(Figure legends in engstrom_et_al_2020.docx)
 
-Include <50 word description
+
+Supplementary materials:
+
 
 Figures
-S1: Map of study sites locations.
-S2: Base pair differences between GenBank snow algae sequence segments. A. 18S bp differences in primers used by Lutz et al 2016 and Terashima et al 2017. B. 18S bp differences between snow algae species using primers used in current study. C. Base pair differences between snow algae Genbank sequence segments, in the region amplified by our custom rbcL primers.
-S3: Maximum likelihood phylogenetic tree of our rbcL ASVs (~400bp). Nodes annotated with bootstrap;bayesian scores, tips with best taxonomic annotation. Coloured circles on tips represent OTU, size proportional to total relative abundance.
-S4: Cell count relative abundances of snow algae samples, with samples arranged on the x axis from lowest to highest elevation. Colors represent morphospecies. 
-S5: 18S algae ASV clustering. These ASVs are a subset of all 18S ASVs, only including those assigned to Chlorophyceae. A. Multi-dimentional scaling (MDS) showing genetic distance between ASVs. Colored by taxonomic assignment, size proportional to relative abundance. B. t-SNE clustering of genetic distance between 18S. C. ML tree of 18S ASVs.
-S6: rbcL diversity of snow algae samples, labelled by sample ID, plotted against date on the x axis, and coloured by elevation. Top: Faith's phylogenetic diversity, using phylogenetic tree in Fig. S3. Bottom: Shannon diversity.
-S7: Relative abundance and microphotographs of samples from the same site. A: rbcL relative abundance of OTUs from May 22 green subsurface snow, and samples from July 4 with orange snow at surface and green snow below. B. Representative light microphotographs of cells from the same samples. 
-
-
-Protocols
-S1: DNA extaction protocol. 
-S2: PCR conditions, including annealing temperatures and extension times. 
-
+S1. Map of sample locations. Red points indicate mountains where snow algae was sampled for this study. Letters correspond to mountains: X=Saxifrage, W=Wedge, B=Brew, P=Panorama Ridge, T=Tricouni, K=Sky Pilot, G=Garibaldi, M=St. Marks summit, H=Hollyburn, F=Fromme, S=Seymour, N=Nesakwatch, L=Liberty Bell. Satellite image courtesy of Google Maps, created using the googleway and ggmap package in R.
+S2. Base pair differences between GenBank snow algae sequence segments. A. 18S bp differences in primers used by Lutz et al 2016 and Terashima et al 2017. B. 18S bp differences between snow algae species using primers used in current study. C. Base pair differences between snow algae Genbank sequence segments, in the region amplified by our custom rbcL primers.
+S3. Maximum likelihood phylogenetic tree of our rbcL ASVs. Maximum likelihood phylogenetic tree of our rbcL ASVs (~400bp). Nodes annotated with bootstrap;bayesian scores, tips with best taxonomic annotation. Coloured circles on tips represent OTU, size proportional to total relative abundance.
+S4. Cell count relative abundances. Cell count relative abundances of snow algae samples, with samples arranged on the x axis from lowest to highest elevation. Colors represent morphospecies.
+S5. 18S algae ASV clustering. These ASVs are a subset of all 18S ASVs, only including those assigned to Chlorophyceae. A. Multi-dimentional scaling (MDS) showing genetic distance between ASVs. Colored by taxonomic assignment, size proportional to relative abundance. B. t-SNE clustering of genetic distance between 18S. C. ML tree of 18S ASVs.
+S6. <i>rbcL</i> diversity of snow algae samples. rbcL diversity of snow algae samples over the course of summer. Sample points are annotated with sample ID and coloured according to elevation. Top: Faith's phylogenetic diversity, using phylogenetic tree in Fig. S3. Bottom: Shannon diversity.
+S7. Temporal and depth comparison of a <i>Chloromonas krienitzii<i/>-dominated site. A: <i>rbcL</i> relative abundance of OTUs from May 22 green subsurface snow, and samples from July 4 with orange snow at surface and green snow below. B. Representative light photomicrographs of cells from the same samples.
 
 Tables
-S1: Snow algae sample site data, only including samples that were included in metabarcoding.
-S2: Primer table.
+S1. Sample site data. Site data for samples included in metabarcoding analysis.
+S2. Primer sequences. 18S and <i>rbcL</i> primer sequence data.
+
+Protocols
+S1. DNA extaction protocol. Detailed protocol used for DNA extraction.
+S2. PCR conditions. PCR conditions, including annealing temperatures and extension times.
