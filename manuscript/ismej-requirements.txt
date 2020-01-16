@@ -1,6 +1,0 @@
-Title pg
-- running title on all pages following title page
-- names, affiliations, contact for corresponding author
-
-Ontology: 4 subject areas
-reccommendations for revieweres
