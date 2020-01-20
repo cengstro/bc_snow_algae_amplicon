@@ -7,7 +7,7 @@ library(ggmap)
 library(png)
 
 # download data from googleway: do only once to avoid API overcharges
-key <- "AIzaSyBJsmyAKTkTg9LT-HdGCCdZdbE2Hjwm-L8"
+key <-
 register_google(key = key)
 
 # get map

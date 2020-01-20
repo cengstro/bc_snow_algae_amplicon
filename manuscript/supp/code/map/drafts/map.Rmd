@@ -17,7 +17,7 @@ field <- read_csv(here::here("data/02_tidied/tidied_field.csv"))
 ```
 
 ```{r settings}
-key="AIzaSyBJsmyAKTkTg9LT-HdGCCdZdbE2Hjwm-L8"
+key=
 register_google(key = key)
 ```
 

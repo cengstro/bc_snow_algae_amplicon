@@ -7,7 +7,7 @@ library(ggmap)
 
 
 # get base map --------------
-key="AIzaSyBJsmyAKTkTg9LT-HdGCCdZdbE2Hjwm-L8"
+key=
 register_google(key = key) 
 
 algae_map <- get_googlemap(c(-123.004722, 49.850556), zoom = 7, maptype = "satellite")
