@@ -15,6 +15,7 @@ presentation*
 *.JPEG
 *.svg
 *.tiff
+*.eps
 
 # text
 *.docx#
