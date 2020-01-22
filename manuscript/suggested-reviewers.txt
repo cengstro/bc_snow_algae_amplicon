@@ -1,7 +1,0 @@
-Suggested reviewers
-
-Daniel Remias daniel.remias@fh-wels.at University of Innsbruck
-Takahiro Segawa tsegawa@yamanashi.ac.jp University of Yamanashi
-Shawn Brown spbrown2@memphis.edu University of Memphis
-Matthew Davey mpd39@cam.ac.uk University of Cambridge
-Lianne Benning benning@gfz-potsdam.de GFZ German Research Centre for Geosciences
