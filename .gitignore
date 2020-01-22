@@ -1,11 +1,12 @@
 .Rproj.user
+.Rproj
 .RData
 .Rhistory
 archive*
 pres*
 photos*
 presentation*
-manuscript*
+manuscript/*
 
 # image
 *.png
