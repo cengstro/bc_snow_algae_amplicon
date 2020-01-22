@@ -1,0 +1,15 @@
+#tinytex troubleshooting
+
+
+#Error tlmgr: Remote repository is newer than local (2018 < 2019)
+#set source repo to older version...
+tlmgr option repository ftp://tug.org/historic/systems/texlive/2018/tlnet-final
+
+
+
+#unzuipped fancyhdr, xargs, bigfoot into R/3.6 dir
+cd ~/R/x86_64-pc-linux-gnu-library/3.6/fancyhdr/
+tex fancyhdr.ins
+
+
+# found the problem, I hadnt installed tinytex in R tinytex::install_tinytex()

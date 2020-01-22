@@ -1,0 +1,6 @@
+>rbcL
+^\w{0,10}GAACGTGACAAATTAAACAAA
+>18s
+# note: primers fasta file should include ^ before primer sequenceTTAATTTGACTCAACRCGGG
+>16s
+CCTACGGGNBGCASCAG

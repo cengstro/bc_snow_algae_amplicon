@@ -1,0 +1,1 @@
+csplit -z filename /query/ {*}

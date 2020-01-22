@@ -1,0 +1,15 @@
+    68 unknown_bre18-01-p2_S1_L001_R1_001.fastq
+    68 unknown_bre18-01-p2_S1_L001_R2_001.fastq
+    60 unknown_bre18-02x_S2_L001_R1_001.fastq
+    60 unknown_bre18-02x_S2_L001_R2_001.fastq
+    52 unknown_bre18-10-p2_S3_L001_R1_001.fastq
+    52 unknown_bre18-10-p2_S3_L001_R2_001.fastq
+    76 unknown_bre18-17_S4_L001_R1_001.fastq
+    76 unknown_bre18-17_S4_L001_R2_001.fastq
+    48 unknown_bre18-19_S5_L001_R1_001.fastq
+    48 unknown_bre18-19_S5_L001_R2_001.fastq
+   108 unknown_bre18-22-bb_S6_L001_R1_001.fastq
+   108 unknown_bre18-22-bb_S6_L001_R2_001.fastq
+   104 unknown_bre18-rd-p2_S7_L001_R1_001.fastq
+   104 unknown_bre18-rd-p2_S7_L001_R2_001.fastq
+  1032 total

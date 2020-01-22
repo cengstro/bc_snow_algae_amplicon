@@ -1,0 +1,9 @@
+open mpi: 16 cores (not in same node)
+
+#threaded
+one node, multiple cores
+ntasks = 1
+cpu per tasks
+
+docs compute canada running jobs
+support@computecanada.ca
