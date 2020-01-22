@@ -8,6 +8,9 @@ library(tidyverse)
 library(DECIPHER)
 library(ape)
 library(ggtree)
+library(gridExtra)
+library(ggpubr)
+library(cowplot)
 ```
 
 ```{r, include=F}
@@ -26,7 +29,7 @@ total_rel_abund <- rel_abund %>%
 
 
 ```{r, include=F}
-BrowseSeqs(aligns, highlight = T)
+# BrowseSeqs(aligns, highlight = T)
 
 dists <-  aligns %>% 
   DECIPHER::DistanceMatrix(type="matrix", correction = "JC")
@@ -57,7 +60,7 @@ colors <- c("Sanguina_nivaloides"="#ff534a",
             "Chlamydomonadales"="grey60",
             "NA"="grey60")
 
-mds <- ggplot(mds_coords_w_taxonomy, aes(x=V1, y=V2))+
+mds_1 <- ggplot(mds_coords_w_taxonomy, aes(x=V1, y=V2))+
   geom_point(aes(color=best_assignment, size=rel_abund), alpha=0.7, na.rm=TRUE) +
   scale_color_manual(values= colors) +
   guides(size="none",
@@ -65,10 +68,16 @@ mds <- ggplot(mds_coords_w_taxonomy, aes(x=V1, y=V2))+
   # include pts not assigned taxonomy
   geom_point(data = filter(mds_coords_w_taxonomy, is.na(best_assignment)), 
              color = "grey", alpha = 0.8) +
-  labs(color="Taxonomic assignment")
-mds
-```
+  labs(color="Taxonomic assignment", tag="A")
 
+legend <- mds_1 %>% 
+  cowplot::get_legend() %>% 
+  ggpubr::as_ggplot()
+
+mds <- mds_1 +
+  theme(legend.position = "none")
+  
+```
 
 
 # t-SNE
@@ -97,18 +106,12 @@ tsne <- ggplot(tsne_pts_taxonomy, aes(x=V1, y=V2)) +
   scale_color_manual(values= colors) +
   guides(size="none",
          colour = guide_legend(override.aes = list(size=5, alpha=1))) +
-  labs(color="Taxonomic assignment")
-
-tsne
+  labs(color="Taxonomic assignment", tag="B") +
+  theme(legend.position = "none")
   
 ```
 
-Perplexity = 20. 
 
-
-\pagebreak
-
-# Maximum likelihood tree (IQTree)
 
 ```{r, echo=F, message=F, warning=F}
 
@@ -156,7 +159,21 @@ tree_out <- ggtree(tree) +
         legend.key = element_blank()) +
   scale_color_manual(values= colors) +
   geom_tiplab(data = annotate, aes(label = best_assignment), size=2)+
-  guides(size="none")
-  
-tree_out
+  guides(size="none") +
+  labs(tag="C") +
+  theme(legend.position = "none")
 ```
+
+
+
+```{r, fig.width=8, fig.height=10}
+lay <- rbind(c(1,1,4),
+             c(2,2,4),
+             c(3,3,4),
+             c(3,3,4),
+             c(3,3,4))
+gridExtra::grid.arrange(mds, tsne, tree_out, legend, layout_matrix=lay)
+
+
+```
+

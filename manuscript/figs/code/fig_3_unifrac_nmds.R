@@ -71,4 +71,4 @@ uf_plot <- ggplot(unifrac_plot_data, aes(x=NMDS2, y=NMDS1)) +
 
 uf_plot
 
-ggsave(filename = here::here("manuscript/figs/final/fig_4_unifrac.pdf"), plot=uf_plot, width = 85, height = 70, units="mm")
+ggsave(filename = here::here("manuscript/figs/intermediate/fig_3.png"), plot=uf_plot, width = 85, height = 70, dpi=300, units="mm")

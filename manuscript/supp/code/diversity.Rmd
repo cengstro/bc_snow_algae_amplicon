@@ -21,7 +21,7 @@ library(lubridate)
 
 
 ```{r, include=F}
-rel_abund <- read_csv(here::here("data/rel_abund/3_filter/rbcl/rbcl_rel_abund.csv")) # not looking at the depth samples, controls, etc
+rbcl_rel_abund <- read_csv(here::here("data/rel_abund/3_filter/rbcl/rbcl_rel_abund.csv")) # not looking at the depth samples, controls, etc
 tax <- read_csv(here::here("data/taxonomy/tidied.rbcl_taxonomy.csv"))
 field <- read_csv(here::here("data/field/tidy_field.csv"))
 asv_seqs <- read_csv(here::here("data/fastas/asv_seq_data/rbcl_asv_sequence_key.csv"))
@@ -31,7 +31,7 @@ rbcl.tree <- read.tree(here::here("data/tree/rbcl/asv613.fasta.treefile")) ### t
 
 ```{r, include=F}
 # get relative abundance of each otu, in wide format, 
-otu_rel_abund <- rel_abund %>% 
+otu_rel_abund <- rbcl_rel_abund %>% 
   left_join(otus, by="asv_id") %>% 
   group_by(sample_id, otu_name) %>% 
   summarise(rel_abund = sum(rel_abund)) %>%   
@@ -67,7 +67,7 @@ shannon_plot
 
 ```{r, include=F}
 # format
-ra_wide <- rel_abund %>% 
+ra_wide <- rbcl_rel_abund %>% 
   select(sample_id, asv_id, rel_abund) %>% 
   arrange(asv_id) %>% 
   pivot_wider(names_from = asv_id, values_from = rel_abund, values_fill = list(rel_abund = 0)) %>% 
